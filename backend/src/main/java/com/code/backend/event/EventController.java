@@ -6,18 +6,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class EventsController {
+public class EventController {
 
     @Autowired
     EventsRepository eventRepository;
 
     @GetMapping("/events")
-    public List<Events> getAllEvents() {
+    public List<Events> getAllEvent() {
         return eventRepository.findAll();
     }
 
     @PostMapping("/events")
-    public Events createBook(@RequestBody Events events) {
+    public Events createEvent(@RequestBody Events events) {
         return eventRepository.save(events);
     }
 
