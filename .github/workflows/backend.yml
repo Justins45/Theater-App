@@ -1,0 +1,5 @@
+# backend.yml — only runs when backend/ changes
+on:
+  push:
+    paths:
+      - 'backend/**'

@@ -1,0 +1,5 @@
+# frontend.yml — only runs when frontend/ changes
+on:
+  push:
+    paths:
+      - 'frontend/**'

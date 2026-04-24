@@ -1,0 +1,5 @@
+# shared.yml — only runs when shared/ changes
+on:
+  push:
+    paths:
+      - 'shared/**'
