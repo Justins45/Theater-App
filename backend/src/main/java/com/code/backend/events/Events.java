@@ -1,4 +1,4 @@
-package com.code.backend;
+package com.code.backend.events;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Event {
+public class Events {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,9 +18,9 @@ public class Event {
     private double capacity;
     private String image_url;
 
-    public Event() {}
+    public Events() {}
 
-    public Event(String title, String description, String director,
+    public Events(String title, String description, String director,
                  double capacity, String image_url) {
         this.title = title;
         this.description = description;

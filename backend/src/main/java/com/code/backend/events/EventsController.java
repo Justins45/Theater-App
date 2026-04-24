@@ -1,4 +1,4 @@
-package com.code.backend;
+package com.code.backend.events;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,10 +10,10 @@ import java.util.List;
 public class EventsController {
 
     @Autowired
-    EventRepository eventRepository;
+    EventsRepository eventRepository;
 
     @GetMapping("/events")
-    public List<Event> getAllEvents() {
+    public List<Events> getAllEvents() {
         return eventRepository.findAll();
     }
 
