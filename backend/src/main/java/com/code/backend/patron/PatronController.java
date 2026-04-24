@@ -1,10 +1,11 @@
 package com.code.backend.patron;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class PatronController {
@@ -18,13 +19,16 @@ public class PatronController {
     }
 
     @GetMapping("/patrons/{id}")
-    public Optional<Patron> getPatronById(@PathVariable Long id) {
-        return getAllPatrons().stream().filter(e -> e.getId().equals(id)).findFirst();
+    public ResponseEntity<Patron> getPatronById(@PathVariable Long id) {
+        return patronRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping("/patrons")
-    public Patron createPatron(@RequestBody Patron patron) {
-        return patronRepository.save(patron);
+    public ResponseEntity<Patron> createPatron(@RequestBody Patron patron) {
+        Patron saved = patronRepository.save(patron);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
 
