@@ -12,6 +12,14 @@ export default defineConfig({
     vue(),
     vueDevTools(),
   ],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: "modern-compiler",
+        additionalData: `@use "@/assets/_variables.scss" as *;`,
+      }
+    }
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

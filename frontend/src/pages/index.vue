@@ -6,4 +6,8 @@
   </div>
 </template>
 
-<style scoped></style>
+<style scoped lang="scss">
+h1 {
+  color: $primary-colour;
+}
+</style>
