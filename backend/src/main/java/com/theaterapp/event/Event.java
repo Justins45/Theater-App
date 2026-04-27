@@ -15,13 +15,13 @@ public class Event {
     private String title;
     private String description;
     private String director;
-    private double capacity;
+    private int capacity;
     private String image_url;
 
     public Event() {}
 
     public Event(String title, String description, String director,
-                 double capacity, String image_url) {
+                 int capacity, String image_url) {
         this.title = title;
         this.description = description;
         this.director = director;
@@ -57,11 +57,11 @@ public class Event {
         this.director = director;
     }
 
-    public double getCapacity() {
+    public int getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(double capacity) {
+    public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
 
