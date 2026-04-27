@@ -1,4 +1,4 @@
-package com.code.backend.patron;
+package com.theaterapp.patron;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

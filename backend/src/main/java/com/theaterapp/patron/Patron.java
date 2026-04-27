@@ -1,4 +1,4 @@
-package com.code.backend.patron;
+package com.theaterapp.patron;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

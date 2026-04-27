@@ -1,13 +1,13 @@
-package com.code.backend;
+package com.theaterapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BackendApplication {
+public class TheaterApp {
 
     public static void main(String[] args) {
-        SpringApplication.run(BackendApplication.class, args);
+        SpringApplication.run(TheaterApp.class, args);
     }
 
 }

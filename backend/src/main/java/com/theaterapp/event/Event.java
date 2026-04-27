@@ -1,4 +1,4 @@
-package com.code.backend.event;
+package com.theaterapp.event;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

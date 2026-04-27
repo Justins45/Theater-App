@@ -1,4 +1,4 @@
-package com.code.backend.event;
+package com.theaterapp.event;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
