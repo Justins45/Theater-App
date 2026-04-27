@@ -1,7 +1,6 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div id="app">
     <nav>
       <RouterLink to="/">Go to Home View</RouterLink>
       <RouterLink to="/event">Go to Event View</RouterLink>
@@ -10,7 +9,6 @@
     <main>
       <RouterView />
     </main>
-  </div>
 </template>
 
 <style scoped></style>
