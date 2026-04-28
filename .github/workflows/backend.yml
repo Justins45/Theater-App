@@ -23,16 +23,10 @@ jobs:
           java-version: '25'
           distribution: 'temurin'
           cache: 'maven'
-      
-      - name: Cache Maven Packages
-        uses: actions/cache@v4
-        with: 
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
+          cache-dependency-path: 'backend/pom.xml'
 
       - name: Build and Run Tests
-        run: mvn verify
+        run: mvn verify -U
         working-directory: backend
       
       - name: Upload test Results
