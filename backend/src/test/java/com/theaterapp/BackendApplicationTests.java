@@ -2,16 +2,15 @@ package com.theaterapp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestPropertySource;
+import org.springframework.context.ApplicationContext;
+import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
-@TestPropertySource(properties = {
-        "spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration"
-})
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 class BackendApplicationTests {
 
     @Test
-    void contextLoads() {
+    void contextLoads(ApplicationContext context) {
+        assertThat(context).isNotNull();
     }
 
 }
