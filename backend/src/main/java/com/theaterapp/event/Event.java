@@ -16,17 +16,15 @@ public class Event {
     private String description;
     private String director;
     private int capacity;
-    private String image_url;
 
     public Event() {}
 
     public Event(String title, String description, String director,
-                 int capacity, String image_url) {
+                 int capacity) {
         this.title = title;
         this.description = description;
         this.director = director;
         this.capacity = capacity;
-        this.image_url = image_url;
     }
 
     public String getId() {
@@ -65,14 +63,6 @@ public class Event {
         this.capacity = capacity;
     }
 
-    public String getImage_url() {
-        return image_url;
-    }
-
-    public void setImage_url(String image_url) {
-        this.image_url = image_url;
-    }
-
     @Override
     public String toString() {
         return "Event{" +
@@ -81,7 +71,6 @@ public class Event {
                 ", description='" + description + '\'' +
                 ", director='" + director + '\'' +
                 ", capacity=" + capacity +
-                ", image_url='" + image_url + '\'' +
                 '}';
     }
 }
