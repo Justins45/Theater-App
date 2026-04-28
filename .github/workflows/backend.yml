@@ -30,7 +30,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: Build and Run Tests
-        run: nvm verify
+        run: mvn verify
       
       - name: Upload test Results
         uses: actions/upload-artifact@v4
