@@ -1,4 +1,5 @@
 package com.theaterapp.patron;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -27,6 +28,7 @@ class PatronServiceTest {
     PatronService patronService;
 
     @Test
+    @DisplayName("Find all Patrons should Return Mapped DTO's")
     void findAllPatrons_shouldReturnMappedDTOs() {
         Patron patron = new Patron("Jane", "Smith", "jane@example.com");
         PatronDTO dto = new PatronDTO("Jane", "Smith", "jane@example.com");
@@ -42,6 +44,7 @@ class PatronServiceTest {
     }
 
     @Test
+    @DisplayName("Find by ID should Return DTO when patron Exists")
     void findById_shouldReturnDTO_whenPatronExists() {
         Patron patron = new Patron("Jane", "Smith", "jane@example.com");
         PatronDTO dto = new PatronDTO("Jane", "Smith", "jane@example.com");
@@ -57,6 +60,7 @@ class PatronServiceTest {
     }
 
     @Test
+    @DisplayName("Find by ID should return empty when patron not found")
     void findById_shouldReturnEmpty_whenPatronNotFound() {
         when(patronRepository.findById(99L)).thenReturn(Optional.empty());
 
@@ -66,6 +70,7 @@ class PatronServiceTest {
     }
 
     @Test
+    @DisplayName("Save should persist and return DTO")
     void save_shouldPersistAndReturnDTO() {
         PatronDTO inputDTO = new PatronDTO("John", "Doe", "john@example.com");
         Patron savedPatron = new Patron("John", "Doe", "jane@example.com");

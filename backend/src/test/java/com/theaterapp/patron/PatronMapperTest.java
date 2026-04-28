@@ -1,5 +1,6 @@
 package com.theaterapp.patron;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -10,6 +11,7 @@ class PatronMapperTest {
     PatronMapper mapper = new PatronMapper();
 
     @Test
+    @DisplayName("Should map all fields to DTO")
     void shouldMapAllFieldsToDTO() {
         Patron patron = new Patron("John", "Doe", "john@example.com");
 
@@ -21,6 +23,7 @@ class PatronMapperTest {
     }
 
     @Test
+    @DisplayName("Should not expose password field")
     void shouldNotExposePassword() {
         // Verifies the DTO doesn't accidentally include sensitive fields
         Patron patron = new Patron("John", "Doe", "john@example.com");
