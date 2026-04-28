@@ -25,5 +25,5 @@ public class EventMapperTest {
     }
 
 
-    // needs a non exposure test 
+    // needs a non exposure test
 }
