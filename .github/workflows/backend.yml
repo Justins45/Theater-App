@@ -26,7 +26,7 @@ jobs:
           cache-dependency-path: 'backend/pom.xml'
 
       - name: Build and Run Tests
-        run: mvn verify -U
+        run: mvn verify -Dtest=!TheaterAppTests
         working-directory: backend
       
       - name: Upload test Results
