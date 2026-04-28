@@ -17,7 +17,8 @@ public class Event {
     private String director;
     private int capacity;
 
-    public Event() {}
+    public Event() {
+    }
 
     public Event(String title, String description, String director,
                  int capacity) {
