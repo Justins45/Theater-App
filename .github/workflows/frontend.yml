@@ -1,5 +1,45 @@
 # frontend.yml — only runs when frontend/ changes
+name: Frontend
+
 on:
   push:
+    branches: [ main ]
+    pull_request: [ main ]
     paths:
       - 'frontend/**'
+  workflow_dispatch: #
+
+jobs:
+  build-and-test: 
+    runs-on: ubuntu-latest
+
+    steps: 
+      - name: CHeckout Code
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependancy-path: frontend/package-lock.json
+      
+      - name: Install and Check
+        working-directory: frontend
+        run: | 
+          npm ci
+          npm run lint
+          npm run type-check
+          npm run test:unit -- --reporter=verbose
+          npm run build
+        env: 
+          NODE_ENV: production
+
+      - name: Upload Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with: 
+          name: test-results
+          path: | 
+            frontend/dist/
+            frontend/coverage/
