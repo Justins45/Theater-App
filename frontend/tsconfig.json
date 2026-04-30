@@ -10,11 +10,5 @@
     {
       "path": "./tsconfig.vitest.json"
     }
-  ],
-  "include": [
-    "./typed-router.d.ts"
-  ],
-  "compilerOptions": {
-    "moduleResolution": "Bundler"
-  }
+  ]
 }

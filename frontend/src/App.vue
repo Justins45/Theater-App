@@ -1,14 +1,15 @@
 <script setup lang="ts"></script>
 
 <template>
-    <nav>
-      <RouterLink to="/">Go to Home View</RouterLink>
-      <RouterLink to="/event">Go to Event View</RouterLink>
-      <RouterLink to="/patron">Go to Patron View</RouterLink>
-    </nav>
-    <main>
-      <RouterView />
-    </main>
+  <h1>You did it!</h1>
+  <p>
+    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
+    documentation
+  </p>
 </template>
 
-<style scoped></style>
+<style scoped lang="scss">
+  p {
+    color: $primary-colour;
+  }
+</style>

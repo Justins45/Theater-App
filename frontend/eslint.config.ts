@@ -28,8 +28,8 @@ export default defineConfigWithVueTs(
 
   ...pluginOxlint.buildFromOxlintConfigFile('.oxlintrc.json'),
 
-  {
-    files: ['**/*.{vue,ts,mts,tsx}'],
+    {
+    files: ['**/*.{vue,ts}'],
     rules: {
       'vue/multi-word-component-names': 'off',
     },

@@ -1,13 +1,7 @@
-<script setup lang="ts"></script>
+<script lang="ts"></script>
 
 <template>
-  <div>
-    <h1>HomeView</h1>
-  </div>
+  <div>Index.vue</div>
 </template>
 
-<style scoped lang="scss">
-h1 {
-  color: $primary-colour;
-}
-</style>
+<style scoped lang="scss"></style>
