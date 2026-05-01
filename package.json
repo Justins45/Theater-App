@@ -4,6 +4,6 @@
   "workspaces": [
     "frontend",
     "admin",
-    "shared"
+    "@theater/shared"
   ]
 }

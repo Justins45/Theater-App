@@ -13,9 +13,6 @@ on:
 jobs:
   build-and-test: 
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: frontend
 
     steps: 
       - name: CHeckout Code
@@ -32,7 +29,7 @@ jobs:
         run: npm ci
       
       - name: Build Shared Types
-        run: npm run build:types --workspace=shared 
+        run: npm run build:types --workspace=@theater/shared 
 
       - name: Lint
         run: npm run lint --workspace=frontend
