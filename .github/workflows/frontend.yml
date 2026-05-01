@@ -7,6 +7,7 @@ on:
     pull_request: [ main ]
     paths:
       - 'frontend/**'
+      - 'shared/**' 
   workflow_dispatch: #
 
 jobs:
@@ -25,19 +26,27 @@ jobs:
         with:
           node-version: 24
           cache: npm
-          cache-dependency-path: frontend/package-lock.json
+          cache-dependency-path: package-lock.json
+
+      - name: Install Dependencies
+        run: npm ci  
       
-      - name: Install and Check
-        run: | 
-          npm install --include=dev
-          npm run lint
-          npm run test:unit -- --reporter=verbose
-          npm run build  
-        env: 
+      - name: Build Shared Types
+        run: npm run build:types --workspace=shared 
+
+      - name: Lint
+        run: npm run lint --workspace=frontend
+
+      - name: Test
+        run: npm run test:unit --workspace=frontend -- --reporter=verbose
+
+      - name: Build
+        run: npm run build --workspace=frontend
+        env:
           NODE_ENV: production
 
       - name: Upload Results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with: 
           name: test-results
