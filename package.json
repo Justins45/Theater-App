@@ -1,0 +1,9 @@
+{
+  "name": "theater-app",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "admin",
+    "shared"
+  ]
+}

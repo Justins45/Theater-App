@@ -7,23 +7,26 @@ import VueRouter from 'vue-router/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    VueRouter({}),
-    vue(),
-    vueDevTools(),
-  ],
+  plugins: [VueRouter({}), vue(), vueDevTools()],
   css: {
     preprocessorOptions: {
       scss: {
         additionalData: `
           @use "@/assets/_variables.scss" as *;
-        `
-      }
-    }
+        `,
+      },
+    },
   },
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '@theater/shared': fileURLToPath(new URL('../shared/index.ts', import.meta.url)),
     },
+    // ensures symlinked packages resolve correctly
+    preserveSymlinks: true,
+  },
+  optimizeDeps: {
+    // tells Vite to pre-bundle the shared package too
+    include: ['@theater/shared'],
   },
 })

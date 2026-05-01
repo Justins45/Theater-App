@@ -1,0 +1,19 @@
+{
+  "name": "@theater/shared",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./index.ts",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./index.js",
+    "./components/*": "./components/*"
+  },
+  "scripts": {
+    "build:types": "vue-tsc --declaration --emitDeclarationOnly --outDir dist"
+  },
+  "devDependencies": {
+    "@vue/tsconfig": "^0.9.1",
+    "typescript": "^6.0.3",
+    "vue-tsc": "^3.2.7"
+  }
+}
