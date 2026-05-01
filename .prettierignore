@@ -1,0 +1,6 @@
+# .prettierignore  (repo root)
+admin/src-tauri/
+*/dist/
+*/dist-ssr/
+*/coverage/
+*.min.js

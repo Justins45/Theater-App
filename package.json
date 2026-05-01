@@ -5,5 +5,28 @@
     "frontend",
     "admin",
     "shared"
-  ]
+  ],
+  "scripts": {
+    "lint": "npm run lint:frontend && npm run lint:admin && npm run lint:shared",
+    "lint:frontend": "eslint frontend/src",
+    "lint:admin": "eslint admin/src",
+    "lint:shared": "eslint shared",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest --workspace vitest.workspace.ts"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@vitejs/plugin-vue": "^5.0.0",
+    "@vue/eslint-config-prettier": "^10.0.0",
+    "@vue/eslint-config-typescript": "^14.0.0",
+    "@vue/test-utils": "^2.0.0",
+    "@vue/tsconfig": "^0.7.0",
+    "eslint": "^9.0.0",
+    "eslint-plugin-vue": "^9.0.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.0.0",
+    "vite": "^6.0.0",
+    "vitest": "^3.0.0"
+  }
 }
