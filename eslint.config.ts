@@ -23,13 +23,14 @@ export default defineConfigWithVueTs(
     'admin/src-tauri/**',
     // coverage
     '*/coverage/**',
+    // Vite generated — not user code
+    '**/vite-env.d.ts',
   ]),
 
   pluginVue.configs['flat/essential'],
   vueTsConfigs.recommended,
 
   {
-    name: 'app/vitest',
     ...pluginVitest.configs.recommended,
     files: [
       'frontend/src/**/__tests__/**/*.ts',
@@ -38,6 +39,13 @@ export default defineConfigWithVueTs(
       '**/*.spec.ts',
       '**/*.test.ts',
     ],
+  },
+
+  {
+    files: ['**/*.{vue,ts,mts,tsx}'],
+    rules: {
+      'vue/multi-word-component-names': 'off',
+    },
   },
 
   skipFormatting,
