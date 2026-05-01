@@ -7,7 +7,10 @@
     "shared"
   ],
   "scripts": {
-    "lint": "eslint .",
+    "lint": "npm run lint:frontend && npm run lint:admin && npm run lint:shared",
+    "lint:frontend": "eslint frontend/src",
+    "lint:admin": "eslint admin/src",
+    "lint:shared": "eslint shared",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "vitest --workspace vitest.workspace.ts"
