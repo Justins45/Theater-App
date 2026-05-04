@@ -44,7 +44,9 @@ jobs:
           path: | 
             admin/vue/dist/
             admin/vue/coverage/
-            
+
+# Update later to make a build on any v_._._ relese 
+# using tauri-apps/tauri-action@v0.6.2 (latest May 4/25)
   rust-tests:
     name: Rust Test & Lint
     runs-on: ubuntu-latest
@@ -69,12 +71,10 @@ jobs:
 
       - name: Cache Rust dependencies
         uses: Swatinem/rust-cache@v2
-        with:
-          workspaces: "src-tauri -> target"
 
       - name: Check formatting
         working-directory: src-tauri
-        run: cargo fmt --check
+        run: cd && cargo fmt --check
 
       - name: Clippy lint
         working-directory: src-tauri
