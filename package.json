@@ -7,13 +7,18 @@
     "shared"
   ],
   "scripts": {
-    "lint": "npm run lint:frontend && npm run lint:admin && npm run lint:shared",
+    "lint": "npm run lint:frontend && npm run lint:admin-vue && npm run lint:admin-rust-clippy && npm run lint:shared",
     "lint:frontend": "eslint frontend/src",
-    "lint:admin": "eslint admin/src",
+    "lint:admin-vue": "eslint admin/src",
+    "lint:admin-rust-clippy": "cd admin/src-tauri && cargo clippy",
     "lint:shared": "eslint shared",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "test": "vitest --workspace vitest.workspace.ts"
+    "format": "npm run format:vue && npm run format:admin-rust",
+    "format:vue": "prettier --write .",
+    "format:admin-rust": "cd admin/src-tauri && cargo fmt",
+    "test": " test:vue && test:admin-rust && test:backend",
+    "test:vue": "vitest --workspace vitest.workspace.ts",
+    "test:admin-rust": "cd admin/src-tauri && cargo test",
+    "test:backend": "cd backend && mvn test"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",
