@@ -71,10 +71,12 @@ jobs:
 
       - name: Cache Rust dependencies
         uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: "src-tauri -> target"
 
       - name: Check formatting
         working-directory: src-tauri
-        run: cd && cargo fmt --check
+        run: cargo fmt --check
 
       - name: Clippy lint
         working-directory: src-tauri
