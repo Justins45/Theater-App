@@ -1,4 +1,6 @@
 # shared.yml — only runs when shared/ changes
+name: Shared
+
 on:
   push:
     branches: [ main ]
