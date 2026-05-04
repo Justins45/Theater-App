@@ -25,7 +25,7 @@ jobs:
           cache: 'maven'
           cache-dependency-path: 'backend/pom.xml'
 
-      - name: Build and Run Tests
+      - name: Run Tests
         run: mvn verify -U
         working-directory: backend
       

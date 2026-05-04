@@ -29,13 +29,13 @@ jobs:
         run: npm ci
       
       - name: Build Shared Types
-        run: npm run build:types --workspace=@theater/shared 
+        run: npm run build:shared
 
       - name: Lint
-        run: npm run lint 
+        run: npm run lint:frontend 
 
       - name: Test
-        run: npm run test --reporter=verbose
+        run: npm run test:vue --reporter=verbose
 
       - name: Build
         run: npm run build --workspace=frontend
