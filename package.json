@@ -7,6 +7,9 @@
     "shared"
   ],
   "scripts": {
+    "start:admin": "cd admin && npm run tauri dev",
+    "start:frontend": "cd frontend && npm run dev",
+    "start:backend": "cd backend && DB_NAME=$DB_NAME DB_PASSWORD=$DB_PASSWORD mvn spring-boot:run",
     "lint": "npm run lint:frontend && npm run lint:admin-vue && npm run lint:admin-rust-clippy && npm run lint:shared",
     "lint:frontend": "eslint frontend/src",
     "lint:admin-vue": "eslint admin/src",
@@ -18,7 +21,8 @@
     "test": " test:vue && test:admin-rust && test:backend",
     "test:vue": "vitest --workspace vitest.workspace.ts",
     "test:admin-rust": "cd admin/src-tauri && cargo test",
-    "test:backend": "cd backend && mvn test"
+    "test:backend": "cd backend && mvn test",
+    "temp:test": "$hello"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",

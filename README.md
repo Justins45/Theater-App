@@ -4,6 +4,10 @@ A full-stack theater ticketing platform. Patrons browse events, pick seats, and 
 
 _**NOTE: not all portions of this README.md are fully setup, some parts are still in development and will be added soon.**_
 
+_**NOTE: This program was written and testing on Mac OS Tahoe v26.3. Not all Operating systems are fully tested as of may 4th 2026.**_
+
+
+
 ## What's in This Repo
 
 ```
@@ -18,15 +22,15 @@ theater-app/
 
 ## Running Locally
 
-Start each part of the project in its own terminal:
+Start each part of the project in its own terminal (_ran from root directory_):
 
-| Service      | Directory   | Command                                          |
-| ------------ | ----------- | ------------------------------------------------ |
-| Dependencies | `/` (root)  | `npm install`                                    |
-| Frontend     | `/frontend` | `npm run dev`                                    |
-| Admin        | `/admin`    | `npm run tauri dev`                              |
-| Backend      | `/backend`  | `mvn spring-boot:run` (with `DB_PASSWORD`=value) |
-| Database     | —           | Start PostgreSQL via your local service manager  |
+| Service      | Command                                                 |
+| ------------ | ------------------------------------------------------- |
+| Dependencies | `npm install`                                           |
+| Frontend     | `npm run start:frontend`                                |
+| Admin        | `npm run start:admin`                                   |
+| Backend      | `DB_NAME=$name DB_PASSWORD=$pass npm run start:backend` |
+| Database     | Start PostgreSQL via your local service manager         |
 
 The backend runs on `localhost:8080` and the frontend on `localhost:5173` and admin runs on `localhost:1420` by default.
 
