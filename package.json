@@ -7,6 +7,7 @@
     "shared"
   ],
   "scripts": {
+    "build:shared": "cd shared && npm run build:types",
     "start:admin": "cd admin && npm run tauri dev",
     "start:frontend": "cd frontend && npm run dev",
     "start:backend": "cd backend && DB_NAME=$DB_NAME DB_PASSWORD=$DB_PASSWORD mvn spring-boot:run",
@@ -21,8 +22,7 @@
     "test": " test:vue && test:admin-rust && test:backend",
     "test:vue": "vitest --workspace vitest.workspace.ts",
     "test:admin-rust": "cd admin/src-tauri && cargo test",
-    "test:backend": "cd backend && mvn test",
-    "temp:test": "$hello"
+    "test:backend": "cd backend && mvn test"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",

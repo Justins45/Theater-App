@@ -14,13 +14,19 @@ npm install
 
 1. Create `components/YourComponent.vue`
 2. Export it from `index.ts`
-3. Run the type build from the `shared/` directory:
+3. Run the type build from the `shared/` directory or `root`:
 
-```bash
-npm run build:types
-```
+**Root Directory**
+  ```bash
+  npm run build:shared
+  ```
 
-4. Import it in `frontend` or `admin` — no changes needed in those projects
+**Shared Directory**
+  ```bash
+  npm run build:types
+  ```
+
+1. Import it in `frontend` or `admin` — no changes needed in those projects
 
 ## Notes
 
