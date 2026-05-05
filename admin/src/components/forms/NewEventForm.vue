@@ -11,12 +11,14 @@ interface FormProps {
   capacity: number | null,
 }
 
-const form = ref<FormProps>({
+const defaultData = () => ({
   title: "",
   description: "",
   director: "",
   capacity: null,
 })
+
+const form = ref<FormProps>(defaultData())
 
 // Vue call off to Rust to take and make the JSON for a new event while checking each field exists and is valid (form injection prevention)
 async function create_event() {
@@ -26,8 +28,9 @@ async function create_event() {
     description: form.value.description,
     director: form.value.director,
     capacity: form.value.capacity
-  }
-)
+  })
+
+  form.value = defaultData()
 }
 </script>
 

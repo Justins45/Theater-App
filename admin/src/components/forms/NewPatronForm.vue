@@ -10,11 +10,13 @@ interface FormProps {
   email: string
 }
 
-const form = ref<FormProps>({
+const defaultData = () => ({
   firstName: "",
   lastName: "",
   email: ""
 })
+
+const form = ref<FormProps>(defaultData())
 
 async function create_patron() {
 createPatronMSG.value = await invoke("create_patron_command", 
@@ -22,9 +24,9 @@ createPatronMSG.value = await invoke("create_patron_command",
     firstName: form.value.firstName,
     lastName: form.value.lastName,
     email: form.value.email
-  }
-)
+  })
 
+  form.value = defaultData()
 }
 </script>
 <template>
