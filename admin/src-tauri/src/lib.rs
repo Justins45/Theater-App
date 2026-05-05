@@ -1,4 +1,5 @@
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
+use tauri_plugin_window_state::{Builder, StateFlags};
 
 use serde_json::json;
 use serde_json::Value;
@@ -52,6 +53,7 @@ async fn create_event_command(
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(Builder::default().with_state_flags(StateFlags::all() & !StateFlags::VISIBLE).build())
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![
             greet_command,
