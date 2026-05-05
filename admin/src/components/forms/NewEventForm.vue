@@ -20,7 +20,14 @@ const form = ref<FormProps>({
 
 // Vue call off to Rust to take and make the JSON for a new event while checking each field exists and is valid (form injection prevention)
 async function create_event() {
-  createEventMSG.value = await invoke("create_event_command", {title: form.value.title, description: form.value.description, director: form.value.director, capacity: form.value.capacity})
+  createEventMSG.value = await invoke("create_event_command", 
+  {
+    title: form.value.title,
+    description: form.value.description,
+    director: form.value.director,
+    capacity: form.value.capacity
+  }
+)
 }
 </script>
 

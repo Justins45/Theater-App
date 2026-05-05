@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import NewEventForm from './components/NewEventForm.vue';
+import NewEventForm from './components/forms/NewEventForm.vue';
+import NewPatronForm from './components/forms/NewPatronForm.vue';
 import { SharedButton } from '@theater/shared'
 
 // async function greet() {
@@ -13,6 +14,7 @@ import { SharedButton } from '@theater/shared'
     <h1>Welcome to Tauri + Vue</h1>
     <NewEventForm />
     <SharedButton />
+    <NewPatronForm />
   </main>
 </template>
 
