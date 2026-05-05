@@ -10,7 +10,6 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/events")
 @RequiredArgsConstructor
-@CrossOrigin
 public class EventController {
 
     private final EventService eventService;
