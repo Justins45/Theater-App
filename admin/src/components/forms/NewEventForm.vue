@@ -50,7 +50,6 @@ async function create_event() {
 </template>
 
 <style scoped lang="scss">
-
   h2 {
     font-size: 1.2rem;
   }
