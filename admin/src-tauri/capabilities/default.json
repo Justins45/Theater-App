@@ -8,6 +8,14 @@
   "permissions": [
     "core:default",
     "opener:default",
-    "core:window:allow-show"
+    "core:window:allow-show",
+    {
+      "identifier": "http:default",
+      "allow": [
+        {
+          "url": "http://localhost:8080"
+        }
+      ]
+    }
   ]
 }
