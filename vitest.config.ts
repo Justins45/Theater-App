@@ -16,5 +16,37 @@ export default defineConfig({
     globals: true,          // matches create-vue default
     environment: 'jsdom',
     clearMocks: true,
+    projects: [
+      {
+        extends: true,
+        test: {
+          name: {
+            label: "frontend",
+            color: "cyan"
+          },
+          root: "./frontend"
+        }
+      },
+      {
+        extends: true,
+        test: {
+          name: {
+            label: "admin",
+            color: "red"
+          },
+          root: "./admin"
+        }
+      },
+      {
+        extends: true,
+        test: {
+          name: {
+            label: "shared",
+            color: "yellow"
+          },
+          root: "./shared"
+        }
+      },
+    ]
   },
 })
