@@ -20,7 +20,7 @@
     "format:vue": "prettier --write .",
     "format:admin-rust": "cd admin/src-tauri && cargo fmt",
     "test": " npm run test:vue && npm run test:admin-rust && npm run test:backend",
-    "test:vue": "vitest run --workspace vitest.workspace.ts",
+    "test:vue": "vitest run",
     "test:admin-rust": "cd admin/src-tauri && cargo test",
     "test:backend": "cd backend && mvn test"
   },
