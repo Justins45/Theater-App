@@ -6,11 +6,9 @@ _**NOTE: not all portions of this README.md are fully setup, some parts are stil
 
 _**NOTE: This program was written and testing on Mac OS Tahoe v26.3. Not all Operating systems are fully tested as of may 4th 2026.**_
 
-
-
 ## What's in This Repo
 
-```
+```txt
 theater-app/
 ├── .github/
 │   └── workflows/       ← CI/CD pipelines
@@ -24,12 +22,14 @@ theater-app/
 
 Start each part of the project in its own terminal (_ran from root directory_):
 
+**Make sure you have your databse information inside the** `backend/src/main/resources/secretes.properties` **file .**
+
 | Service      | Command                                                 |
 | ------------ | ------------------------------------------------------- |
 | Dependencies | `npm install`                                           |
 | Frontend     | `npm run start:frontend`                                |
 | Admin        | `npm run start:admin`                                   |
-| Backend      | `DB_NAME=$name DB_PASSWORD=$pass npm run start:backend` |
+| Backend      | `npm run start:backend`                                 |
 | Database     | Start PostgreSQL via your local service manager         |
 
 The backend runs on `localhost:8080` and the frontend on `localhost:5173` and admin runs on `localhost:1420` by default.
@@ -86,7 +86,8 @@ Before running any part of the project you will need the following installed:
 - **Docker** — optional, for running the backend in a container
 
 You will also need accounts and credentials for:
-- **Stripe** — test API keys for local development
+
+- **Stripe** — test API keys for local development  
 - **NeonDB** — only required for testing on the cloud
 
 ### Configuration and Secrets
