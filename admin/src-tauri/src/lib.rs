@@ -30,11 +30,11 @@ pub async fn create_patron(
 
 pub async fn create_event(
     title: &str,
-    dateTime: &str,
+    date_time: &str,
 ) -> Result<reqwest::Response, reqwest::Error> {
     let json = json!({
         "title": title,
-        "dateTime": dateTime,
+        "dateTime": date_time,
     });
 
     let res = reqwest::Client::new()
@@ -47,8 +47,8 @@ pub async fn create_event(
 }
 
 #[tauri::command]
-async fn create_event_command(title: &str, dateTime: &str) -> Result<Value, String> {
-    let res = create_event(title, dateTime)
+async fn create_event_command(title: &str, date_time: &str) -> Result<Value, String> {
+    let res = create_event(title, date_time)
         .await
         .map_err(|e| e.to_string())?;
 
