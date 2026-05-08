@@ -17,14 +17,16 @@ npm install
 3. Run the type build from the `shared/` directory or `root`:
 
 **Root Directory**
-  ```bash
-  npm run build:shared
-  ```
+
+```bash
+npm run build:shared
+```
 
 **Shared Directory**
-  ```bash
-  npm run build:types
-  ```
+
+```bash
+npm run build:types
+```
 
 1. Import it in `frontend` or `admin` — no changes needed in those projects
 

@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -29,11 +30,11 @@ public class EventServiceTest {
     @Test
     @DisplayName("Find all events should return mapped DTO's")
     void findAllEvents_shouldReturnMappedDTOs() {
-        Event event = new Event("spiderman", "spiderman description", "jane " +
-                "doe", 69);
+        Event event = new Event("spiderman", LocalDateTime.parse("2024-05" +
+                "-20T10:15:30"));
 
-        EventDTO eventDTO = new EventDTO("spiderman", "spiderman description", "jane " +
-                "doe", 69);
+        EventDTO eventDTO = new EventDTO("spiderman", LocalDateTime.parse("2024-05" +
+                "-20T10:15:30"));
 
         when(eventRepository.findAll()).thenReturn(List.of(event));
         when(eventMapper.apply(event)).thenReturn(eventDTO);
@@ -48,12 +49,12 @@ public class EventServiceTest {
     @Test
     @DisplayName("Save should persist and Return DTO")
     void save_shouldPersistAndReturnDTO() {
-        EventDTO inputDTO = new EventDTO("spiderman", "spiderman description"
-                , "jane doe", 69);
-        Event savedEvent = new Event("spiderman", "spiderman description"
-                , "jane doe", 69);
-        EventDTO outputDTO = new EventDTO("spiderman", "spiderman description"
-                , "jane doe", 69);
+        EventDTO inputDTO = new EventDTO("spiderman", LocalDateTime.parse("2024-05" +
+                "-20T10:15:30"));
+        Event savedEvent = new Event("spiderman", LocalDateTime.parse("2024-05" +
+                "-20T10:15:30"));
+        EventDTO outputDTO = new EventDTO("spiderman", LocalDateTime.parse("2024-05" +
+                "-20T10:15:30"));
 
         when(eventRepository.save(any(Event.class))).thenReturn(savedEvent);
         when(eventMapper.apply(savedEvent)).thenReturn(outputDTO);

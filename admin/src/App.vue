@@ -1,17 +1,16 @@
 <script setup lang="ts">
-import NewEventForm from './components/forms/NewEventForm.vue';
-import GetAllEvents from './components/GetAllEvents.vue';
-import NewPatronForm from './components/forms/NewPatronForm.vue';
-import GetAllPatrons from './components/GetAllPatrons.vue';
+import NewEventForm from "./components/forms/NewEventForm.vue";
+import GetAllEvents from "./components/GetAllEvents.vue";
+import NewPatronForm from "./components/forms/NewPatronForm.vue";
+import GetAllPatrons from "./components/GetAllPatrons.vue";
 import { onMounted } from "vue";
 import { getCurrentWindow } from "@tauri-apps/api/window";
-import { SharedButton } from '@theater/shared'
+import { SharedButton } from "@theater/shared";
 
 // Allow Tauri to show window again after resize is complete
 onMounted(async () => {
-  await getCurrentWindow().show()
-})
-
+  await getCurrentWindow().show();
+});
 
 // async function greet() {
 //   // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
@@ -35,8 +34,6 @@ onMounted(async () => {
         <GetAllEvents />
       </div>
     </div>
-  
-    
   </main>
 </template>
 
@@ -45,5 +42,11 @@ onMounted(async () => {
   display: flex;
   flex-direction: row;
   gap: 3rem;
+
+  div {
+    &:first-child {
+      width: 30rem;
+    }
+  }
 }
 </style>

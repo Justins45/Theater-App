@@ -160,22 +160,23 @@ for the Theater App stack. Review before each major phase and before going live.
 
 Address all of these before real users and real money are involved:
 
-| # | Item | Priority |
-|---|---|---|
-| 1 | JWT stored in `httpOnly` cookie, not `localStorage` | 🔴 Must Have |
-| 2 | Stripe webhook signature verification | 🔴 Must Have |
-| 3 | Stripe + DB secrets in environment variables only | 🔴 Must Have |
-| 4 | CORS locked to your domain, not wildcard | 🔴 Must Have |
-| 5 | Ownership checks on every data endpoint | 🔴 Must Have |
-| 6 | Role enforcement on every admin/staff endpoint | 🔴 Must Have |
-| 7 | QR payload signing (HMAC) | 🟡 Before First Event |
-| 8 | Rate limiting on `/auth/login` | 🟡 Before First Event |
-| 9 | Token expiry + refresh token strategy | 🟡 Before First Event |
-| 10 | Actuator endpoints disabled in production | 🟢 Before Public Launch |
-| 11 | HTTPS enforced, no plain HTTP | 🟢 Before Public Launch |
-| 12 | Tauri using OS keychain for token storage | 🟢 Before Public Launch |
+| #   | Item                                                | Priority                |
+| --- | --------------------------------------------------- | ----------------------- |
+| 1   | JWT stored in `httpOnly` cookie, not `localStorage` | 🔴 Must Have            |
+| 2   | Stripe webhook signature verification               | 🔴 Must Have            |
+| 3   | Stripe + DB secrets in environment variables only   | 🔴 Must Have            |
+| 4   | CORS locked to your domain, not wildcard            | 🔴 Must Have            |
+| 5   | Ownership checks on every data endpoint             | 🔴 Must Have            |
+| 6   | Role enforcement on every admin/staff endpoint      | 🔴 Must Have            |
+| 7   | QR payload signing (HMAC)                           | 🟡 Before First Event   |
+| 8   | Rate limiting on `/auth/login`                      | 🟡 Before First Event   |
+| 9   | Token expiry + refresh token strategy               | 🟡 Before First Event   |
+| 10  | Actuator endpoints disabled in production           | 🟢 Before Public Launch |
+| 11  | HTTPS enforced, no plain HTTP                       | 🟢 Before Public Launch |
+| 12  | Tauri using OS keychain for token storage           | 🟢 Before Public Launch |
 
 ---
+
 ---
 
 # Part 2 — Scalability
@@ -298,7 +299,7 @@ Small decisions made now that make future scaling surgical rather than invasive:
 
 - **SC7.1** Use a service layer properly
   - Keep business logic in service classes, not controllers or repositories
-  - When you add a message queue later, only what *calls* the service changes — not the service itself
+  - When you add a message queue later, only what _calls_ the service changes — not the service itself
 
 - **SC7.2** Use DTOs on all API endpoints
   - Never return JPA entities directly from controllers
@@ -358,18 +359,18 @@ Beyond 30,000/day — You will know what you need by then
 
 ## SC9.0 - Scalability Readiness Checklist
 
-| # | Item | When |
-|---|---|---|
-| 1 | HikariCP connection pool configured | MVP |
-| 2 | NeonDB PgBouncer enabled | MVP |
-| 3 | Database indexes on seats, tickets, orders | MVP |
-| 4 | Unique constraint on `orders.stripe_session_id` | MVP |
-| 5 | No N+1 queries in seat availability endpoint | MVP |
-| 6 | Webhook returns 200 before processing | MVP |
-| 7 | Service layer separates business logic from controllers | MVP |
-| 8 | DTOs on all API responses | MVP |
-| 9 | No in-memory state between requests | MVP |
-| 10 | Redis cache for seat availability | ~5,000 users/day |
-| 11 | Second backend instance + load balancer | ~10,000 users/day |
-| 12 | Async webhook processing via message queue | ~10,000 users/day |
-| 13 | PostgreSQL read replica | ~20,000 users/day |
+| #   | Item                                                    | When              |
+| --- | ------------------------------------------------------- | ----------------- |
+| 1   | HikariCP connection pool configured                     | MVP               |
+| 2   | NeonDB PgBouncer enabled                                | MVP               |
+| 3   | Database indexes on seats, tickets, orders              | MVP               |
+| 4   | Unique constraint on `orders.stripe_session_id`         | MVP               |
+| 5   | No N+1 queries in seat availability endpoint            | MVP               |
+| 6   | Webhook returns 200 before processing                   | MVP               |
+| 7   | Service layer separates business logic from controllers | MVP               |
+| 8   | DTOs on all API responses                               | MVP               |
+| 9   | No in-memory state between requests                     | MVP               |
+| 10  | Redis cache for seat availability                       | ~5,000 users/day  |
+| 11  | Second backend instance + load balancer                 | ~10,000 users/day |
+| 12  | Async webhook processing via message queue              | ~10,000 users/day |
+| 13  | PostgreSQL read replica                                 | ~20,000 users/day |

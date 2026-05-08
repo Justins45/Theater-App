@@ -1,8 +1,8 @@
-# System URL pathing 
+# System URL pathing
 
 ## Documentation (support?)
 
-- docs.url.com 
+- docs.url.com
 - support.url.com
 
 ## System health

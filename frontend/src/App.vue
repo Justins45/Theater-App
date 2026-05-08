@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { SharedButton } from '@theater/shared'
+import { SharedButton } from "@theater/shared";
 </script>
 
 <template>
