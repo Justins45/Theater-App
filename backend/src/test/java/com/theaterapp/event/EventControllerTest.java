@@ -55,7 +55,7 @@ public class EventControllerTest {
         mockMvc.perform(post("/api/events")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
-                                {"title":"spiderman","dateTime":"2024-05-20T10:15:30Z"
+                                {"title":"spiderman","dateTime":"2024-05-20T10:15:30Z"}
                                 """))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.title").value("spiderman"));
