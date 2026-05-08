@@ -1,35 +1,32 @@
 package com.theaterapp.patron;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
 @Entity
+@Getter
+@Setter
+@Table(name = "patrons")
 public class Patron {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Setter
-    private String firstName;
-    @Setter
-    private String lastName;
-    @Setter
+    @Column(nullable = false, unique = true)
+    private String userName;
+
+    @Column(nullable = false, unique = true)
     private String email;
-    @Setter
+
     private String password;
 
     public Patron() {
     }
 
-    public Patron(String firstName, String lastName, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Patron(String userName, String email) {
+        this.userName = userName;
         this.email = email;
     }
 
