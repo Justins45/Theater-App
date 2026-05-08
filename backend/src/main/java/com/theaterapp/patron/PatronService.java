@@ -1,6 +1,7 @@
 package com.theaterapp.patron;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +15,7 @@ public class PatronService {
 
     private final PatronRepository patronRepository;
     private final PatronMapper patronMapper;
+    private final PasswordEncoder passwordEncoder;
 
     public List<PatronDTO> findAll() {
         return patronRepository.findAll().stream()
@@ -23,7 +25,7 @@ public class PatronService {
 
     public PatronDTO save(PatronRegisterDTO patronRegisterDTO) {
         Patron patron = new Patron(patronRegisterDTO.userName(),
-                patronRegisterDTO.password(),
+                passwordEncoder.encode(patronRegisterDTO.password()),
                 patronRegisterDTO.email(),
                 patronRegisterDTO.role());
         return patronMapper.apply(patronRepository.save(patron));
