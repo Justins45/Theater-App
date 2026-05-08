@@ -1,12 +1,7 @@
 package com.theaterapp.patron;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.util.AssertionErrors.assertEquals;
-import static org.springframework.test.util.AssertionErrors.assertTrue;
-
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -14,6 +9,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Optional;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.util.AssertionErrors.assertEquals;
+import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 @ExtendWith(MockitoExtension.class)
 class PatronServiceTest {
@@ -38,8 +38,8 @@ class PatronServiceTest {
 
         List<PatronDTO> result = patronService.findAll();
 
-        assertEquals("Size < or > 1",1, result.size());
-        assertEquals("Jane not first in line","JaneSmith",
+        assertEquals("Size < or > 1", 1, result.size());
+        assertEquals("Jane not first in line", "JaneSmith",
                 result.getFirst().userName());
     }
 
@@ -55,7 +55,7 @@ class PatronServiceTest {
         Optional<PatronDTO> result = patronService.findById(1L);
 
         assertTrue("Patron is missing", result.isPresent());
-        assertEquals("Patron is incorrect","jane@example.com",
+        assertEquals("Patron is incorrect", "jane@example.com",
                 result.get().email());
     }
 
@@ -66,7 +66,7 @@ class PatronServiceTest {
 
         Optional<PatronDTO> result = patronService.findById(99L);
 
-        assertTrue("Result has vale when needing to be empty",result.isEmpty());
+        assertTrue("Result has vale when needing to be empty", result.isEmpty());
     }
 
     @Test
@@ -81,7 +81,7 @@ class PatronServiceTest {
 
         PatronDTO result = patronService.save(inputDTO);
 
-        assertEquals("Result not saved","JaneSmith", result.userName());
+        assertEquals("Result not saved", "JaneSmith", result.userName());
         verify(patronRepository, times(1)).save(any(Patron.class));
     }
 }

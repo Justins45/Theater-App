@@ -13,11 +13,11 @@ class PatronMapperTest {
     @Test
     @DisplayName("Should map all fields to DTO")
     void shouldMapAllFieldsToDTO() {
-        Patron patron = new Patron("Johndoe","john@example.com");
+        Patron patron = new Patron("Johndoe", "john@example.com");
 
         PatronDTO dto = mapper.apply(patron);
 
-        assertEquals("Missing Username","Johndoe", dto.userName());
+        assertEquals("Missing Username", "Johndoe", dto.userName());
         assertEquals("Missing Email", "john@example.com", dto.email());
     }
 
@@ -25,7 +25,7 @@ class PatronMapperTest {
     @DisplayName("Should not expose password field")
     void shouldNotExposePassword() {
         // Verifies the DTO doesn't accidentally include sensitive fields
-        Patron patron = new Patron("Johndoe","john@example.com");
+        Patron patron = new Patron("Johndoe", "john@example.com");
         patron.setPassword("supersecret");
 
         PatronDTO dto = mapper.apply(patron);

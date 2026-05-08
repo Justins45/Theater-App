@@ -27,24 +27,20 @@ This is the minimum path to a working product covering three core flows:
   - 2.1.1 Consider making it public — eliminates the Actions minute quota entirely and serves as a portfolio piece ✅
 
 - **2.2** Backend CI pipeline (GitHub Actions)
-
   - 2.2.1 Trigger on every push to main ✅
   - 2.2.2 Build Spring Boot jar ✅
   - 2.2.3 Run tests (scaffold this now even if no tests exist yet — adding them later becomes trivial) ✅
 
 - **2.3** Frontend CI pipeline (GitHub Actions)
-
   - 2.3.1 Trigger on every push to main ✅
   - 2.3.2 Lint + build Vue app ✅
 
 - **2.4** Tauri CD pipeline (GitHub Actions)
-
   - 2.4.1 Trigger on tagged releases only (e.g. `v1.0.0`) — Tauri builds are slow, don't run on every push
   - 2.4.2 Build Windows + Mac installers
   - 2.4.3 Attach installers to GitHub Release automatically
 
 - **2.5** Setup databases
-
   - 2.5.1 Local PostgreSQL via application.yml ✅
   - 2.5.2 NeonDB (cloud) via application.yml
 
@@ -62,7 +58,6 @@ This is the minimum path to a working product covering three core flows:
 - **3.1** Setup Spring Boot project (web ✅, security, data-jpa ✅)
 
 - **3.2** Minimal schema — only what the three flows touch
-
   - 3.2.1 Users (id ✅, email ✅, password ✅, role)
   - 3.2.2 Venues (id, name, timezone) ✅ (hard written in db)
   - 3.2.3 Events (id ✅, venue_id, name ✅, datetime Local ✅)
@@ -72,13 +67,11 @@ This is the minimum path to a working product covering three core flows:
   - 3.2.7 Tickets (id, order_id, seat_id, qr_payload, status, venu timezone)
 
 - **3.3** Auth
-
   - 3.3.1 /auth/register
   - 3.3.2 /auth/login (returns JWT with role claim attached)
   - 3.3.3 /auth/me
 
 - **3.4** Core API — only what the three flows need
-
   - 3.4.1 GET /events — list events ✅
   - 3.4.2 GET /events/{id}/seats — seat map with availability
   - 3.4.3 POST /seats/hold — hold seats during checkout (10 min TTL)

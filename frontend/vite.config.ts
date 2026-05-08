@@ -1,9 +1,9 @@
-import { fileURLToPath, URL } from 'node:url'
+import { fileURLToPath, URL } from "node:url";
 
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import vueDevTools from 'vite-plugin-vue-devtools'
-import VueRouter from 'vue-router/vite'
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import vueDevTools from "vite-plugin-vue-devtools";
+import VueRouter from "vue-router/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -19,14 +19,14 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
-      '@theater/shared': fileURLToPath(new URL('../shared/index.ts', import.meta.url)),
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
+      "@theater/shared": fileURLToPath(new URL("../shared/index.ts", import.meta.url)),
     },
     // ensures symlinked packages resolve correctly
     preserveSymlinks: true,
   },
   optimizeDeps: {
     // tells Vite to pre-bundle the shared package too
-    include: ['@theater/shared'],
+    include: ["@theater/shared"],
   },
-})
+});

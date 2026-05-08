@@ -3,35 +3,35 @@ name: Backend
 
 on:
   push:
-    branches: [ main ]
-    pull_request: [ main ]
+    branches: [main]
+    pull_request: [main]
     paths:
-      - 'backend/**'
+      - "backend/**"
   workflow_dispatch: #
 
-jobs: 
-  build-and-test: 
+jobs:
+  build-and-test:
     runs-on: ubuntu-latest
 
-    steps: 
+    steps:
       - name: Checkout Code
         uses: actions/checkout@v5
 
       - name: Set up JDK 25
         uses: actions/setup-java@v5
-        with: 
-          java-version: '25'
-          distribution: 'temurin'
-          cache: 'maven'
-          cache-dependency-path: 'backend/pom.xml'
+        with:
+          java-version: "25"
+          distribution: "temurin"
+          cache: "maven"
+          cache-dependency-path: "backend/pom.xml"
 
       - name: Run Tests
         run: mvn verify -U
         working-directory: backend
-      
+
       - name: Upload test Results
         uses: actions/upload-artifact@v7
         if: always()
-        with: 
+        with:
           name: test-results
           path: backend/target/surefire-reports/

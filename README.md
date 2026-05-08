@@ -24,13 +24,13 @@ Start each part of the project in its own terminal (_ran from root directory_):
 
 **Make sure you have your databse information inside the** `backend/src/main/resources/secretes.properties` **file .**
 
-| Service      | Command                                                 |
-| ------------ | ------------------------------------------------------- |
-| Dependencies | `npm install`                                           |
-| Frontend     | `npm run start:frontend`                                |
-| Admin        | `npm run start:admin`                                   |
-| Backend      | `npm run start:backend`                                 |
-| Database     | Start PostgreSQL via your local service manager         |
+| Service      | Command                                         |
+| ------------ | ----------------------------------------------- |
+| Dependencies | `npm install`                                   |
+| Frontend     | `npm run start:frontend`                        |
+| Admin        | `npm run start:admin`                           |
+| Backend      | `npm run start:backend`                         |
+| Database     | Start PostgreSQL via your local service manager |
 
 The backend runs on `localhost:8080` and the frontend on `localhost:5173` and admin runs on `localhost:1420` by default.
 
@@ -42,7 +42,7 @@ The backend runs on `localhost:8080` and the frontend on `localhost:5173` and ad
 
 A Spring Boot REST API that serves both the web app and the desktop admin app. It handles all business logic, authentication, seat locking, payment processing, and ticket management.
 
-The backend serves to gather information for the front end, and take in and return information for the admin sections. 
+The backend serves to gather information for the front end, and take in and return information for the admin sections.
 
 ### Frontend (`/frontend`)
 

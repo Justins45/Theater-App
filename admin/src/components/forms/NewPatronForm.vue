@@ -1,37 +1,40 @@
 <script setup lang="ts">
-import { invoke } from '@tauri-apps/api/core'
-import { ref } from 'vue'
+import { invoke } from "@tauri-apps/api/core";
+import { ref } from "vue";
 
-const createPatronMSG = ref('')
+const createPatronMSG = ref("");
 
 interface FormProps {
-  userName: string,
-  email: string
+  userName: string;
+  email: string;
 }
 
 const defaultData = () => ({
   userName: "",
-  email: ""
-})
+  email: "",
+});
 
-const form = ref<FormProps>(defaultData())
+const form = ref<FormProps>(defaultData());
 
 async function create_patron() {
-createPatronMSG.value = await invoke("create_patron_command", 
-  {
+  createPatronMSG.value = await invoke("create_patron_command", {
     userName: form.value.userName,
-    email: form.value.email
-  })
+    email: form.value.email,
+  });
 
-  form.value = defaultData()
+  form.value = defaultData();
 }
 </script>
 <template>
   <div>
     <h2>Create new Patron</h2>
     <form @submit.prevent="create_patron">
-      <input type="text" v-model="form.userName" placeholder="Patron Username...">
-      <input type="text" v-model="form.email" placeholder="Patron email...">
+      <input
+        type="text"
+        v-model="form.userName"
+        placeholder="Patron Username..."
+      />
+      <input type="text" v-model="form.email" placeholder="Patron email..." />
       <button type="submit">Submit</button>
     </form>
     <p>{{ form }}</p>

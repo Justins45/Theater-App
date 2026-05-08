@@ -7,7 +7,6 @@ Roadmap to display the intent with each step along with some notes on how to pro
 ## 1.0 - Phase 1 - Product Scope
 
 - **1.1** Clarify MVP Scope
-
   - 1.1.1 Users: Browse events, pick seats, buy tickets, view tickets ...
   - 1.1.2 Theaters: View events, see orders, manually issue tickets, basic refunds ...
   - 1.1.3 Define user roles: `Customer`, `Staff`, `Admin` — document permissions for each
@@ -25,18 +24,15 @@ Roadmap to display the intent with each step along with some notes on how to pro
 ## 2.0 - Phase 2 - Backend Foundation
 
 - **2.1** Setup Backend Project (Java, Spring Boot, JPA, Security)
-
   - 2.1.1 spring-boot-starter-web
   - 2.1.2 spring-boot-starter-security
   - 2.1.3 spring-boot-starter-data-jpa
 
 - **2.2** Setup PostgreSQL
-
   - 2.2.1 Local PostgreSQL via application.yml
   - 2.2.2 Cloud based NeonDB via application.yml
 
 - **2.3** Design Minimal Schema
-
   - 2.3.1 Users
   - 2.3.2 Venues — define hierarchy: Venue → Section → Row → Seat
   - 2.3.3 Events — store all datetimes in UTC, convert to local timezone on display
@@ -48,12 +44,10 @@ Roadmap to display the intent with each step along with some notes on how to pro
   - 2.3.9 ...
 
 - **2.4** Implement Core Entities + Repositories
-
   - 2.4.1 JPA entities for each table
   - 2.4.2 Repos for basic CRUD
 
 - **2.5** Implement Auth
-
   - 2.5.1 Email/password auth (JWT or session)
   - 2.5.2 Define and attach roles to JWT claims: `ROLE_CUSTOMER`, `ROLE_STAFF`, `ROLE_ADMIN`
   - 2.5.3 Endpoints:
@@ -78,13 +72,11 @@ Roadmap to display the intent with each step along with some notes on how to pro
 ### 2.7 - Seat Locking & Concurrency
 
 - **2.7.1** Implement seat hold service
-
   - 2.7.1.1 On /seats/hold: write a hold record with expiry timestamp
   - 2.7.1.2 Prevent other users from holding or purchasing a HELD seat
   - 2.7.1.3 Return hold expiry time to frontend (for countdown timer display)
 
 - **2.7.2** Implement hold expiry job
-
   - 2.7.2.1 Scheduled job (e.g. every 60s) to release expired holds
   - 2.7.2.2 On expiry: set seat state back to AVAILABLE, delete hold record
 
@@ -97,7 +89,6 @@ Roadmap to display the intent with each step along with some notes on how to pro
 - **2.8.1** Unit test services (JUnit, Mockito, Spring Boot Test, TestContainers)
 
 - **2.8.2** Integration tests
-
   - 2.8.2.1 Auth (register, login, verify email, reset password)
   - 2.8.2.2 Events
   - 2.8.2.3 Seats + hold / release / expiry
@@ -125,7 +116,6 @@ Roadmap to display the intent with each step along with some notes on how to pro
 ## 3.0 - Phase 3 - Payments
 
 - **3.1** Integrate Stripe Checkout
-
   - 3.1.1 Create Stripe account + API keys (test + production)
   - 3.1.2 Backend endpoint: /checkout/create-session (amount, event, seats)
   - 3.1.3 Handle webhooks
@@ -150,12 +140,10 @@ Roadmap to display the intent with each step along with some notes on how to pro
 ## 4.0 - Phase 4 - Frontend (Vue 3)
 
 - **4.1** Setup Vue (Tailwind, Pinia, Router)
-
   - 4.1.1 Confirm Tailwind is included — required for responsive mobile layout
   - 4.1.2 Establish mobile-first responsive design as a baseline requirement throughout
 
 - **4.2** Build Core Pages
-
   - 4.2.1 Event list
   - 4.2.2 Event details + seat selection
     - 4.2.2.1 Show real-time seat availability (AVAILABLE / HELD / SOLD states)
@@ -180,7 +168,6 @@ Roadmap to display the intent with each step along with some notes on how to pro
 - **4.5.2** Test Pinia stores + components
 
 - **4.5.3** Integration tests
-
   - 4.5.3.1 Login
   - 4.5.3.2 Email verification flow
   - 4.5.3.3 Password reset flow
@@ -211,11 +198,9 @@ Roadmap to display the intent with each step along with some notes on how to pro
 - **5.1** Init Tauri app
 
 - **5.2** Implement auth + API client (same backend auth as web)
-
   - 5.2.1 Auth must use `ROLE_STAFF` or `ROLE_ADMIN` — reject `ROLE_CUSTOMER` tokens
 
 - **5.3** Build admin views
-
   - 5.3.1 Login
   - 5.3.2 Events list
   - 5.3.3 Search orders
@@ -236,7 +221,6 @@ Roadmap to display the intent with each step along with some notes on how to pro
 ## 6.0 - Phase 6 - Hardening & Polishing
 
 - **6.1** Validation & error handling
-
   - 6.1.1 Frontend form validation
   - 6.1.2 Backend request validation + error messages
   - 6.1.3 Security: enforce RBAC on all endpoints using roles defined in 1.1.3
@@ -285,7 +269,6 @@ Roadmap to display the intent with each step along with some notes on how to pro
 - **7.1** Containerize backend (Docker)
 
 - **7.2** Deploy to staging environment first (see 6.4)
-
   - 7.2.1 Verify all features against staging before promoting
   - 7.2.2 Confirm Stripe test webhooks are firing correctly in staging
 
@@ -299,14 +282,12 @@ Roadmap to display the intent with each step along with some notes on how to pro
 ### 7.5 - Database Backups / Disaster Recovery
 
 - **7.5.1** Cloud (NeonDB)
-
   - 7.5.1.1 Scheduled backups
   - 7.5.1.2 Point-in-time recovery
   - 7.5.1.3 Document restore procedures
   - 7.5.1.4 OPTIONAL: Automate snapshot creation via API
 
 - **7.5.2** Local (PostgreSQL)
-
   - 7.5.2.1 Backup scripts
   - 7.5.2.2 Restore scripts
   - 7.5.2.3 Scheduled tasks

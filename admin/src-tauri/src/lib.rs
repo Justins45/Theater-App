@@ -47,10 +47,7 @@ pub async fn create_event(
 }
 
 #[tauri::command]
-async fn create_event_command(
-    title: &str,
-    dateTime: &str,
-) -> Result<Value, String> {
+async fn create_event_command(title: &str, dateTime: &str) -> Result<Value, String> {
     let res = create_event(title, dateTime)
         .await
         .map_err(|e| e.to_string())?;
@@ -61,10 +58,7 @@ async fn create_event_command(
 }
 
 #[tauri::command]
-async fn create_patron_command(
-    user_name: &str,
-    email: &str,
-) -> Result<Value, String> {
+async fn create_patron_command(user_name: &str, email: &str) -> Result<Value, String> {
     let res = create_patron(user_name, email)
         .await
         .map_err(|e| e.to_string())?;
