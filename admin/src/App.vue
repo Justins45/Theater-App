@@ -48,7 +48,7 @@ onMounted(async () => {
   
   div {
     &:first-child {
-      max-width: 30rem;
+      width: 30rem;
     }
   }
 }

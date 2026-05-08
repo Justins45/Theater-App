@@ -6,12 +6,12 @@ const createEventMSG = ref("")
 
 interface FormProps {
   title: string,
-  dateTime: Date,
+  dateTime: Date | null,
 }
 
 const defaultData = () => ({
   title: "",
-  dateTime: new Date(),
+  dateTime: null,
 })
 
 const form = ref<FormProps>(defaultData())
