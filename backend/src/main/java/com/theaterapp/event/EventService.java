@@ -22,9 +22,7 @@ public class EventService {
     public EventDTO save(EventDTO eventDTO) {
         Event event = new Event(
                 eventDTO.title(),
-                eventDTO.description(),
-                eventDTO.director(),
-                eventDTO.capacity()
+                eventDTO.dateTime()
         );
         return eventMapper.apply(eventRepository.save(event));
     }

@@ -10,9 +10,7 @@ public class EventMapper implements Function<Event, EventDTO> {
     public EventDTO apply(Event event) {
         return new EventDTO(
                 event.getTitle(),
-                event.getDescription(),
-                event.getDirector(),
-                event.getCapacity()
+                event.getDateTime()
         );
     }
 }
