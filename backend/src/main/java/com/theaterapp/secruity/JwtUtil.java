@@ -1,6 +1,5 @@
 package com.theaterapp.secruity;
 
-import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
@@ -32,9 +31,10 @@ public class JwtUtil {
     }
 
     /**
-     *
-     * @param email
-     * @return
+     * Generates token for a user based on username, with current time +
+     * expiration time
+     * @param email String
+     * @return JWT Token
      */
     public String generateToken(String email) {
         return Jwts.builder()
@@ -45,9 +45,9 @@ public class JwtUtil {
     }
 
     /**
-     *
-     * @param token
-     * @return
+     * Get user information from a JWT token,
+     * @param token JWT Token
+     * @return User info in token
      */
     public String getUserFromToken(String token) {
         return Jwts.parser().verifyWith(key).build()
@@ -57,9 +57,9 @@ public class JwtUtil {
     }
 
     /**
-     *
-     * @param token
-     * @return
+     * Check if token given is valid
+     * @param token JWT Token
+     * @return true/false based on if token is valid
      */
     public boolean validateJWTtoken(String token) {
         try {
