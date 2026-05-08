@@ -11,13 +11,11 @@ pub fn greet(name: &str) -> String {
 }
 
 pub async fn create_patron(
-    first_name: &str,
-    last_name: &str,
+    user_name: &str,
     email: &str,
 ) -> Result<reqwest::Response, reqwest::Error> {
     let json = json!({
-      "firstName": first_name,
-      "lastName": last_name,
+      "userName": user_name,
       "email": email
     });
 
@@ -32,15 +30,11 @@ pub async fn create_patron(
 
 pub async fn create_event(
     title: &str,
-    description: &str,
-    director: &str,
-    capacity: i32,
+    dateTime: &str,
 ) -> Result<reqwest::Response, reqwest::Error> {
     let json = json!({
         "title": title,
-        "description": description,
-        "director": director,
-        "capacity": capacity
+        "dateTime": dateTime,
     });
 
     let res = reqwest::Client::new()
@@ -55,11 +49,9 @@ pub async fn create_event(
 #[tauri::command]
 async fn create_event_command(
     title: &str,
-    description: &str,
-    director: &str,
-    capacity: i32,
+    dateTime: &str,
 ) -> Result<Value, String> {
-    let res = create_event(title, description, director, capacity)
+    let res = create_event(title, dateTime)
         .await
         .map_err(|e| e.to_string())?;
 
@@ -70,11 +62,10 @@ async fn create_event_command(
 
 #[tauri::command]
 async fn create_patron_command(
-    first_name: &str,
-    last_name: &str,
+    user_name: &str,
     email: &str,
 ) -> Result<Value, String> {
-    let res = create_patron(first_name, last_name, email)
+    let res = create_patron(user_name, email)
         .await
         .map_err(|e| e.to_string())?;
 

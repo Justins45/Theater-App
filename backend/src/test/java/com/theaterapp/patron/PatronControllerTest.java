@@ -35,7 +35,7 @@ public class PatronControllerTest {
     @DisplayName("GET patrons should return 200 with list")
     void GET_patrons_shouldReturn200WithList() throws Exception {
         List<PatronDTO> patrons = List.of(
-                new PatronDTO("Jane", "Smith", "jane@example.com")
+                new PatronDTO("JaneSmith", "jane@example.com")
         );
         when(patronService.findAll()).thenReturn(patrons);
 
@@ -45,7 +45,7 @@ public class PatronControllerTest {
          */
         mockMvc.perform(get("/api/patrons"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].firstName").value("Jane"))
+                .andExpect(jsonPath("$[0].userName").value("JaneSmith"))
                 .andExpect(jsonPath("$[0].email").value("jane@example.com"))
                 .andExpect(jsonPath("$[0].password").doesNotExist());
     }
@@ -63,16 +63,16 @@ public class PatronControllerTest {
     @Test
     @DisplayName("POST patrons should return 201")
     void POST_patrons_shouldReturn201() throws Exception {
-        PatronDTO dto = new PatronDTO("John", "Doe", "john@example.com");
+        PatronDTO dto = new PatronDTO("JaneSmith", "jane@example.com");
         when(patronService.save(any())).thenReturn(dto);
 
 
         mockMvc.perform(post("/api/patrons")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
-                                {"firstName":"John","lastName":"Doe","email":"john@example.com"}
+                                {"userName":"JaneSmith","email":"jane@example.com"}
                                 """))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.email").value("john@example.com"));
+                .andExpect(jsonPath("$.email").value("jane@example.com"));
     }
 }

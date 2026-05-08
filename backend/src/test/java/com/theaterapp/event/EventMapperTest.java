@@ -3,6 +3,8 @@ package com.theaterapp.event;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+
 import static org.springframework.test.util.AssertionErrors.assertEquals;
 
 public class EventMapperTest {
@@ -12,16 +14,14 @@ public class EventMapperTest {
     @Test
     @DisplayName("Event Maps to all DTO fields")
     void shouldMapToAllDTOFields() {
-        Event event = new Event("spiderman", "spiderman description", "jane " +
-                "doe", 69);
+        Event event = new Event("spiderman", LocalDateTime.parse("2024-05" +
+                "-20T10:15:30"));
 
         EventDTO eventDTO = eventMapper.apply(event);
 
         assertEquals("Missing Title", "spiderman", eventDTO.title());
-        assertEquals("Missing Description", "spiderman description",
-                eventDTO.description());
-        assertEquals("Missing Director", "jane doe", eventDTO.director());
-        assertEquals("Missing Capacity", 69, eventDTO.capacity());
+        assertEquals("Missing Date and Time", LocalDateTime.parse("2024-05-20T10:15:30"),
+                eventDTO.dateTime());
     }
 
 

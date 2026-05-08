@@ -10,7 +10,7 @@
     "build:shared": "cd shared && npm run build:types",
     "start:admin": "cd admin && npm run tauri dev",
     "start:frontend": "cd frontend && npm run dev",
-    "start:backend": "cd backend && DB_NAME=$DB_NAME DB_PASSWORD=$DB_PASSWORD mvn spring-boot:run",
+    "start:backend": "cd backend && mvn spring-boot:run",
     "lint": "npm run lint:frontend && npm run lint:admin-vue && npm run lint:admin-rust-clippy && npm run lint:shared",
     "lint:frontend": "eslint frontend/src",
     "lint:admin-vue": "eslint admin/src",

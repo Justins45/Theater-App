@@ -30,8 +30,8 @@ class PatronServiceTest {
     @Test
     @DisplayName("Find all Patrons should Return Mapped DTO's")
     void findAllPatrons_shouldReturnMappedDTOs() {
-        Patron patron = new Patron("Jane", "Smith", "jane@example.com");
-        PatronDTO dto = new PatronDTO("Jane", "Smith", "jane@example.com");
+        Patron patron = new Patron("JaneSmith", "jane@example.com");
+        PatronDTO dto = new PatronDTO("JaneSmith", "jane@example.com");
 
         when(patronRepository.findAll()).thenReturn(List.of(patron));
         when(patronMapper.apply(patron)).thenReturn(dto);
@@ -39,15 +39,15 @@ class PatronServiceTest {
         List<PatronDTO> result = patronService.findAll();
 
         assertEquals("Size < or > 1",1, result.size());
-        assertEquals("Jane not first in line","Jane",
-                result.getFirst().firstName());
+        assertEquals("Jane not first in line","JaneSmith",
+                result.getFirst().userName());
     }
 
     @Test
     @DisplayName("Find by ID should Return DTO when patron Exists")
     void findById_shouldReturnDTO_whenPatronExists() {
-        Patron patron = new Patron("Jane", "Smith", "jane@example.com");
-        PatronDTO dto = new PatronDTO("Jane", "Smith", "jane@example.com");
+        Patron patron = new Patron("JaneSmith", "jane@example.com");
+        PatronDTO dto = new PatronDTO("JaneSmith", "jane@example.com");
 
         when(patronRepository.findById(1L)).thenReturn(Optional.of(patron));
         when(patronMapper.apply(patron)).thenReturn(dto);
@@ -72,16 +72,16 @@ class PatronServiceTest {
     @Test
     @DisplayName("Save should persist and return DTO")
     void save_shouldPersistAndReturnDTO() {
-        PatronDTO inputDTO = new PatronDTO("John", "Doe", "john@example.com");
-        Patron savedPatron = new Patron("John", "Doe", "jane@example.com");
-        PatronDTO outputDTO = new PatronDTO("John", "Doe", "john@example.com");
+        PatronDTO inputDTO = new PatronDTO("JaneSmith", "jane@example.com");
+        Patron savedPatron = new Patron("JaneSmith", "jane@example.com");
+        PatronDTO outputDTO = new PatronDTO("JaneSmith", "jane@example.com");
 
         when(patronRepository.save(any(Patron.class))).thenReturn(savedPatron);
         when(patronMapper.apply(savedPatron)).thenReturn(outputDTO);
 
         PatronDTO result = patronService.save(inputDTO);
 
-        assertEquals("Result not saved","John", result.firstName());
+        assertEquals("Result not saved","JaneSmith", result.userName());
         verify(patronRepository, times(1)).save(any(Patron.class));
     }
 }

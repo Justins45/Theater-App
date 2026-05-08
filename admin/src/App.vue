@@ -45,5 +45,11 @@ onMounted(async () => {
   display: flex;
   flex-direction: row;
   gap: 3rem;
+  
+  div {
+    &:first-child {
+      width: 30rem;
+    }
+  }
 }
 </style>
