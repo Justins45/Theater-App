@@ -10,7 +10,8 @@ public class PatronMapper implements Function<Patron, PatronDTO> {
     public PatronDTO apply(Patron patron) {
         return new PatronDTO(
                 patron.getUserName(),
-                patron.getEmail()
+                patron.getEmail(),
+                patron.getRole()
         );
     }
 }

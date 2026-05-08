@@ -20,14 +20,23 @@ public class Patron {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @Column(nullable = false)
+    private String role;
+
     private String password;
 
     public Patron() {
     }
 
-    public Patron(String userName, String email) {
+    public Patron(String userName, String email, String role) {
         this.userName = userName;
         this.email = email;
+
+        if (role == null || role.isEmpty()) {
+            this.role = "CUSTOMER";
+        } else {
+            this.role = role;
+        }
     }
 
 }
