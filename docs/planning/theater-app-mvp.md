@@ -1,6 +1,6 @@
 # Theater App — MVP Roadmap
 
-### Patron Purchase · Admin Management · Door Scanning
+## Patron Purchase · Admin Management · Door Scanning
 
 This is the minimum path to a working product covering three core flows:
 
@@ -23,20 +23,19 @@ This is the minimum path to a working product covering three core flows:
 > Set this up before writing a single line of application code.
 > It will serve you for the entire project.
 
-- **2.1** Create GitHub repository
-
-  - 2.1.1 Consider making it public — eliminates the Actions minute quota entirely and serves as a portfolio piece
+- **2.1** Create GitHub repository ✅
+  - 2.1.1 Consider making it public — eliminates the Actions minute quota entirely and serves as a portfolio piece ✅
 
 - **2.2** Backend CI pipeline (GitHub Actions)
 
-  - 2.2.1 Trigger on every push to main
-  - 2.2.2 Build Spring Boot jar
-  - 2.2.3 Run tests (scaffold this now even if no tests exist yet — adding them later becomes trivial)
+  - 2.2.1 Trigger on every push to main ✅
+  - 2.2.2 Build Spring Boot jar ✅
+  - 2.2.3 Run tests (scaffold this now even if no tests exist yet — adding them later becomes trivial) ✅
 
 - **2.3** Frontend CI pipeline (GitHub Actions)
 
-  - 2.3.1 Trigger on every push to main
-  - 2.3.2 Lint + build Vue app
+  - 2.3.1 Trigger on every push to main ✅
+  - 2.3.2 Lint + build Vue app ✅
 
 - **2.4** Tauri CD pipeline (GitHub Actions)
 
@@ -46,25 +45,25 @@ This is the minimum path to a working product covering three core flows:
 
 - **2.5** Setup databases
 
-  - 2.5.1 Local PostgreSQL via application.yml
+  - 2.5.1 Local PostgreSQL via application.yml ✅
   - 2.5.2 NeonDB (cloud) via application.yml
 
 - **2.6** Setup deployment targets
   - 2.6.1 Backend: Render or Fly.io (free tier, connect to NeonDB)
   - 2.6.2 Frontend: Vercel or Netlify (free tier, auto-deploys on push to main)
 
-> ✅ At this point you have a skeleton that auto-builds and auto-deploys on every push.
+> At this point you have a skeleton that auto-builds and auto-deploys on every push.
 > Everything from here is just filling it in.
 
 ---
 
 ## 3.0 - Backend
 
-- **3.1** Setup Spring Boot project (web, security, data-jpa)
+- **3.1** Setup Spring Boot project (web ✅, security, data-jpa ✅)
 
 - **3.2** Minimal schema — only what the three flows touch
 
-  - 3.2.1 Users (id, email, password, role)
+  - 3.2.1 Users (id ✅, email ✅, password ✅, role 🔁)
   - 3.2.2 Venues (id, name)
   - 3.2.3 Events (id, venue_id, name, datetime UTC)
   - 3.2.4 Seats (id, event_id, label, state)
@@ -80,7 +79,7 @@ This is the minimum path to a working product covering three core flows:
 
 - **3.4** Core API — only what the three flows need
 
-  - 3.4.1 GET /events — list events
+  - 3.4.1 GET /events — list events ✅
   - 3.4.2 GET /events/{id}/seats — seat map with availability
   - 3.4.3 POST /seats/hold — hold seats during checkout (10 min TTL)
   - 3.4.4 POST /checkout/create-session — create Stripe session
@@ -96,7 +95,7 @@ This is the minimum path to a working product covering three core flows:
   - 3.5.2 Stripe webhook: on `checkout.session.expired` → release associated holds
 
 - **3.6** API Docs
-  - 3.6.1 Setup Swagger/Springdoc OpenAP to view API end-points
+  - 3.6.1 Setup Swagger/Springdoc OpenAP to view API end-points ✅
   - 3.6.2 Setup and Use Postman to test all API end-points to make sure they do the correct things
 
 ---
@@ -115,7 +114,7 @@ This is the minimum path to a working product covering three core flows:
 
 ## 5.0 - Web Frontend — Patron Flows (Vue 3)
 
-- **5.1** Setup Vue + Tailwind + Pinia + Router
+- **5.1** Setup Vue + SCSS + Pinia + Router ✅
 - **5.2** Event list page
 - **5.3** Event detail + seat selection page
   - 5.3.1 Show real-time seat availability (AVAILABLE / HELD / SOLD)
