@@ -21,9 +21,11 @@ public class PatronService {
                 .toList();
     }
 
-    public PatronDTO save(PatronDTO patronDTO) {
-        Patron patron = new Patron(patronDTO.userName(), patronDTO.email(),
-                patronDTO.role());
+    public PatronDTO save(PatronRegisterDTO patronRegisterDTO) {
+        Patron patron = new Patron(patronRegisterDTO.userName(),
+                patronRegisterDTO.password(),
+                patronRegisterDTO.email(),
+                patronRegisterDTO.role());
         return patronMapper.apply(patronRepository.save(patron));
     }
 

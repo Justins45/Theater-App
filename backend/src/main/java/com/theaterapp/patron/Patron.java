@@ -28,8 +28,9 @@ public class Patron {
     public Patron() {
     }
 
-    public Patron(String userName, String email, String role) {
+    public Patron(String userName, String password, String email, String role) {
         this.userName = userName;
+        this.password = password;
         this.email = email;
 
         if (role == null || role.isEmpty()) {

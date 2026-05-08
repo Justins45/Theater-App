@@ -28,8 +28,8 @@ public class PatronController {
     }
 
     @PostMapping()
-    public ResponseEntity<PatronDTO> createPatron(@RequestBody PatronDTO patronDTO) {
-        PatronDTO saved = patronService.save(patronDTO);
+    public ResponseEntity<PatronDTO> createPatron(@RequestBody PatronRegisterDTO patronRegisterDTO) {
+        PatronDTO saved = patronService.save(patronRegisterDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
