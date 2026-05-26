@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 @Service
-public class JWTservice {
+public class JwtService {
 
     @Value("${app.secret.auth.key}")
     private String secreteKey;

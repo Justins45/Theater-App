@@ -39,7 +39,7 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
 
-    private final JWTservice jwTservice;
+    private final JwtService jwTservice;
     private final StaffDetailsService staffDetailsService;
     private final PatronDetailsService patronDetailsService;
 

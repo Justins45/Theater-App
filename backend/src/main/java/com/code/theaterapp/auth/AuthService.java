@@ -2,7 +2,7 @@ package com.code.theaterapp.auth;
 
 import com.code.theaterapp.auth.dtos.LoginRequestDTO;
 import com.code.theaterapp.auth.dtos.LoginResponseDTO;
-import com.code.theaterapp.auth.secruity.JWTservice;
+import com.code.theaterapp.auth.secruity.JwtService;
 import com.code.theaterapp.shared.person.PersonRepo;
 import com.code.theaterapp.shared.person.Person;
 import com.code.theaterapp.staff.StaffRepo;
@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 public class AuthService {
 
     private final AuthenticationManager authenticationManager;
-    private final JWTservice jwTservice;
+    private final JwtService jwTservice;
     private final PersonRepo personRepo;
     private final StaffRepo staffRepo;
 
