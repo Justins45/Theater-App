@@ -1,5 +1,9 @@
 package com.code.theaterapp.staff;
 
+import com.code.theaterapp.exceptions.AccountAlreadyExistsException;
+import com.code.theaterapp.exceptions.UsernameAlreadyExistsException;
+import com.code.theaterapp.patron.Patron;
+import com.code.theaterapp.patron.PatronRepo;
 import com.code.theaterapp.shared.enums.Role;
 import com.code.theaterapp.shared.person.Person;
 import com.code.theaterapp.shared.person.PersonRepo;
