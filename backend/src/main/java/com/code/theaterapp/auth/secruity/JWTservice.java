@@ -22,7 +22,7 @@ import java.util.function.Function;
 @Service
 public class JWTservice {
 
-    @Value("${app.secret.key}")
+    @Value("${app.secret.auth.key}")
     private String secreteKey;
 
     @Value("${remember.token.name}")
