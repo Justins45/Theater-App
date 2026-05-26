@@ -1,5 +1,6 @@
 package com.code.theaterapp.staff;
 
+import com.code.theaterapp.auth.secruity.accounts.StaffAccount;
 import com.code.theaterapp.shared.person.Person;
 import com.code.theaterapp.shared.person.PersonRepo;
 import lombok.RequiredArgsConstructor;

@@ -1,5 +1,6 @@
 package com.code.theaterapp.staff;
 
+import com.code.theaterapp.auth.dtos.StaffRegisterDTO;
 import com.code.theaterapp.exceptions.AccountAlreadyExistsException;
 import com.code.theaterapp.exceptions.UsernameAlreadyExistsException;
 import com.code.theaterapp.patron.Patron;

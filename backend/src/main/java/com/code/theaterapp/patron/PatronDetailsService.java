@@ -1,5 +1,6 @@
 package com.code.theaterapp.patron;
 
+import com.code.theaterapp.auth.secruity.accounts.PatronAccount;
 import com.code.theaterapp.shared.person.Person;
 import com.code.theaterapp.shared.person.PersonRepo;
 import lombok.RequiredArgsConstructor;

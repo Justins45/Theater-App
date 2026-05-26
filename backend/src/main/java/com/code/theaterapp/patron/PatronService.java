@@ -1,5 +1,7 @@
 package com.code.theaterapp.patron;
 
+import com.code.theaterapp.auth.dtos.PatronRegisterDTO;
+import com.code.theaterapp.exceptions.UsernameAlreadyExistsException;
 import com.code.theaterapp.patron.dtos.PatronDTO;
 import com.code.theaterapp.shared.enums.Role;
 import com.code.theaterapp.shared.person.Person;
