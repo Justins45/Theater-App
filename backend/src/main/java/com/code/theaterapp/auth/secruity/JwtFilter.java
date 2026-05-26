@@ -2,11 +2,14 @@ package com.code.theaterapp.auth.secruity;
 
 import com.code.theaterapp.patron.PatronDetailsService;
 import com.code.theaterapp.staff.StaffDetailsService;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -38,6 +41,8 @@ import java.util.concurrent.TimeUnit;
 @Component
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
+
+    private static final Logger log = LoggerFactory.getLogger(JwtFilter.class);
 
     private final JwtService jwTservice;
     private final StaffDetailsService staffDetailsService;
@@ -71,10 +76,19 @@ public class JwtFilter extends OncePerRequestFilter {
          * Check if the authToken exists and if it does not check the rememberToken for username
          */
         String username = null;
-        if (authToken != null) {
-            username = jwTservice.extractUsername(authToken);
-        } else if (rememberToken != null && jwTservice.validateToken(rememberToken)) {
-            username = jwTservice.extractUsername(rememberToken);
+        try {
+            if (authToken != null) {
+                username = jwTservice.extractUsername(authToken);
+            } else if (jwTservice.validateToken(rememberToken)) {
+                username = jwTservice.extractUsername(rememberToken);
+            }
+        } catch (JwtException | IllegalArgumentException e) {
+            // Token exists but is malformed or signed with the wrong key.
+            // Treat as unauthenticated and let the request proceed to authentication check.
+            log.warn("Invalid JWT token on request to {}: {}",
+                    request.getRequestURI(), e.getMessage());
+            filterChain.doFilter(request, response);
+            return;
         }
 
         // Catch all if the rememberToken is invalid (no username from valid token saved)
@@ -85,42 +99,55 @@ public class JwtFilter extends OncePerRequestFilter {
 
         // set new authToken if authToken is within 10 minutes of expiring
         if (authToken != null && rememberToken != null && jwTservice.validateToken(rememberToken)) {
-            Date now = new Date();
-            Date authTokenExp = jwTservice.extractExpiration(authToken);
-            long millisUntilExpiry = authTokenExp.getTime() - now.getTime();
-            String userType = jwTservice.extractUserType(authToken);
+            try {
+                Date now = new Date();
+                Date authTokenExp = jwTservice.extractExpiration(authToken);
+                long millisUntilExpiry = authTokenExp.getTime() - now.getTime();
+                String userType = jwTservice.extractUserType(authToken);
 
-            if (millisUntilExpiry < TimeUnit.MINUTES.toMillis(10)) {
-                ResponseCookie newAuthCookie = jwTservice.generateToken(username, userType, authTokenName);
-                response.addHeader(HttpHeaders.SET_COOKIE, newAuthCookie.toString());
-                authToken = newAuthCookie.getValue();
+                if (millisUntilExpiry < TimeUnit.MINUTES.toMillis(10)) {
+                    ResponseCookie newAuthCookie = jwTservice.generateToken(username, userType, authTokenName);
+                    response.addHeader(HttpHeaders.SET_COOKIE, newAuthCookie.toString());
+                    authToken = newAuthCookie.getValue();
+                }
+            } catch (JwtException | IllegalArgumentException e) {
+                log.warn("JWT refresh attempt failed for user '{}': {}", username, e.getMessage());
             }
         }
 
         // set authentication for user
         if (SecurityContextHolder.getContext().getAuthentication() == null) {
+            try {
 
-            String userType = jwTservice.extractUserType(authToken);
+                String userType = jwTservice.extractUserType(authToken);
 
-            UserDetails userDetails;
-            if ("STAFF".equals(userType)) {
-                userDetails = staffDetailsService.loadUserByUsername(username);
-            } else {
-                userDetails = patronDetailsService.loadUserByUsername(username);
+                UserDetails userDetails;
+                if ("STAFF".equals(userType)) {
+                    userDetails = staffDetailsService.loadUserByUsername(username);
+                } else {
+                    userDetails = patronDetailsService.loadUserByUsername(username);
+                }
+
+                if (jwTservice.validateToken(authToken, userDetails.getUsername())) {
+
+                    UsernamePasswordAuthenticationToken authentication =
+                            new UsernamePasswordAuthenticationToken(
+                                    username,
+                                    null,
+                                    userDetails.getAuthorities()
+                            );
+                    authentication.setDetails(
+                            new WebAuthenticationDetailsSource().buildDetails(request)
+                    );
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
+            } catch (JwtException | IllegalArgumentException e) {
+                log.warn("JWT auth context setup failed for user '{}' on {}: {}",
+                        username, request.getRequestURI(), e.getMessage());
+                // leave SecurityContext unauthenticated
+
             }
 
-            if (jwTservice.validateToken(authToken, userDetails.getUsername())) {
-                UsernamePasswordAuthenticationToken authentication =
-                        new UsernamePasswordAuthenticationToken(
-                                username,
-                                null,
-                                userDetails.getAuthorities()
-                        );
-                authentication.setDetails(
-                        new WebAuthenticationDetailsSource().buildDetails(request)
-                );
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-            }
         }
 
         // proceed to subsequent filters

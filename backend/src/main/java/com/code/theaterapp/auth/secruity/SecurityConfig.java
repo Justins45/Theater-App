@@ -119,9 +119,9 @@ public class SecurityConfig {
         http.authenticationProvider(patronProvider);
 
         http.authorizeHttpRequests(request -> request
-                .requestMatchers("/staff/login").permitAll()
-                .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
-                .requestMatchers("/staff/**").hasAuthority("ROLE_STAFF")
+                .requestMatchers("/api/staff/login").permitAll()
+                .requestMatchers("/api/admin/**").hasAuthority("ROLE_ADMIN")
+                .requestMatchers("/api/staff/**").hasAuthority("ROLE_STAFF")
 
                 // All other endpoints are public — lock these down as the app grows
                 .anyRequest().permitAll()
