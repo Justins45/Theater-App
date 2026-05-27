@@ -60,7 +60,6 @@ public class JwtService {
         }
 
 
-
         JwtBuilder builder = Jwts.builder()
                 .subject(username)
                 .issuedAt(new Date(System.currentTimeMillis()))
@@ -84,8 +83,9 @@ public class JwtService {
 
 
     /**
-     *<p>Takes in the request and the cookie name to find, and returns out the JWT as a string associated with the
+     * <p>Takes in the request and the cookie name to find, and returns out the JWT as a string associated with the
      * cookie</p>
+     *
      * @param cookieName Cookie name to find
      * @return {@link String} JWT from the found cookie
      */
@@ -160,7 +160,9 @@ public class JwtService {
         return extractClaim(token, Claims::getSubject);
     }
 
-    /** @return {@code true} if the token's expiration date is in the past */
+    /**
+     * @return {@code true} if the token's expiration date is in the past
+     */
     private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
@@ -183,7 +185,7 @@ public class JwtService {
     /**
      * Extracts a specific claim from a JWT token using the provided resolver function.
      *
-     * @param token the JWT token to extract from
+     * @param token          the JWT token to extract from
      * @param claimsResolver a function that maps {@link Claims} to the desired value (e.g. {@code Claims::getSubject})
      * @return the extracted claim value of type {@code T}
      */

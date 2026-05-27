@@ -14,6 +14,7 @@ public class PatronController {
     public String getPatron() {
         return "Welcome to the patron root path";
     }
+
     @GetMapping("/add")
     public String getAdd() {
         return "Welcome to the patron add path";

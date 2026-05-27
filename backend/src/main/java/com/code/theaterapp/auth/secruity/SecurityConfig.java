@@ -36,7 +36,7 @@ public class SecurityConfig {
 
 
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder()  {
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -131,7 +131,6 @@ public class SecurityConfig {
         //       and 403 (authenticated but forbidden) → access denied page
 
         http.httpBasic(Customizer.withDefaults());
-
 
 
         // Stateless: server holds no session, JWT cookie is the source of truth
