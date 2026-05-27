@@ -120,8 +120,10 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(request -> request
                 .requestMatchers("/api/staff/login").permitAll()
+                .requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
                 .requestMatchers("/api/admin/**").hasAuthority("ROLE_ADMIN")
                 .requestMatchers("/api/staff/**").hasAuthority("ROLE_STAFF")
+                .requestMatchers("/api/auth/me").hasAuthority("ROLE_PATRON")
 
                 // All other endpoints are public — lock these down as the app grows
                 .anyRequest().permitAll()
