@@ -47,7 +47,6 @@ public class PatronService {
         return patronMapper.apply(savedPatron);
     }
 
-    @Transactional
     public PatronMeResponse getMe(PatronAccount account) {
         return new PatronMeResponse(
                 account.getUsername(),

@@ -3,11 +3,16 @@ package com.code.theaterapp.auth.controllers;
 import com.code.theaterapp.auth.AuthService;
 import com.code.theaterapp.auth.dtos.LoginRequestDTO;
 import com.code.theaterapp.auth.dtos.LoginResponseDTO;
+import com.code.theaterapp.auth.secruity.accounts.PatronAccount;
+import com.code.theaterapp.auth.secruity.accounts.StaffAccount;
+import com.code.theaterapp.patron.dtos.PatronMeResponse;
 import com.code.theaterapp.staff.StaffService;
+import com.code.theaterapp.staff.dtos.StaffMeResponse;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -28,6 +33,11 @@ public class StaffController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO request) {
         return authService.login(request, "STAFF");
+    }
+
+    @GetMapping("/me")
+    public StaffMeResponse me(@AuthenticationPrincipal StaffAccount account) {
+        return staffService.getMe(account);
     }
 
 }

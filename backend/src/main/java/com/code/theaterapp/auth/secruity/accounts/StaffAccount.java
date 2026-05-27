@@ -1,5 +1,6 @@
 package com.code.theaterapp.auth.secruity.accounts;
 
+import com.code.theaterapp.shared.enums.Role;
 import com.code.theaterapp.shared.person.Person;
 import com.code.theaterapp.staff.Staff;
 import org.jspecify.annotations.NullMarked;
@@ -8,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -36,6 +38,12 @@ public class StaffAccount implements UserDetails {
     public @NullMarked String getUsername() {
         return person.getUsername();
     }
+
+    public String getEmail() { return person.getEmail(); }
+    public String getFirstname() { return person.getFirstName(); }
+    public String getLastname() { return person.getLastName(); }
+    public Role getRole() { return staff.getRole(); }
+    public OffsetDateTime getAccountCreation() { return staff.getStaffAccountCreation(); }
 
 
     // TODO: impl later ex: account banning / email verification (locking account till verified or something like that)

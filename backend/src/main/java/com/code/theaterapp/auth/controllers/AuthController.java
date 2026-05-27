@@ -24,7 +24,6 @@ public class AuthController {
 
     @GetMapping("/me")
     public PatronMeResponse me(@AuthenticationPrincipal PatronAccount account) {
-//        System.out.println(account.getClass().getName());
         return patronService.getMe(account);
     }
 
