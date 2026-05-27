@@ -1,0 +1,87 @@
+package com.theaterapp.patron;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.List;
+import java.util.Optional;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.util.AssertionErrors.assertEquals;
+import static org.springframework.test.util.AssertionErrors.assertTrue;
+
+@ExtendWith(MockitoExtension.class)
+class PatronServiceTest {
+
+    @Mock
+    PatronRepository patronRepository;
+
+    @Mock
+    PatronMapper patronMapper;
+
+    @InjectMocks
+    PatronService patronService;
+
+    @Test
+    @DisplayName("Find all Patrons should Return Mapped DTO's")
+    void findAllPatrons_shouldReturnMappedDTOs() {
+        Patron patron = new Patron("JaneSmith", "jane@example.com");
+        PatronDTO dto = new PatronDTO("JaneSmith", "jane@example.com");
+
+        when(patronRepository.findAll()).thenReturn(List.of(patron));
+        when(patronMapper.apply(patron)).thenReturn(dto);
+
+        List<PatronDTO> result = patronService.findAll();
+
+        assertEquals("Size < or > 1", 1, result.size());
+        assertEquals("Jane not first in line", "JaneSmith",
+                result.getFirst().userName());
+    }
+
+    @Test
+    @DisplayName("Find by ID should Return DTO when patron Exists")
+    void findById_shouldReturnDTO_whenPatronExists() {
+        Patron patron = new Patron("JaneSmith", "jane@example.com");
+        PatronDTO dto = new PatronDTO("JaneSmith", "jane@example.com");
+
+        when(patronRepository.findById(1L)).thenReturn(Optional.of(patron));
+        when(patronMapper.apply(patron)).thenReturn(dto);
+
+        Optional<PatronDTO> result = patronService.findById(1L);
+
+        assertTrue("Patron is missing", result.isPresent());
+        assertEquals("Patron is incorrect", "jane@example.com",
+                result.get().email());
+    }
+
+    @Test
+    @DisplayName("Find by ID should return empty when patron not found")
+    void findById_shouldReturnEmpty_whenPatronNotFound() {
+        when(patronRepository.findById(99L)).thenReturn(Optional.empty());
+
+        Optional<PatronDTO> result = patronService.findById(99L);
+
+        assertTrue("Result has vale when needing to be empty", result.isEmpty());
+    }
+
+    @Test
+    @DisplayName("Save should persist and return DTO")
+    void save_shouldPersistAndReturnDTO() {
+        PatronDTO inputDTO = new PatronDTO("JaneSmith", "jane@example.com");
+        Patron savedPatron = new Patron("JaneSmith", "jane@example.com");
+        PatronDTO outputDTO = new PatronDTO("JaneSmith", "jane@example.com");
+
+        when(patronRepository.save(any(Patron.class))).thenReturn(savedPatron);
+        when(patronMapper.apply(savedPatron)).thenReturn(outputDTO);
+
+        PatronDTO result = patronService.save(inputDTO);
+
+        assertEquals("Result not saved", "JaneSmith", result.userName());
+        verify(patronRepository, times(1)).save(any(Patron.class));
+    }
+}
