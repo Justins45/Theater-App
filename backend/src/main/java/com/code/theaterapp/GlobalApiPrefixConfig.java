@@ -1,4 +1,4 @@
-package com.theaterapp;
+package com.code.theaterapp;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RestController;

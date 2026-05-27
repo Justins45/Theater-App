@@ -1,6 +1,6 @@
 # Folder Formation
 
-```
+```txt
 theater-app/
 │
 ├── .github/

@@ -1,0 +1,47 @@
+package com.code.theaterapp.patron;
+
+import com.code.theaterapp.auth.dtos.PatronRegisterDTO;
+import com.code.theaterapp.exceptions.UsernameAlreadyExistsException;
+import com.code.theaterapp.patron.dtos.PatronDTO;
+import com.code.theaterapp.shared.enums.Role;
+import com.code.theaterapp.shared.person.Person;
+import com.code.theaterapp.shared.person.PersonRepo;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.time.OffsetDateTime;
+
+@Service
+@RequiredArgsConstructor
+public class PatronService {
+
+    private final PersonRepo personRepo;
+    private final PatronRepo patronRepo;
+    private final PatronMapper patronMapper;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Transactional
+    public PatronDTO createPatron(PatronRegisterDTO registerDTO) {
+
+        if (personRepo.findByUsername(registerDTO.username()).isPresent()) {
+            throw new UsernameAlreadyExistsException("Username is already taken");
+        }
+
+        Person person = new Person();
+        person.setUsername(registerDTO.username());
+        person.setPassword(bCryptPasswordEncoder.encode(registerDTO.password()));
+        person.setEmail(registerDTO.email());
+        person.setAccountCreated(OffsetDateTime.now());
+
+        Person savedPerson = personRepo.save(person);
+
+        Patron patron = new Patron();
+        patron.setPerson(savedPerson);
+        patron.setRole(Role.ROLE_PATRON);
+
+        Patron savedPatron = patronRepo.save(patron);
+        return patronMapper.apply(savedPatron);
+    }
+}
