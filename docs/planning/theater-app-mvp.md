@@ -12,7 +12,7 @@ This is the minimum path to a working product covering three core flows:
 
 ## 1.0 - Foundation
 
-- **1.1** Define the three roles: `CUSTOMER`, `STAFF`, `ADMIN`
+- **1.1** Define the three roles: `ROLE_CUSTOMER`, `ROLE_STAFF`, `ROLE_ADMIN` ✅
 - **1.2** Define seat states: `AVAILABLE`, `HELD`, `SOLD`
 - **1.3** Define ticket statuses: `ISSUED`, `SCANNED`
 
@@ -41,7 +41,7 @@ This is the minimum path to a working product covering three core flows:
   - 2.4.3 Attach installers to GitHub Release automatically
 
 - **2.5** Setup databases
-  - 2.5.1 Local PostgreSQL via application.yml ✅
+  - 2.5.1 Local PostgreSQL ✅ via application.yml
   - 2.5.2 NeonDB (cloud) via application.yml
 
 - **2.6** Setup deployment targets
@@ -58,21 +58,21 @@ This is the minimum path to a working product covering three core flows:
 - **3.1** Setup Spring Boot project (web ✅, security, data-jpa ✅)
 
 - **3.2** Minimal schema — only what the three flows touch
-  - 3.2.1 Users (id ✅, email ✅, password ✅, role)
+  - 3.2.1 Users (id, email, password, role) ✅
   - 3.2.2 Venues (id, name, timezone) ✅ (hard written in db)
-  - 3.2.3 Events (id ✅, venue_id, name ✅, datetime Local ✅)
+  - 3.2.3 Events (id, venue_id, name, datetime Local)
   - 3.2.4 Seats (id, event_id, label, state)
   - 3.2.5 Seat Holds (id, user_id, seat_id, expires_at)
   - 3.2.6 Orders (id, user_id, created_at)
   - 3.2.7 Tickets (id, order_id, seat_id, qr_payload, status, venu timezone)
 
 - **3.3** Auth
-  - 3.3.1 /auth/register
-  - 3.3.2 /auth/login (returns JWT with role claim attached)
+  - 3.3.1 /auth/register ✅
+  - 3.3.2 /auth/login (returns JWT with role claim attached) ✅
   - 3.3.3 /auth/me
 
 - **3.4** Core API — only what the three flows need
-  - 3.4.1 GET /events — list events ✅
+  - 3.4.1 GET /events — list events
   - 3.4.2 GET /events/{id}/seats — seat map with availability
   - 3.4.3 POST /seats/hold — hold seats during checkout (10 min TTL)
   - 3.4.4 POST /checkout/create-session — create Stripe session
@@ -89,7 +89,7 @@ This is the minimum path to a working product covering three core flows:
 
 - **3.6** API Docs
   - 3.6.1 Setup Swagger/Springdoc OpenAP to view API end-points ✅
-  - 3.6.2 Setup and Use Postman to test all API end-points to make sure they do the correct things
+  - 3.6.2 Setup and Use Postman to test all API end-points to make sure they do the correct things ✅
 
 ---
 
