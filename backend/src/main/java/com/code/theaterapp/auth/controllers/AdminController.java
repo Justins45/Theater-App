@@ -15,7 +15,7 @@ public class AdminController {
 
     private final StaffService staffService;
 
-    @GetMapping("/")
+    @GetMapping
     public String getAdmin() {
         return "Welcome to the admin root path";
     }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class RootController {
 
-    @GetMapping("/")
+    @GetMapping
     public String getRoot() {
         return "Welcome to the root path";
     }

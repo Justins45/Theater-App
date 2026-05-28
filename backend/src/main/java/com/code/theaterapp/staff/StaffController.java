@@ -22,7 +22,7 @@ public class StaffController {
     private final StaffService staffService;
     private final AuthService authService;
 
-    @GetMapping("/")
+    @GetMapping
     public String getStaff() {
         return "Welcome to the Staff root path";
     }
