@@ -7,7 +7,9 @@ import com.code.theaterapp.venue.VenueRepo;
 import com.code.theaterapp.venue.VenueService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 import java.util.List;
@@ -21,8 +23,8 @@ public class StageService {
     private final StageMapper stageMapper;
 
 
-    public List<StageDTO> getAllStages() {
-        return stageRepo.findAll().stream()
+    public List<StageDTO> getAllStages(Long venueId) {
+        return stageRepo.findAllStagesByVenueId(venueId).stream()
                 .map(stageMapper::apply)
                 .toList();
     }
@@ -30,14 +32,14 @@ public class StageService {
     public StageDTO findByIdAndVenueId(Long stageId, Long venueId) {
 
         Stage stage = stageRepo.findByIdAndVenueId(stageId, venueId)
-                .orElseThrow(() -> new EntityNotFoundException("Stage not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Stage not found"));
 
         return stageMapper.apply(stage);
     }
 
     public StageDTO createStage(CreateStageDTO createStageDTO) {
         Venue venue = venueRepo.findById(createStageDTO.venueId())
-                .orElseThrow(() -> new EntityNotFoundException("Venue not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Venue not found"));
 
         Stage stage = new Stage();
         stage.setName(createStageDTO.name());
