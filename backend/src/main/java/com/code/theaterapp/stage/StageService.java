@@ -4,8 +4,6 @@ import com.code.theaterapp.stage.dtos.CreateStageDTO;
 import com.code.theaterapp.stage.dtos.StageDTO;
 import com.code.theaterapp.venue.Venue;
 import com.code.theaterapp.venue.VenueRepo;
-import com.code.theaterapp.venue.VenueService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
