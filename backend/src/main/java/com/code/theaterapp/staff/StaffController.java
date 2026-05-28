@@ -1,12 +1,9 @@
-package com.code.theaterapp.auth.controllers;
+package com.code.theaterapp.staff;
 
 import com.code.theaterapp.auth.AuthService;
 import com.code.theaterapp.auth.dtos.LoginRequestDTO;
 import com.code.theaterapp.auth.dtos.LoginResponseDTO;
-import com.code.theaterapp.auth.secruity.accounts.PatronAccount;
 import com.code.theaterapp.auth.secruity.accounts.StaffAccount;
-import com.code.theaterapp.patron.dtos.PatronMeResponse;
-import com.code.theaterapp.staff.StaffService;
 import com.code.theaterapp.staff.dtos.StaffMeResponse;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
