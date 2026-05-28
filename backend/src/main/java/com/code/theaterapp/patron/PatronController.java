@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/patron")
 public class PatronController {
 
-    @GetMapping("/")
+    @GetMapping
     public String getPatron() {
         return "Welcome to the patron root path";
     }

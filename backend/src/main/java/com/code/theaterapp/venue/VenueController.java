@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/venue")
 public class VenueController {
 
-    @GetMapping("/")
+    @GetMapping
     public String getVenue() {
         return "Welcome to the venue root path";
     }

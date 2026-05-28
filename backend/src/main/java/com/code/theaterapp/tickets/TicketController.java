@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/tickets")
 public class TicketController {
 
-    @GetMapping("/")
+    @GetMapping
     public String getAllTickets() {
         return "Welcome to the ticket root path";
     }
