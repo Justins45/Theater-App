@@ -6,9 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,8 +23,13 @@ public class EventController {
     }
 
     @GetMapping("/{id}")
-    public Optional<EventDTO> getEvent(@PathVariable("id") Long id) {
-        return eventService.getEventById(id);
+    public EventDTO getEvent(@PathVariable("id") Long id) {
+        // TODO: add checks for published and not expired
+        //  .filter(e -> e.isPublished())
+        //  .filter(e -> !e.isExpired())
+        return eventService.getEventById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+        );
     }
 
     @PostMapping
