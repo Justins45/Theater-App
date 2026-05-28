@@ -4,13 +4,13 @@ import com.code.theaterapp.stage.dtos.CreateStageDTO;
 import com.code.theaterapp.stage.dtos.StageDTO;
 import com.code.theaterapp.venue.Venue;
 import com.code.theaterapp.venue.VenueRepo;
+import com.code.theaterapp.venue.VenueService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +27,13 @@ public class StageService {
                 .toList();
     }
 
-    public Optional<StageDTO> getStageById(Long id) { return stageRepo.findById(id).map(stageMapper::apply); }
+    public StageDTO findByIdAndVenueId(Long stageId, Long venueId) {
+
+        Stage stage = stageRepo.findByIdAndVenueId(stageId, venueId)
+                .orElseThrow(() -> new EntityNotFoundException("Stage not found"));
+
+        return stageMapper.apply(stage);
+    }
 
     public StageDTO createStage(CreateStageDTO createStageDTO) {
         Venue venue = venueRepo.findById(createStageDTO.venueId())
