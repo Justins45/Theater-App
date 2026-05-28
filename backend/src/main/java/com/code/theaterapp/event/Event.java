@@ -33,6 +33,9 @@ public class Event {
     @Column(nullable = false)
     private Instant eventCreated;
 
+    public void setShowTime(String newShowTime) {
+        this.showTime = LocalTime.parse(newShowTime);
+    }
 
     public String getWallClock() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm a");

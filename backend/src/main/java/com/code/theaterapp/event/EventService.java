@@ -1,7 +1,7 @@
 package com.code.theaterapp.event;
 
+import com.code.theaterapp.event.dtos.CreateEventDTO;
 import com.code.theaterapp.event.dtos.EventDTO;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,11 +26,10 @@ public class EventService {
         return eventRepo.findById(id).map(eventMapper::apply);
     }
 
-    @Transactional
-    public EventDTO createEvent(Event eventDetails) {
+    public EventDTO createEvent(CreateEventDTO createEventDTO) {
         Event event = new Event();
-        event.setTitle(eventDetails.getTitle());
-        event.setShowTime(eventDetails.getShowTime());
+        event.setTitle(createEventDTO.title());
+        event.setShowTime(createEventDTO.showTime());
         event.setEventCreated(Instant.now());
 
         Event savedEvent = eventRepo.save(event);
