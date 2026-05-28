@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+
 @Entity
 @Getter
 @Service
@@ -22,10 +24,10 @@ public class Venue {
     private String name;
 
     @Column(nullable = false)
-    private String location;
+    private String timeZone;
 
     @Column(nullable = false)
-    private String timeZone;
+    private String street;
 
     @Column(nullable = false)
     private String city;
@@ -38,4 +40,15 @@ public class Venue {
 
     @Column(nullable = false)
     private String country;
+
+    @Column(nullable = false)
+    private Instant dateCreated;
+
+    public String getAddress() {
+        return getStreet() + " "
+                + getCity() + " "
+                + getProvince() + " "
+                + getPostalCode() + " "
+                + getCountry();
+    }
 }
