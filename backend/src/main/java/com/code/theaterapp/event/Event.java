@@ -1,5 +1,6 @@
 package com.code.theaterapp.event;
 
+import com.code.theaterapp.stage.Stage;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,6 +30,9 @@ public class Event {
     private String title;
     @Column(nullable = false)
     private LocalTime showTime;
+
+    @ManyToOne
+    private Stage stage;
 
     @Column(nullable = false)
     private Instant eventCreated;
