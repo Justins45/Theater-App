@@ -10,6 +10,7 @@ public class EventMapper implements Function<Event, EventDTO> {
     @Override
     public EventDTO apply(Event event) {
         return new EventDTO(
+                event.getId(),
                 event.getTitle(),
                 event.getWallClock()
         );
