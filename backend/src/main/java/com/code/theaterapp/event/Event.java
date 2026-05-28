@@ -34,7 +34,7 @@ public class Event {
     private Instant eventCreated;
 
 
-    public String getShowTime(){
+    public String getWallClock() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm a");
         return this.showTime.format(formatter);
     }
