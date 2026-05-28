@@ -21,7 +21,8 @@ public class Stage {
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "venue_id")
     private Venue venue;
 
     @Column(nullable = false)

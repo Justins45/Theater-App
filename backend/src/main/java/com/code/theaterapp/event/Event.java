@@ -28,7 +28,8 @@ public class Event {
     @Column(nullable = false)
     private LocalTime showTime;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "stage_id")
     private Stage stage;
 
     @Column(nullable = false)
