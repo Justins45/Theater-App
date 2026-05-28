@@ -1,6 +1,7 @@
 package com.code.theaterapp.staff;
 
 import com.code.theaterapp.auth.dtos.StaffRegisterDTO;
+import com.code.theaterapp.auth.secruity.accounts.StaffAccount;
 import com.code.theaterapp.exceptions.AccountAlreadyExistsException;
 import com.code.theaterapp.exceptions.UsernameAlreadyExistsException;
 import com.code.theaterapp.patron.Patron;
@@ -9,6 +10,7 @@ import com.code.theaterapp.shared.enums.Role;
 import com.code.theaterapp.shared.person.Person;
 import com.code.theaterapp.shared.person.PersonRepo;
 import com.code.theaterapp.staff.dtos.StaffDTO;
+import com.code.theaterapp.staff.dtos.StaffMeResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -69,4 +71,15 @@ public class StaffService {
         return staffMapper.apply(staffSaved);
     }
 
+    @Transactional
+    public StaffMeResponse getMe(StaffAccount account) {
+        return new StaffMeResponse(
+                account.getUsername(),
+                account.getEmail(),
+                account.getFirstname(),
+                account.getLastname(),
+                account.getRole(),
+                account.getAccountCreation()
+        );
+    }
 }

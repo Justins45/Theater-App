@@ -59,8 +59,8 @@ This is the minimum path to a working product covering three core flows:
 - **3.1** Setup Spring Boot project (web ✅, security, data-jpa ✅)
 
 - **3.2** Minimal schema — only what the three flows touch
-    - 3.2.1 Users (id, email, password, role) ✅
-    - 3.2.2 Venues (id, name, timezone) ✅ (hard written in db)
+  - 3.2.1 Users (id, email, password, role) ✅
+  - 3.2.2 Venues (id, name, timezone) ✅ (hard written in db)
   - 3.2.3 Events (id, venue_id, name, datetime UTC)
   - 3.2.4 Seats (id, event_id, label, state)
   - 3.2.5 Seat Holds (id, user_id, seat_id, expires_at)
@@ -70,7 +70,7 @@ This is the minimum path to a working product covering three core flows:
 - **3.3** Auth
   - 3.3.1 /auth/register ✅
   - 3.3.2 /auth/login (returns JWT with role claim attached) ✅
-  - 3.3.3 /auth/me
+  - 3.3.3 /auth/me ✅
 
 - **3.4** Core API — only what the three flows need
 

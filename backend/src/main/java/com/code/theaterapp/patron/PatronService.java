@@ -1,8 +1,10 @@
 package com.code.theaterapp.patron;
 
 import com.code.theaterapp.auth.dtos.PatronRegisterDTO;
+import com.code.theaterapp.auth.secruity.accounts.PatronAccount;
 import com.code.theaterapp.exceptions.UsernameAlreadyExistsException;
 import com.code.theaterapp.patron.dtos.PatronDTO;
+import com.code.theaterapp.patron.dtos.PatronMeResponse;
 import com.code.theaterapp.shared.enums.Role;
 import com.code.theaterapp.shared.person.Person;
 import com.code.theaterapp.shared.person.PersonRepo;
@@ -44,4 +46,14 @@ public class PatronService {
         Patron savedPatron = patronRepo.save(patron);
         return patronMapper.apply(savedPatron);
     }
+
+    public PatronMeResponse getMe(PatronAccount account) {
+        return new PatronMeResponse(
+                account.getUsername(),
+                account.getEmail(),
+                account.getFirstname(),
+                account.getLastname()
+        );
+    }
+
 }
