@@ -14,15 +14,16 @@ import java.util.Optional;
 public class EventService {
 
     private final EventRepo eventRepo;
+    private final EventMapper eventMapper;
 
-    public List<Event> getAllEvents() {
+    public List<EventDTO> getAllEvents() {
         return eventRepo.findAll().stream()
-                .map(EventDTO::from)
+                .map(eventMapper::apply)
                 .toList();
     }
 
-    public Optional<Event> getEventById(Long id) {
-        return eventRepo.findById(id);
+    public Optional<EventDTO> getEventById(Long id) {
+        return eventRepo.findById(id).map(eventMapper::apply);
     }
 
     @Transactional
@@ -33,13 +34,8 @@ public class EventService {
         event.setEventCreated(Instant.now());
 
         Event savedEvent = eventRepo.save(event);
+        return eventMapper.apply(savedEvent);
 
-        // TODO: make mapper
-        return new EventDTO(
-                savedEvent.getTitle(),
-                savedEvent.getWallClock()
-        );
-        
     }
 
 
