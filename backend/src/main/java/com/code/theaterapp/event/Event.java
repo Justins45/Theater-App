@@ -23,9 +23,6 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    Used for getting Stage event is on + capacity and other stuff
-//    private Stage stage;
-
     @Column(nullable = false)
     private String title;
     @Column(nullable = false)
