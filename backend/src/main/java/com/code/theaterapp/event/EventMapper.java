@@ -12,7 +12,9 @@ public class EventMapper implements Function<Event, EventDTO> {
         return new EventDTO(
                 event.getId(),
                 event.getTitle(),
-                event.getWallClock()
+                event.getWallClock(),
+                event.getStage().getName(),
+                event.getStage().getCapacity()
         );
     }
 }
