@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/tickets")
 public class TicketController {
 
+    // Show users tickets
     @GetMapping
     public String getAllTickets() {
         return "Welcome to the ticket root path";
     }
 
+    // show users ticket information on the web
     @GetMapping("/{id}")
     public String getTicket(@PathVariable("id") int id) {
         return "Welcome to Event with id: " + id;
