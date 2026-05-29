@@ -14,7 +14,7 @@ This is the minimum path to a working product covering three core flows:
 
 - **1.1** Define the three roles: `ROLE_CUSTOMER`, `ROLE_STAFF`, `ROLE_ADMIN` ✅
 - **1.2** Define seat states: `AVAILABLE`, `HELD`, `SOLD`
-- **1.3** Define ticket statuses: `ISSUED`, `SCANNED`
+- **1.3** Define ticket statuses: `ISSUED`, `SCANNED` ✅
 
 ---
 
@@ -56,16 +56,16 @@ This is the minimum path to a working product covering three core flows:
 
 ## 3.0 - Backend
 
-- **3.1** Setup Spring Boot project (web ✅, security, data-jpa ✅)
+- **3.1** Setup Spring Boot project (web, security, data-jpa) ✅
 
 - **3.2** Minimal schema — only what the three flows touch
   - 3.2.1 Users (id, email, password, role) ✅
-  - 3.2.2 Venues (id, name, timezone) ✅ (hard written in db)
-  - 3.2.3 Events (id, venue_id, name, datetime UTC)
+  - 3.2.2 Venues (id, name, timezone) ✅
+  - 3.2.3 Events (id, venue_id, name, datetime UTC) ✅
   - 3.2.4 Seats (id, event_id, label, state)
   - 3.2.5 Seat Holds (id, user_id, seat_id, expires_at)
   - 3.2.6 Orders (id, user_id, created_at)
-  - 3.2.7 Tickets (id, order_id, seat_id, qr_payload, status, venu timezone)
+  - 3.2.7 Tickets (id, order_id, seat_id, qr_payload, status, venu timezone) ✅
 
 - **3.3** Auth
   - 3.3.1 /auth/register ✅
@@ -74,13 +74,13 @@ This is the minimum path to a working product covering three core flows:
 
 - **3.4** Core API — only what the three flows need
 
-  - 3.4.1 GET /events — list events
+  - 3.4.1 GET /events — list events ✅
   - 3.4.2 GET /events/{id}/seats — seat map with availability
   - 3.4.3 POST /seats/hold — hold seats during checkout (10 min TTL)
   - 3.4.4 POST /checkout/create-session — create Stripe session
   - 3.4.5 POST /stripe/webhook — on payment complete: create order + tickets + mark seats SOLD
-  - 3.4.6 GET /tickets — list tickets for logged in user
-  - 3.4.7 GET /tickets/{id} — get single ticket + QR payload
+  - 3.4.6 GET /tickets — list tickets for logged in user ✅
+  - 3.4.7 GET /tickets/{id} — get single ticket + QR payload ✅
   - 3.4.8 POST /tickets/{id}/scan — mark ticket as SCANNED (staff only)
   - 3.4.9 POST /admin/tickets/issue — manually issue a ticket to a user (admin only)
   - 3.4.10 GET /admin/orders — list all orders (admin only)
