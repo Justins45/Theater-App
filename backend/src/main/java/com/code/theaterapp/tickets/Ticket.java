@@ -36,11 +36,11 @@ public class Ticket {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "venue_id")
-    private Venue venueId;
+    private Venue venue;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_id")
-    private Event eventId;
+    private Event event;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
