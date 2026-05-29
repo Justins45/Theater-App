@@ -5,7 +5,7 @@ import com.code.theaterapp.event.EventRepo;
 import com.code.theaterapp.patron.Patron;
 import com.code.theaterapp.patron.PatronRepo;
 import com.code.theaterapp.shared.enums.TicketStatus;
-import com.code.theaterapp.shared.person.PersonRepo;
+import com.code.theaterapp.tickets.dtos.CreateTicketDTO;
 import com.code.theaterapp.tickets.dtos.TicketDTO;
 import com.code.theaterapp.venue.Venue;
 import com.code.theaterapp.venue.VenueRepo;

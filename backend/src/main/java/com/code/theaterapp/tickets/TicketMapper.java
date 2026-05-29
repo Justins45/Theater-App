@@ -12,10 +12,10 @@ public class TicketMapper implements Function<Ticket, TicketDTO> {
         return new TicketDTO(
                 ticket.getId(),
                 ticket.getPrice(),
-                ticket.getPatron(),
-                ticket.getEvent(),
-                ticket.getVenue(),
-                ticket.getTicketStatus().toString()
+                ticket.getPatron().getId(),
+                ticket.getEvent().getId(),
+                ticket.getVenue().getId(),
+                ticket.getTicketStatus()
         );
     }
 }
