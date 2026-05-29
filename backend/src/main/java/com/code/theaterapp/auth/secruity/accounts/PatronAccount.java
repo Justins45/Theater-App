@@ -40,6 +40,7 @@ public class PatronAccount implements UserDetails {
     public String getEmail() { return person.getEmail(); }
     public String getFirstname() { return person.getFirstName(); }
     public String getLastname() { return person.getLastName(); }
+    public Long getId() { return patron.getId(); }
 
     // TODO: impl later ex: account banning / email verification (locking account till verified or something like that)
 
