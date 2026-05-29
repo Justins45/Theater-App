@@ -1,17 +1,15 @@
 package com.code.theaterapp.tickets.dtos;
 
-import com.code.theaterapp.event.Event;
-import com.code.theaterapp.patron.Patron;
-import com.code.theaterapp.venue.Venue;
+import com.code.theaterapp.shared.enums.TicketStatus;
 
 import java.math.BigDecimal;
 
 public record TicketDTO(
         Long id,
         BigDecimal price,
-        Patron patron,
-        Event event,
-        Venue venue,
-        String ticketStatus
+        Long patronId,
+        Long eventId,
+        Long venueId,
+        TicketStatus ticketStatus
 ) {
 }
