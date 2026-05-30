@@ -9,7 +9,7 @@ public record TicketDTO(
         BigDecimal price,
         Long patronId,
         Long eventId,
-        Long venueId,
+        Integer venueId,
         TicketStatus ticketStatus
 ) {
 }

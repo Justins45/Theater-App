@@ -6,7 +6,7 @@ public record CreateTicketDTO(
         BigDecimal price,
         Long patronId,
         Long eventId,
-        Long venueId
+        Integer venueId
 
 ) {
 }
