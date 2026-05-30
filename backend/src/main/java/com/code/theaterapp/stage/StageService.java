@@ -29,6 +29,7 @@ public class StageService {
 
     public StageDTO findByIdAndVenueId(Integer stageId, Integer venueId) {
 
+        // TODO: make new exception EntityNotFoundException(String message)
         Stage stage = stageRepo.findByIdAndVenueId(stageId, venueId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Stage not found"));
 
