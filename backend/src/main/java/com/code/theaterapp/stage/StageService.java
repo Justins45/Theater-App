@@ -21,13 +21,13 @@ public class StageService {
     private final StageMapper stageMapper;
 
 
-    public List<StageDTO> getAllStages(Long venueId) {
+    public List<StageDTO> getAllStages(Integer venueId) {
         return stageRepo.findAllStagesByVenueId(venueId).stream()
                 .map(stageMapper::apply)
                 .toList();
     }
 
-    public StageDTO findByIdAndVenueId(Long stageId, Long venueId) {
+    public StageDTO findByIdAndVenueId(Integer stageId, Integer venueId) {
 
         Stage stage = stageRepo.findByIdAndVenueId(stageId, venueId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Stage not found"));

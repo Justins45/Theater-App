@@ -17,12 +17,12 @@ public class StageController {
     private final StageService stageService;
 
     @GetMapping
-    public List<StageDTO> getAllStages(@PathVariable Long venueId) {
+    public List<StageDTO> getAllStages(@PathVariable Integer venueId) {
         return stageService.getAllStages(venueId);
     }
 
     @GetMapping("/{stageId}")
-    public StageDTO getStageById(@PathVariable Long venueId, @PathVariable Long stageId) {
+    public StageDTO getStageById(@PathVariable Integer venueId, @PathVariable Integer stageId) {
         return stageService.findByIdAndVenueId(stageId, venueId);
     }
 
