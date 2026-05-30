@@ -20,7 +20,7 @@ public class VenueController {
     public List<VenueDTO> getAllVenues() { return venueService.getAllVenues(); }
 
     @GetMapping("/{id}")
-    public VenueDTO getVenue(@PathVariable("id") Long id) {
+    public VenueDTO getVenue(@PathVariable("id") Integer id) {
         return venueService.getVenueById(id);
     }
 

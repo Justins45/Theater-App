@@ -1,7 +1,7 @@
 package com.code.theaterapp.venue.dtos;
 
 public record VenueDTO(
-        Long id,
+        Integer id,
         String name,
         String timeZone,
         String street,

@@ -9,7 +9,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +23,7 @@ public class VenueService {
                 .toList();
     }
 
-    public VenueDTO getVenueById(Long id) {
+    public VenueDTO getVenueById(Integer id) {
         Venue venue = venueRepo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Stage not found"));
 
