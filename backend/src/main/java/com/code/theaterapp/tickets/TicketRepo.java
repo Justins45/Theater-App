@@ -10,6 +10,6 @@ import java.util.UUID;
 @Repository
 public interface TicketRepo extends JpaRepository<Ticket, UUID> {
 
-    List<Ticket> findAllByPatronId(Long patronId);
-    Optional<Ticket> findByIdAndPatronId(UUID ticketId, Long patronId);
+    List<Ticket> findAllByPatronId(UUID patronId);
+    Optional<Ticket> findByIdAndPatronId(UUID ticketId, UUID patronId);
 }

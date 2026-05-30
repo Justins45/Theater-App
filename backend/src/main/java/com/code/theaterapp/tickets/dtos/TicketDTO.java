@@ -8,8 +8,8 @@ import java.util.UUID;
 public record TicketDTO(
         UUID id,
         BigDecimal price,
-        Long patronId,
-        Long eventId,
+        UUID patronId,
+        UUID eventId,
         Integer venueId,
         TicketStatus ticketStatus
 ) {

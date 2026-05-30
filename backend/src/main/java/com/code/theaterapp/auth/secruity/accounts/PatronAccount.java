@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.UUID;
 
 public class PatronAccount implements UserDetails {
 
@@ -40,7 +41,7 @@ public class PatronAccount implements UserDetails {
     public String getEmail() { return person.getEmail(); }
     public String getFirstname() { return person.getFirstName(); }
     public String getLastname() { return person.getLastName(); }
-    public Long getId() { return patron.getId(); }
+    public UUID getId() { return patron.getId(); }
 
     // TODO: impl later ex: account banning / email verification (locking account till verified or something like that)
 

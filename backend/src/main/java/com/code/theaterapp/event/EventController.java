@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,7 +24,7 @@ public class EventController {
     }
 
     @GetMapping("/{id}")
-    public EventDTO getEvent(@PathVariable("id") Long id) {
+    public EventDTO getEvent(@PathVariable("id") UUID id) {
         // TODO: add checks for published and not expired
         //  .filter(e -> e.isPublished())
         //  .filter(e -> !e.isExpired())
