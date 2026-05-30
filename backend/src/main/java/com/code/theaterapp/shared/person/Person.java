@@ -22,7 +22,7 @@ public class Person {
     @Id
     @GeneratedValue
     @UuidGenerator(style = UuidGenerator.Style.VERSION_7)
-    private UUID personID;
+    private UUID personId;
 
     @Column(nullable = false, unique = true)
     private String username;
