@@ -1,7 +1,8 @@
 package com.code.theaterapp.tickets;
 
 import com.code.theaterapp.auth.secruity.accounts.PatronAccount;
-import com.code.theaterapp.tickets.dtos.TicketDTO;
+import com.code.theaterapp.tickets.dtos.TicketDetailsDTO;
+import com.code.theaterapp.tickets.dtos.TicketSummaryDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,13 +24,13 @@ public class TicketController {
 
     // Show users tickets
     @GetMapping
-    public ResponseEntity<List<TicketDTO>> getAllTickets(@AuthenticationPrincipal PatronAccount patronAccount) {
+    public ResponseEntity<List<TicketSummaryDTO>> getAllTickets(@AuthenticationPrincipal PatronAccount patronAccount) {
         return ResponseEntity.ok(ticketService.getAllTickets(patronAccount.getId()));
     }
 
     // show users ticket information on the web
     @GetMapping("/{ticketId}")
-    public ResponseEntity<TicketDTO> getTicket(
+    public ResponseEntity<TicketDetailsDTO> getTicket(
             @AuthenticationPrincipal PatronAccount patronAccount,
             @PathVariable("ticketId") UUID ticketId ) {
         return ResponseEntity.ok(ticketService.getByIdAndPatronId(ticketId, patronAccount.getId()));

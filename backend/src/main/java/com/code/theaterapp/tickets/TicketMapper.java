@@ -1,15 +1,15 @@
 package com.code.theaterapp.tickets;
 
-import com.code.theaterapp.tickets.dtos.TicketDTO;
+import com.code.theaterapp.tickets.dtos.TicketDetailsDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Function;
 
 @Component
-public class TicketMapper implements Function<Ticket, TicketDTO> {
+public class TicketMapper implements Function<Ticket, TicketDetailsDTO> {
     @Override
-    public TicketDTO apply(Ticket ticket) {
-        return new TicketDTO(
+    public TicketDetailsDTO apply(Ticket ticket) {
+        return new TicketDetailsDTO(
                 ticket.getId(),
                 ticket.getPrice(),
                 ticket.getPatron().getId(),
