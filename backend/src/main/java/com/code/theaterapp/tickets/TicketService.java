@@ -16,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -27,14 +28,14 @@ public class TicketService {
     private final EventRepo eventRepo;
     private final VenueRepo venueRepo;
 
-    public List<TicketDTO> getAllTickets(Long patronId) {
+    public List<TicketDTO> getAllTickets(UUID patronId) {
         return ticketRepo.findAllByPatronId(patronId)
                 .stream()
                 .map(ticketMapper::apply)
                 .toList();
     }
 
-    public TicketDTO getByIdAndPatronId(Long ticketId, Long patronId) {
+    public TicketDTO getByIdAndPatronId(UUID ticketId, UUID patronId) {
       Ticket ticket = ticketRepo.findByIdAndPatronId(ticketId, patronId)
               .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Patron not found"));
 

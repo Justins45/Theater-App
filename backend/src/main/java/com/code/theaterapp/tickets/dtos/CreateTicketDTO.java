@@ -1,12 +1,13 @@
 package com.code.theaterapp.tickets.dtos;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 public record CreateTicketDTO(
         BigDecimal price,
-        Long patronId,
-        Long eventId,
-        Long venueId
+        UUID patronId,
+        UUID eventId,
+        Integer venueId
 
 ) {
 }

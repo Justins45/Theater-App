@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,7 +31,7 @@ public class TicketController {
     @GetMapping("/{ticketId}")
     public ResponseEntity<TicketDTO> getTicket(
             @AuthenticationPrincipal PatronAccount patronAccount,
-            @PathVariable("ticketId") Long ticketId ) {
+            @PathVariable("ticketId") UUID ticketId ) {
         return ResponseEntity.ok(ticketService.getByIdAndPatronId(ticketId, patronAccount.getId()));
     }
 }

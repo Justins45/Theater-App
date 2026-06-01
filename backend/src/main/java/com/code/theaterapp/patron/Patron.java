@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,7 +19,7 @@ import lombok.Setter;
 public class Patron {
 
     @Id
-    private Long id;
+    private UUID id;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING) // Converts DB role to Role Enum

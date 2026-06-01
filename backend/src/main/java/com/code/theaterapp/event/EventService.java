@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +29,7 @@ public class EventService {
                 .toList();
     }
 
-    public Optional<EventDTO> getEventById(Long id) {
+    public Optional<EventDTO> getEventById(UUID id) {
         return eventRepo.findById(id).map(eventMapper::apply);
     }
 

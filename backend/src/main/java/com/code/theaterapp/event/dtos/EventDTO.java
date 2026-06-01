@@ -1,7 +1,9 @@
 package com.code.theaterapp.event.dtos;
 
+import java.util.UUID;
+
 public record EventDTO(
-        Long id,
+        UUID id,
         String title,
         String showTime,
         String stageName,

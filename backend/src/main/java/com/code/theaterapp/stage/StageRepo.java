@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface StageRepo extends JpaRepository<Stage, Long> {
+public interface StageRepo extends JpaRepository<Stage, Integer> {
 
-    List<Stage> findAllStagesByVenueId(Long venueId);
-    Optional<Stage> findByIdAndVenueId(Long stageId, Long venueId);
+    List<Stage> findAllStagesByVenueId(Integer venueId);
+    Optional<Stage> findByIdAndVenueId(Integer stageId, Integer venueId);
 }
