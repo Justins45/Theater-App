@@ -1,8 +1,9 @@
 package com.code.theaterapp.auth.controllers;
 
+import com.code.theaterapp.auth.dtos.StaffRegisterConfirmationDTO;
 import com.code.theaterapp.auth.dtos.StaffRegisterDTO;
 import com.code.theaterapp.staff.StaffService;
-import com.code.theaterapp.staff.dtos.StaffDTO;
+import com.code.theaterapp.staff.dtos.StaffDetailsDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +22,8 @@ public class AdminController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<StaffDTO> register(@RequestBody StaffRegisterDTO request) {
-        StaffDTO dto = staffService.createStaff(request);
+    public ResponseEntity<StaffRegisterConfirmationDTO> register(@RequestBody StaffRegisterDTO request) {
+        StaffRegisterConfirmationDTO dto = staffService.createStaff(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 

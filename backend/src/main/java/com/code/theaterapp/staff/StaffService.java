@@ -1,5 +1,6 @@
 package com.code.theaterapp.staff;
 
+import com.code.theaterapp.auth.dtos.StaffRegisterConfirmationDTO;
 import com.code.theaterapp.auth.dtos.StaffRegisterDTO;
 import com.code.theaterapp.auth.secruity.accounts.StaffAccount;
 import com.code.theaterapp.exceptions.AccountAlreadyExistsException;
@@ -9,7 +10,7 @@ import com.code.theaterapp.patron.PatronRepo;
 import com.code.theaterapp.shared.enums.Role;
 import com.code.theaterapp.shared.person.Person;
 import com.code.theaterapp.shared.person.PersonRepo;
-import com.code.theaterapp.staff.dtos.StaffDTO;
+import com.code.theaterapp.staff.dtos.StaffDetailsDTO;
 import com.code.theaterapp.staff.dtos.StaffMeResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,7 @@ public class StaffService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
-    public StaffDTO createStaff(StaffRegisterDTO requestDTO) {
+    public StaffRegisterConfirmationDTO createStaff(StaffRegisterDTO requestDTO) {
 
         // TODO: ?? make checks / person + patron creating into another file? (Duplicated in PatronService)
 
@@ -68,7 +69,7 @@ public class StaffService {
         staff.setRole(requestDTO.role());
 
         Staff staffSaved = staffRepo.save(staff);
-        return staffMapper.apply(staffSaved);
+        return staffMapper.toRegisterConfirmation(staffSaved);
     }
 
     @Transactional

@@ -1,15 +1,13 @@
 package com.code.theaterapp.venue;
 
-import com.code.theaterapp.venue.dtos.VenueDTO;
+import com.code.theaterapp.venue.dtos.VenueDetailsDTO;
+import com.code.theaterapp.venue.dtos.VenueSummaryDTO;
 import org.springframework.stereotype.Component;
 
-import java.util.function.Function;
-
 @Component
-public class VenueMapper implements Function<Venue, VenueDTO> {
-    @Override
-    public VenueDTO apply(Venue venue) {
-        return new VenueDTO(
+public class VenueMapper {
+    public VenueDetailsDTO toDetails(Venue venue) {
+        return new VenueDetailsDTO(
                 venue.getId(),
                 venue.getName(),
                 venue.getTimeZone(),
@@ -18,6 +16,16 @@ public class VenueMapper implements Function<Venue, VenueDTO> {
                 venue.getProvince(),
                 venue.getPostalCode(),
                 venue.getCountry()
+        );
+    }
+
+    public VenueSummaryDTO toSummary(Venue venue) {
+        return new VenueSummaryDTO(
+                venue.getId(),
+                venue.getName(),
+                venue.getTimeZone(),
+                venue.getStreet(),
+                venue.getCity()
         );
     }
 }

@@ -1,7 +1,7 @@
 package com.code.theaterapp.patron.dtos;
 
 
-public record PatronDTO(
+public record PatronDetailsDTO(
         String username,
         String email,
         String firstName,

@@ -5,7 +5,7 @@ import com.code.theaterapp.shared.enums.TicketStatus;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-public record TicketDTO(
+public record TicketDetailsDTO(
         UUID id,
         BigDecimal price,
         UUID patronId,

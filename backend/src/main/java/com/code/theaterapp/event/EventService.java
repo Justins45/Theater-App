@@ -1,10 +1,10 @@
 package com.code.theaterapp.event;
 
 import com.code.theaterapp.event.dtos.CreateEventDTO;
-import com.code.theaterapp.event.dtos.EventDTO;
+import com.code.theaterapp.event.dtos.EventDetailsDTO;
+import com.code.theaterapp.event.dtos.EventSummaryDTO;
 import com.code.theaterapp.stage.Stage;
 import com.code.theaterapp.stage.StageRepo;
-import com.code.theaterapp.stage.StageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -23,17 +23,17 @@ public class EventService {
     private final StageRepo stageRepo;
     private final EventMapper eventMapper;
 
-    public List<EventDTO> getAllEvents() {
+    public List<EventSummaryDTO> getAllEvents() {
         return eventRepo.findAll().stream()
-                .map(eventMapper::apply)
+                .map(eventMapper::toSummary)
                 .toList();
     }
 
-    public Optional<EventDTO> getEventById(UUID id) {
-        return eventRepo.findById(id).map(eventMapper::apply);
+    public Optional<EventDetailsDTO> getEventById(UUID id) {
+        return eventRepo.findById(id).map(eventMapper::toDetails);
     }
 
-    public EventDTO createEvent(CreateEventDTO createEventDTO) {
+    public EventDetailsDTO createEvent(CreateEventDTO createEventDTO) {
 
         Stage stage = stageRepo.findByIdAndVenueId(createEventDTO.stageId(), createEventDTO.venueId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Stage not found"));
@@ -45,7 +45,7 @@ public class EventService {
         event.setEventCreated(Instant.now());
 
         Event savedEvent = eventRepo.save(event);
-        return eventMapper.apply(savedEvent);
+        return eventMapper.toDetails(savedEvent);
 
     }
 
