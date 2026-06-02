@@ -20,7 +20,6 @@ public class StageService {
     private final VenueRepo venueRepo;
     private final StageMapper stageMapper;
 
-
     public List<StageSummaryDTO> getAllStages(Integer venueId) {
         return stageRepo.findAllStagesByVenueId(venueId).stream()
                 .map(stageMapper::toSummary)
@@ -28,8 +27,6 @@ public class StageService {
     }
 
     public StageDetailsDTO findByIdAndVenueId(Integer stageId, Integer venueId) {
-
-        // TODO: make new exception EntityNotFoundException(String message)
         Stage stage = stageRepo.findByIdAndVenueId(stageId, venueId)
                 .orElseThrow(() -> new EntityNotFoundException("Stage not found"));
 

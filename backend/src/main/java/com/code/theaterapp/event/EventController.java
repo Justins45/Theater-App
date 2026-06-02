@@ -26,9 +26,6 @@ public class EventController {
 
     @GetMapping("/{id}")
     public EventDetailsDTO getEvent(@PathVariable("id") UUID id) {
-        // TODO: add checks for published and not expired
-        //  .filter(e -> e.isPublished())
-        //  .filter(e -> !e.isExpired())
         return eventService.getEventById(id).orElseThrow(
                 () -> new EntityNotFoundException("Event not found")
         );
