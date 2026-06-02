@@ -3,7 +3,7 @@ package com.code.theaterapp.staff.dtos;
 
 import com.code.theaterapp.shared.enums.Role;
 
-public record StaffDTO(
+public record StaffDetailsDTO(
         String username,
         String email,
         String firstName,

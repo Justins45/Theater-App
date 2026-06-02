@@ -9,7 +9,7 @@ import com.code.theaterapp.patron.PatronRepo;
 import com.code.theaterapp.shared.enums.Role;
 import com.code.theaterapp.shared.person.Person;
 import com.code.theaterapp.shared.person.PersonRepo;
-import com.code.theaterapp.staff.dtos.StaffDTO;
+import com.code.theaterapp.staff.dtos.StaffDetailsDTO;
 import com.code.theaterapp.staff.dtos.StaffMeResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class StaffService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
-    public StaffDTO createStaff(StaffRegisterDTO requestDTO) {
+    public StaffDetailsDTO createStaff(StaffRegisterDTO requestDTO) {
 
         // TODO: ?? make checks / person + patron creating into another file? (Duplicated in PatronService)
 
