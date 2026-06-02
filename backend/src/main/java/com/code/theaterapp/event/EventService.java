@@ -2,6 +2,7 @@ package com.code.theaterapp.event;
 
 import com.code.theaterapp.event.dtos.CreateEventDTO;
 import com.code.theaterapp.event.dtos.EventDetailsDTO;
+import com.code.theaterapp.event.dtos.EventSummaryDTO;
 import com.code.theaterapp.stage.Stage;
 import com.code.theaterapp.stage.StageRepo;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ public class EventService {
     private final StageRepo stageRepo;
     private final EventMapper eventMapper;
 
-    public List<EventDetailsDTO> getAllEvents() {
+    public List<EventSummaryDTO> getAllEvents() {
         return eventRepo.findAll().stream()
                 .map(eventMapper::apply)
                 .toList();
