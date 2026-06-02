@@ -1,5 +1,6 @@
 package com.code.theaterapp.auth.controllers;
 
+import com.code.theaterapp.auth.dtos.StaffRegisterConfirmationDTO;
 import com.code.theaterapp.auth.dtos.StaffRegisterDTO;
 import com.code.theaterapp.staff.StaffService;
 import com.code.theaterapp.staff.dtos.StaffDetailsDTO;
@@ -21,8 +22,8 @@ public class AdminController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<StaffDetailsDTO> register(@RequestBody StaffRegisterDTO request) {
-        StaffDetailsDTO dto = staffService.createStaff(request);
+    public ResponseEntity<StaffRegisterConfirmationDTO> register(@RequestBody StaffRegisterDTO request) {
+        StaffRegisterConfirmationDTO dto = staffService.createStaff(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 
