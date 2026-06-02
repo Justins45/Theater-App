@@ -3,12 +3,11 @@ package com.code.theaterapp.event;
 import com.code.theaterapp.event.dtos.CreateEventDTO;
 import com.code.theaterapp.event.dtos.EventDetailsDTO;
 import com.code.theaterapp.event.dtos.EventSummaryDTO;
+import com.code.theaterapp.exceptions.EntityNotFoundException;
 import com.code.theaterapp.stage.Stage;
 import com.code.theaterapp.stage.StageRepo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 import java.util.List;
@@ -36,7 +35,7 @@ public class EventService {
     public EventDetailsDTO createEvent(CreateEventDTO createEventDTO) {
 
         Stage stage = stageRepo.findByIdAndVenueId(createEventDTO.stageId(), createEventDTO.venueId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Stage not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Stage not found"));
 
         Event event = new Event();
         event.setTitle(createEventDTO.title());

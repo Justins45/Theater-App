@@ -1,5 +1,6 @@
 package com.code.theaterapp.venue;
 
+import com.code.theaterapp.exceptions.EntityNotFoundException;
 import com.code.theaterapp.venue.dtos.CreateVenueDTO;
 import com.code.theaterapp.venue.dtos.VenueDetailsDTO;
 import com.code.theaterapp.venue.dtos.VenueSummaryDTO;
@@ -26,7 +27,7 @@ public class VenueService {
 
     public VenueDetailsDTO getVenueById(Integer id) {
         Venue venue = venueRepo.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Stage not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Stage not found"));
 
         return venueMapper.toDetails(venue);
     }

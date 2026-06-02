@@ -2,6 +2,7 @@ package com.code.theaterapp.tickets;
 
 import com.code.theaterapp.event.Event;
 import com.code.theaterapp.event.EventRepo;
+import com.code.theaterapp.exceptions.EntityNotFoundException;
 import com.code.theaterapp.patron.Patron;
 import com.code.theaterapp.patron.PatronRepo;
 import com.code.theaterapp.shared.enums.TicketStatus;
@@ -11,9 +12,7 @@ import com.code.theaterapp.tickets.dtos.TicketSummaryDTO;
 import com.code.theaterapp.venue.Venue;
 import com.code.theaterapp.venue.VenueRepo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 import java.util.List;
@@ -38,7 +37,7 @@ public class TicketService {
 
     public TicketDetailsDTO getByIdAndPatronId(UUID ticketId, UUID patronId) {
       Ticket ticket = ticketRepo.findByIdAndPatronId(ticketId, patronId)
-              .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Patron not found"));
+              .orElseThrow(() -> new EntityNotFoundException("Patron not found"));
 
       return ticketMapper.toDetails(ticket);
     }
@@ -47,13 +46,13 @@ public class TicketService {
     public TicketDetailsDTO createTicket(CreateTicketDTO createTicketDTO) {
 
         Patron patron = patronRepo.findById(createTicketDTO.patronId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Patron not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Patron not found"));
 
         Event event = eventRepo.findById(createTicketDTO.eventId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Event not found"));
 
         Venue venue = venueRepo.findById(createTicketDTO.venueId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Venue not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Venue not found"));
 
 
 

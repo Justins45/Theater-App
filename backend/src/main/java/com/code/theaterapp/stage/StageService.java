@@ -1,14 +1,13 @@
 package com.code.theaterapp.stage;
 
+import com.code.theaterapp.exceptions.EntityNotFoundException;
 import com.code.theaterapp.stage.dtos.CreateStageDTO;
 import com.code.theaterapp.stage.dtos.StageDetailsDTO;
 import com.code.theaterapp.stage.dtos.StageSummaryDTO;
 import com.code.theaterapp.venue.Venue;
 import com.code.theaterapp.venue.VenueRepo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 import java.util.List;
@@ -32,14 +31,14 @@ public class StageService {
 
         // TODO: make new exception EntityNotFoundException(String message)
         Stage stage = stageRepo.findByIdAndVenueId(stageId, venueId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Stage not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Stage not found"));
 
         return stageMapper.toDetails(stage);
     }
 
     public StageDetailsDTO createStage(CreateStageDTO createStageDTO) {
         Venue venue = venueRepo.findById(createStageDTO.venueId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Venue not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Venue not found"));
 
         Stage stage = new Stage();
         stage.setName(createStageDTO.name());
