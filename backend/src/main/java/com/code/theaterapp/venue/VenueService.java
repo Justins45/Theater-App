@@ -2,6 +2,7 @@ package com.code.theaterapp.venue;
 
 import com.code.theaterapp.venue.dtos.CreateVenueDTO;
 import com.code.theaterapp.venue.dtos.VenueDetailsDTO;
+import com.code.theaterapp.venue.dtos.VenueSummaryDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,9 +18,9 @@ public class VenueService {
     private final VenueRepo venueRepo;
     private final VenueMapper venueMapper;
 
-    public List<VenueDetailsDTO> getAllVenues() {
+    public List<VenueSummaryDTO> getAllVenues() {
         return venueRepo.findAll().stream()
-                .map(venueMapper::toDetails)
+                .map(venueMapper::toSummary)
                 .toList();
     }
 
