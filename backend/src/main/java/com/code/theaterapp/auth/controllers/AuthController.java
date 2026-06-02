@@ -3,6 +3,7 @@ package com.code.theaterapp.auth.controllers;
 import com.code.theaterapp.auth.AuthService;
 import com.code.theaterapp.auth.dtos.LoginRequestDTO;
 import com.code.theaterapp.auth.dtos.LoginResponseDTO;
+import com.code.theaterapp.auth.dtos.PatronRegisterConfirmationDTO;
 import com.code.theaterapp.auth.dtos.PatronRegisterDTO;
 import com.code.theaterapp.auth.secruity.accounts.PatronAccount;
 import com.code.theaterapp.patron.PatronService;
@@ -33,8 +34,8 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<PatronDetailsDTO> register(@RequestBody PatronRegisterDTO request) {
-        PatronDetailsDTO dto = patronService.createPatron(request);
+    public ResponseEntity<PatronRegisterConfirmationDTO> register(@RequestBody PatronRegisterDTO request) {
+        PatronRegisterConfirmationDTO dto = patronService.createPatron(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 }

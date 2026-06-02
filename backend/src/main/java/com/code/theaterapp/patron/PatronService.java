@@ -1,5 +1,6 @@
 package com.code.theaterapp.patron;
 
+import com.code.theaterapp.auth.dtos.PatronRegisterConfirmationDTO;
 import com.code.theaterapp.auth.dtos.PatronRegisterDTO;
 import com.code.theaterapp.auth.secruity.accounts.PatronAccount;
 import com.code.theaterapp.exceptions.UsernameAlreadyExistsException;
@@ -25,7 +26,7 @@ public class PatronService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
-    public PatronDetailsDTO createPatron(PatronRegisterDTO registerDTO) {
+    public PatronRegisterConfirmationDTO createPatron(PatronRegisterDTO registerDTO) {
 
         if (personRepo.findByUsername(registerDTO.username()).isPresent()) {
             throw new UsernameAlreadyExistsException("Username is already taken");
@@ -44,7 +45,7 @@ public class PatronService {
         patron.setRole(Role.ROLE_PATRON);
 
         Patron savedPatron = patronRepo.save(patron);
-        return patronMapper.apply(savedPatron);
+        return patronMapper.toRegisterConfirmation(savedPatron);
     }
 
     public PatronMeResponse getMe(PatronAccount account) {
