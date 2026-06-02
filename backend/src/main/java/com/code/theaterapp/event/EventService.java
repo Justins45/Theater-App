@@ -25,12 +25,12 @@ public class EventService {
 
     public List<EventSummaryDTO> getAllEvents() {
         return eventRepo.findAll().stream()
-                .map(eventMapper::apply)
+                .map(eventMapper::toSummary)
                 .toList();
     }
 
     public Optional<EventDetailsDTO> getEventById(UUID id) {
-        return eventRepo.findById(id).map(eventMapper::apply);
+        return eventRepo.findById(id).map(eventMapper::toDetails);
     }
 
     public EventDetailsDTO createEvent(CreateEventDTO createEventDTO) {
@@ -45,7 +45,7 @@ public class EventService {
         event.setEventCreated(Instant.now());
 
         Event savedEvent = eventRepo.save(event);
-        return eventMapper.apply(savedEvent);
+        return eventMapper.toDetails(savedEvent);
 
     }
 
