@@ -19,7 +19,7 @@ public class VenueService {
 
     public List<VenueDetailsDTO> getAllVenues() {
         return venueRepo.findAll().stream()
-                .map(venueMapper::apply)
+                .map(venueMapper::toDetails)
                 .toList();
     }
 
@@ -27,7 +27,7 @@ public class VenueService {
         Venue venue = venueRepo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Stage not found"));
 
-        return venueMapper.apply(venue);
+        return venueMapper.toDetails(venue);
     }
 
     public VenueDetailsDTO createVenue(CreateVenueDTO createVenueDTO) {
@@ -42,6 +42,6 @@ public class VenueService {
         venue.setDateCreated(Instant.now());
 
         Venue savedVenue = venueRepo.save(venue);
-        return venueMapper.apply(savedVenue);
+        return venueMapper.toDetails(savedVenue);
     }
 }
