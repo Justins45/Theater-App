@@ -1,14 +1,12 @@
 package com.code.theaterapp.tickets;
 
 import com.code.theaterapp.tickets.dtos.TicketDetailsDTO;
+import com.code.theaterapp.tickets.dtos.TicketSummaryDTO;
 import org.springframework.stereotype.Component;
 
-import java.util.function.Function;
-
 @Component
-public class TicketMapper implements Function<Ticket, TicketDetailsDTO> {
-    @Override
-    public TicketDetailsDTO apply(Ticket ticket) {
+public class TicketMapper {
+    public TicketDetailsDTO toDetails(Ticket ticket) {
         return new TicketDetailsDTO(
                 ticket.getId(),
                 ticket.getPrice(),
@@ -18,4 +16,16 @@ public class TicketMapper implements Function<Ticket, TicketDetailsDTO> {
                 ticket.getTicketStatus()
         );
     }
+
+    public TicketSummaryDTO toSummary(Ticket ticket) {
+        return new TicketSummaryDTO(
+                ticket.getId(),
+                ticket.getPrice(),
+                ticket.getPatron().getId(),
+                ticket.getEvent().getId(),
+                ticket.getVenue().getId(),
+                ticket.getTicketStatus()
+        );
+    }
+
 }
