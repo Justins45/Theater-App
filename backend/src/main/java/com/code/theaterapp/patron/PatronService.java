@@ -3,7 +3,7 @@ package com.code.theaterapp.patron;
 import com.code.theaterapp.auth.dtos.PatronRegisterDTO;
 import com.code.theaterapp.auth.secruity.accounts.PatronAccount;
 import com.code.theaterapp.exceptions.UsernameAlreadyExistsException;
-import com.code.theaterapp.patron.dtos.PatronDTO;
+import com.code.theaterapp.patron.dtos.PatronDetailsDTO;
 import com.code.theaterapp.patron.dtos.PatronMeResponse;
 import com.code.theaterapp.shared.enums.Role;
 import com.code.theaterapp.shared.person.Person;
@@ -25,7 +25,7 @@ public class PatronService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
-    public PatronDTO createPatron(PatronRegisterDTO registerDTO) {
+    public PatronDetailsDTO createPatron(PatronRegisterDTO registerDTO) {
 
         if (personRepo.findByUsername(registerDTO.username()).isPresent()) {
             throw new UsernameAlreadyExistsException("Username is already taken");
