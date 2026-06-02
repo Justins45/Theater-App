@@ -7,6 +7,7 @@ import com.code.theaterapp.patron.PatronRepo;
 import com.code.theaterapp.shared.enums.TicketStatus;
 import com.code.theaterapp.tickets.dtos.CreateTicketDTO;
 import com.code.theaterapp.tickets.dtos.TicketDetailsDTO;
+import com.code.theaterapp.tickets.dtos.TicketSummaryDTO;
 import com.code.theaterapp.venue.Venue;
 import com.code.theaterapp.venue.VenueRepo;
 import lombok.RequiredArgsConstructor;
@@ -28,10 +29,10 @@ public class TicketService {
     private final EventRepo eventRepo;
     private final VenueRepo venueRepo;
 
-    public List<TicketDetailsDTO> getAllTickets(UUID patronId) {
+    public List<TicketSummaryDTO> getAllTickets(UUID patronId) {
         return ticketRepo.findAllByPatronId(patronId)
                 .stream()
-                .map(ticketMapper::apply)
+                .map(ticketMapper::toSummary)
                 .toList();
     }
 
@@ -39,7 +40,7 @@ public class TicketService {
       Ticket ticket = ticketRepo.findByIdAndPatronId(ticketId, patronId)
               .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Patron not found"));
 
-      return ticketMapper.apply(ticket);
+      return ticketMapper.toDetails(ticket);
     }
 
 
@@ -65,7 +66,7 @@ public class TicketService {
         ticket.setCreatedAt(Instant.now());
 
         Ticket savedTicket = ticketRepo.save(ticket);
-        return ticketMapper.apply(savedTicket);
+        return ticketMapper.toDetails(savedTicket);
     }
 
 
