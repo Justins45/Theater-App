@@ -1,7 +1,7 @@
 package com.code.theaterapp.event;
 
 import com.code.theaterapp.event.dtos.CreateEventDTO;
-import com.code.theaterapp.event.dtos.EventDTO;
+import com.code.theaterapp.event.dtos.EventDetailsDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +19,12 @@ public class EventController {
     private final EventService eventService;
 
     @GetMapping
-    public List<EventDTO> getAlLEvents() {
+    public List<EventDetailsDTO> getAlLEvents() {
         return eventService.getAllEvents();
     }
 
     @GetMapping("/{id}")
-    public EventDTO getEvent(@PathVariable("id") UUID id) {
+    public EventDetailsDTO getEvent(@PathVariable("id") UUID id) {
         // TODO: add checks for published and not expired
         //  .filter(e -> e.isPublished())
         //  .filter(e -> !e.isExpired())
@@ -34,8 +34,8 @@ public class EventController {
     }
 
     @PostMapping
-    public ResponseEntity<EventDTO> createEvent(@RequestBody CreateEventDTO request) {
-        EventDTO dto = eventService.createEvent(request);
+    public ResponseEntity<EventDetailsDTO> createEvent(@RequestBody CreateEventDTO request) {
+        EventDetailsDTO dto = eventService.createEvent(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 

@@ -1,15 +1,15 @@
 package com.code.theaterapp.event;
 
-import com.code.theaterapp.event.dtos.EventDTO;
+import com.code.theaterapp.event.dtos.EventDetailsDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Function;
 
 @Component
-public class EventMapper implements Function<Event, EventDTO> {
+public class EventMapper implements Function<Event, EventDetailsDTO> {
     @Override
-    public EventDTO apply(Event event) {
-        return new EventDTO(
+    public EventDetailsDTO apply(Event event) {
+        return new EventDetailsDTO(
                 event.getId(),
                 event.getTitle(),
                 event.getWallClock(),
