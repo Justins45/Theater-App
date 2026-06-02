@@ -1,6 +1,6 @@
 package com.code.theaterapp.stage.dtos;
 
-public record StageDTO(
+public record StageSummaryDTO(
         String name,
         Integer capacity,
         Integer venueId

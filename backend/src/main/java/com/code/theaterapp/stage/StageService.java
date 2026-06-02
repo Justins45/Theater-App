@@ -1,7 +1,8 @@
 package com.code.theaterapp.stage;
 
 import com.code.theaterapp.stage.dtos.CreateStageDTO;
-import com.code.theaterapp.stage.dtos.StageDTO;
+import com.code.theaterapp.stage.dtos.StageDetailsDTO;
+import com.code.theaterapp.stage.dtos.StageSummaryDTO;
 import com.code.theaterapp.venue.Venue;
 import com.code.theaterapp.venue.VenueRepo;
 import lombok.RequiredArgsConstructor;
@@ -21,22 +22,22 @@ public class StageService {
     private final StageMapper stageMapper;
 
 
-    public List<StageDTO> getAllStages(Integer venueId) {
+    public List<StageSummaryDTO> getAllStages(Integer venueId) {
         return stageRepo.findAllStagesByVenueId(venueId).stream()
-                .map(stageMapper::apply)
+                .map(stageMapper::toSummary)
                 .toList();
     }
 
-    public StageDTO findByIdAndVenueId(Integer stageId, Integer venueId) {
+    public StageDetailsDTO findByIdAndVenueId(Integer stageId, Integer venueId) {
 
         // TODO: make new exception EntityNotFoundException(String message)
         Stage stage = stageRepo.findByIdAndVenueId(stageId, venueId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Stage not found"));
 
-        return stageMapper.apply(stage);
+        return stageMapper.toDetails(stage);
     }
 
-    public StageDTO createStage(CreateStageDTO createStageDTO) {
+    public StageDetailsDTO createStage(CreateStageDTO createStageDTO) {
         Venue venue = venueRepo.findById(createStageDTO.venueId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Venue not found"));
 
@@ -47,6 +48,6 @@ public class StageService {
         stage.setVenue(venue);
 
         Stage savedStage = stageRepo.save(stage);
-        return stageMapper.apply(savedStage);
+        return stageMapper.toDetails(savedStage);
     }
 }

@@ -1,15 +1,22 @@
 package com.code.theaterapp.stage;
 
-import com.code.theaterapp.stage.dtos.StageDTO;
+import com.code.theaterapp.stage.dtos.StageDetailsDTO;
+import com.code.theaterapp.stage.dtos.StageSummaryDTO;
 import org.springframework.stereotype.Component;
 
-import java.util.function.Function;
-
 @Component
-public class StageMapper implements Function<Stage, StageDTO> {
-    @Override
-    public StageDTO apply(Stage stage) {
-        return new StageDTO(
+public class StageMapper {
+
+    public StageDetailsDTO toDetails(Stage stage) {
+        return new StageDetailsDTO(
+                stage.getName(),
+                stage.getCapacity(),
+                stage.getVenue().getId()
+        );
+    }
+
+    public StageSummaryDTO toSummary(Stage stage) {
+        return new StageSummaryDTO(
                 stage.getName(),
                 stage.getCapacity(),
                 stage.getVenue().getId()
