@@ -129,7 +129,7 @@ public class SecurityConfig {
                 .anyRequest().permitAll()
         );
 
-        // TODO: Frontend should redirect 401 (not authenticated) → login page
+        // NOTE: Frontend should redirect 401 (not authenticated) → login page
         //       and 403 (authenticated but forbidden) → access denied page
 
         http.httpBasic(Customizer.withDefaults());
