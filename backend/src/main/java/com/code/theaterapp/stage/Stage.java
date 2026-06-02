@@ -30,10 +30,5 @@ public class Stage {
 
     @Column(nullable = false)
     private Integer capacity;
-
-
-
-    // TODO: add stage dimensions
-
-
+    
 }
