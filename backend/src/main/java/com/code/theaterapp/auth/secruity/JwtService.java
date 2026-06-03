@@ -109,14 +109,15 @@ public class JwtService {
      */
 
     /**
-     * Validates a JWT token — additional checks are pending implementation.
+     * Validates a JWT token
      *
      * @param token the JWT token to validate
      * @return {@code true} if the token passes all currently implemented checks
      */
     public boolean validateToken(String token) {
         try {
-            return !isTokenExpired(token);
+            extractAllClaims(token);
+            return true;
         } catch (JwtException | IllegalArgumentException e) {
             return false;
         }
