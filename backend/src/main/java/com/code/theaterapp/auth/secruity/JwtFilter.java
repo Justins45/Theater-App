@@ -72,26 +72,7 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
 
-        /*
-         * Check if the authToken exists and if it does not check the rememberToken for username
-         */
-        String username = null;
-        try {
-            if (authToken != null) {
-                username = jwTservice.extractUsername(authToken);
-            } else if (jwTservice.validateToken(rememberToken)) {
-                username = jwTservice.extractUsername(rememberToken);
-            }
-        } catch (JwtException | IllegalArgumentException e) {
-            // Token exists but is malformed or signed with the wrong key.
-            // Treat as unauthenticated and let the request proceed to authentication check.
-            log.warn("Invalid JWT token on request to {}: {}",
-                    request.getRequestURI(), e.getMessage());
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        // Catch all if the rememberToken is invalid (no username from valid token saved)
+        String username = getUsernameFromToken(authToken, rememberToken);
         if (username == null) {
             filterChain.doFilter(request, response);
             return;
@@ -152,5 +133,18 @@ public class JwtFilter extends OncePerRequestFilter {
 
         // proceed to subsequent filters
         filterChain.doFilter(request, response);
+    }
+
+    private String getUsernameFromToken(String authToken, String rememberToken) {
+        try {
+            if (authToken != null) {
+                return jwTservice.extractUsername(authToken);
+            } else if (jwTservice.validateToken(rememberToken)) {
+                return jwTservice.extractUsername(rememberToken);
+            }
+        } catch (JwtException | IllegalArgumentException e) {
+            log.warn("Invalid JWT token, treating as unauthenticated: {}", e.getMessage());
+        }
+        return null;
     }
 }
