@@ -30,7 +30,7 @@ public class PersonValidationService {
 
     public void validateNoStaffAccount(String email) {
         Person person = personRepo.findByEmail(email).orElseThrow(
-                () -> new EntityNotFoundException("Email not found")
+                () -> new EntityNotFoundException("Person not found")
         );
 
         staffRepo.findByPerson(person).ifPresent(

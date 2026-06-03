@@ -9,6 +9,7 @@ import com.code.theaterapp.patron.dtos.PatronMeResponse;
 import com.code.theaterapp.shared.enums.Role;
 import com.code.theaterapp.shared.person.Person;
 import com.code.theaterapp.shared.person.PersonRepo;
+import com.code.theaterapp.shared.person.PersonValidationService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,6 +21,7 @@ import java.time.OffsetDateTime;
 @RequiredArgsConstructor
 public class PatronService {
 
+    private final PersonValidationService personValidationService;
     private final PersonRepo personRepo;
     private final PatronRepo patronRepo;
     private final PatronMapper patronMapper;
@@ -28,9 +30,8 @@ public class PatronService {
     @Transactional
     public PatronRegisterConfirmationDTO createPatron(PatronRegisterDTO registerDTO) {
 
-        if (personRepo.findByUsername(registerDTO.username()).isPresent()) {
-            throw new UsernameAlreadyExistsException("Username is already taken");
-        }
+        personValidationService.validateUniqueEmail(registerDTO.email());
+        personValidationService.validateUniqueUsername(registerDTO.username());
 
         Person person = new Person();
         person.setUsername(registerDTO.username());

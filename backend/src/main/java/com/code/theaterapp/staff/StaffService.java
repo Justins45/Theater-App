@@ -72,7 +72,7 @@ public class StaffService {
     public StaffRegisterConfirmationDTO createStaffExistingAccount(StaffRegisterDTO requestDTO) {
 
         Person person = personRepo.findByEmail(requestDTO.email()).orElseThrow(
-                () -> new EntityNotFoundException("Email not found")
+                () -> new EntityNotFoundException("Person not found")
         );
 
         personValidationService.validateNoStaffAccount(person.getEmail());
