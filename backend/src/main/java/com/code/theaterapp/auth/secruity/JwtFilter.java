@@ -78,23 +78,7 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
 
-        // set new authToken if authToken is within 10 minutes of expiring
-        if (authToken != null && rememberToken != null && jwTservice.validateToken(rememberToken)) {
-            try {
-                Date now = new Date();
-                Date authTokenExp = jwTservice.extractExpiration(authToken);
-                long millisUntilExpiry = authTokenExp.getTime() - now.getTime();
-                String userType = jwTservice.extractUserType(authToken);
-
-                if (millisUntilExpiry < TimeUnit.MINUTES.toMillis(10)) {
-                    ResponseCookie newAuthCookie = jwTservice.generateToken(username, userType, authTokenName);
-                    response.addHeader(HttpHeaders.SET_COOKIE, newAuthCookie.toString());
-                    authToken = newAuthCookie.getValue();
-                }
-            } catch (JwtException | IllegalArgumentException e) {
-                log.warn("JWT refresh attempt failed for user '{}': {}", username, e.getMessage());
-            }
-        }
+        authToken = refreshTokenOrSetNew(authToken, rememberToken, username, response);
 
         // set authentication for user
         if (SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -143,10 +127,41 @@ public class JwtFilter extends OncePerRequestFilter {
         return null;
     }
 
+    /**
+     * Extract a username from whichever token is usable.
+     * Returns null if neither token yields a valid username.
+     */
     private UserDetails loadUserDetails(String username, String userType) {
         if ("STAFF".equals(userType)) {
             return staffDetailsService.loadUserByUsername(username);
         }
         return patronDetailsService.loadUserByUsername(username);
+    }
+
+    /**
+     * If the auth token is within 10 minutes of expiry and a valid remember token exists,
+     * issue a new auth token cookie and return its value. Otherwise, return the original.
+     */
+    private String refreshTokenOrSetNew(String authToken, String rememberToken, String username,
+                                 HttpServletResponse response) {
+
+        if (authToken == null || rememberToken == null) return null;
+        if (!jwTservice.validateToken(rememberToken)) return authToken;
+
+        try {
+            Date authTokenExp = jwTservice.extractExpiration(authToken);
+            long millisUntilExpiry = authTokenExp.getTime() - new Date().getTime();
+            String userType = jwTservice.extractUserType(authToken);
+
+            if (millisUntilExpiry < TimeUnit.MINUTES.toMillis(10)) {
+                ResponseCookie newAuthCookie = jwTservice.generateToken(username, userType, authTokenName);
+                response.addHeader(HttpHeaders.SET_COOKIE, newAuthCookie.toString());
+                return newAuthCookie.getValue();
+            }
+        } catch (JwtException | IllegalArgumentException e) {
+            log.warn("JWT refresh attempt failed for user '{}': {}", username, e.getMessage());
+        }
+
+        return authToken;
     }
 }
