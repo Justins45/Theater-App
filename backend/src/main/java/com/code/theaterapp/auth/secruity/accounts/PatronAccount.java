@@ -43,8 +43,6 @@ public class PatronAccount implements UserDetails {
     public String getLastname() { return person.getLastName(); }
     public UUID getId() { return patron.getId(); }
 
-    // TODO: impl later ex: account banning / email verification (locking account till verified or something like that)
-
     @Override
     public boolean isAccountNonExpired() {
         return UserDetails.super.isAccountNonExpired();

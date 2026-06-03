@@ -3,11 +3,11 @@ package com.code.theaterapp.event;
 import com.code.theaterapp.event.dtos.CreateEventDTO;
 import com.code.theaterapp.event.dtos.EventDetailsDTO;
 import com.code.theaterapp.event.dtos.EventSummaryDTO;
+import com.code.theaterapp.exceptions.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
@@ -26,11 +26,8 @@ public class EventController {
 
     @GetMapping("/{id}")
     public EventDetailsDTO getEvent(@PathVariable("id") UUID id) {
-        // TODO: add checks for published and not expired
-        //  .filter(e -> e.isPublished())
-        //  .filter(e -> !e.isExpired())
         return eventService.getEventById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+                () -> new EntityNotFoundException("Event not found")
         );
     }
 

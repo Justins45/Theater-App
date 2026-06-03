@@ -45,9 +45,6 @@ public class StaffAccount implements UserDetails {
     public Role getRole() { return staff.getRole(); }
     public OffsetDateTime getAccountCreation() { return staff.getStaffAccountCreation(); }
 
-
-    // TODO: impl later ex: account banning / email verification (locking account till verified or something like that)
-
     @Override
     public boolean isAccountNonExpired() {
         return UserDetails.super.isAccountNonExpired();
