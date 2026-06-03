@@ -104,28 +104,8 @@ public class JwtService {
     }
 
     /*
-     * TODO: Expand validation to check both token expiry (done ✅) and full token validity (not done ❌).
-     *
-     *  - extractAllClaims() currently handles:
-     *       • Signature verification  -> verifyWith(getKey())
-     *       • Structure integrity (header, payload, signature)  -> parseSignedClaims(token)
-     *
-     *   - Still needed:
-     *     Must-Have:
-     *       • Issuer (iss) validation       -> .requireIssuer(...)  on JwtParserBuilder ✅
-     *       • Algorithm allowlist (alg)     -> research: JwtParserBuilder does not allow alg header override,
-     *                                          but explicitly set verifyWith() key type to restrict (e.g. SecretKey HS256 only) ✅
-     *       • Required claims presence      -> research: manually assert Claims.get("sub"), ("iss"), ("exp") != null
-     *                                          after extractAllClaims() ✅
-     *     Should-Have:
-     *       • Token revocation / blocklist  -> research: Redis denylist, check jti or token hash on each request
-     *                                          (not needed at this moment - is a deeper dive to block / kill any open
-     *                                          token like logout but still has 15 minutes left on the auth token
-     *                                          expiry) ❌
-     *       • Audience (aud) validation     -> research: .requireAudience(...) on JwtParserBuilder
-     *
-     *
-     * TODO: Update Javadocs once validation checks are finalized.
+     * NOTE: Add token - Token revocation / blocklist - when needed
+     *      also Audience (aud) validation when frontend end backend come into play
      */
 
     /**
@@ -203,10 +183,12 @@ public class JwtService {
     }
 
     /**
-     * Parses and validates the JWT token's signature, returning all contained {@link Claims}.
+     * Parses and validates the JWT token, verifying its signature, issuer, and
+     * required claims, then returns the contained {@link Claims}.
      *
      * @param token the signed JWT token to parse
      * @return the {@link Claims} payload from the verified token
+     * @throws JwtException if the token is invalid or missing required claims
      */
     private Claims extractAllClaims(String token) {
         Claims claims = Jwts
