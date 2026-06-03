@@ -1,22 +1,15 @@
 package com.code.theaterapp.staff;
 
-import com.code.theaterapp.auth.dtos.StaffRegisterConfirmationDTO;
-import com.code.theaterapp.auth.dtos.StaffRegisterDTO;
+import com.code.theaterapp.auth.dtos.*;
 import com.code.theaterapp.auth.secruity.accounts.StaffAccount;
-import com.code.theaterapp.exceptions.AccountAlreadyExistsException;
 import com.code.theaterapp.exceptions.EntityNotFoundException;
-import com.code.theaterapp.exceptions.UsernameAlreadyExistsException;
-import com.code.theaterapp.patron.Patron;
-import com.code.theaterapp.patron.PatronRepo;
-import com.code.theaterapp.shared.enums.Role;
+import com.code.theaterapp.patron.PatronService;
 import com.code.theaterapp.shared.person.Person;
 import com.code.theaterapp.shared.person.PersonRepo;
 import com.code.theaterapp.shared.person.PersonValidationService;
-import com.code.theaterapp.staff.dtos.StaffDetailsDTO;
 import com.code.theaterapp.staff.dtos.StaffMeResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
@@ -27,10 +20,9 @@ public class StaffService {
 
     private final PersonValidationService personValidationService;
     private final PersonRepo personRepo;
+    private final PatronService patronService;
     private final StaffRepo staffRepo;
-    private final PatronRepo patronRepo;
     private final StaffMapper staffMapper;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
     public StaffRegisterConfirmationDTO createStaffNoAccount(StaffRegisterDTO requestDTO) {
@@ -38,29 +30,24 @@ public class StaffService {
         personValidationService.validateUniqueEmail(requestDTO.email());
         personValidationService.validateUniqueUsername(requestDTO.username());
 
+        PatronRegisterDTO patronRegisterDTO = new PatronRegisterDTO(
+                requestDTO.username(),
+                requestDTO.password(),
+                requestDTO.email()
+        );
 
-        // Make generic person
-        Person person = new Person();
-        person.setUsername(requestDTO.username());
-        person.setEmail(requestDTO.email());
-        person.setPassword(bCryptPasswordEncoder.encode(requestDTO.password()));
-        person.setAccountCreated(OffsetDateTime.now());
-
-        Person savedPerson = personRepo.save(person);
-
-        // make Patron as each staff member needs a patron account
-        Patron patron = new Patron();
-        patron.setPerson(savedPerson);
-        patron.setRole(Role.ROLE_PATRON);
-
-        patronRepo.save(patron);
+        PatronRegisterConfirmationDTO patron = patronService.createPatron(patronRegisterDTO);
 
 
-        personValidationService.validateNoStaffAccount(savedPerson.getEmail());
+        personValidationService.validateNoStaffAccount(patron.email());
+
+        Person person = personRepo.findByEmail(patronRegisterDTO.email()).orElseThrow(
+                () -> new EntityNotFoundException("Person does not exist")
+        );
 
         // make staff account
         Staff staff = new Staff();
-        staff.setPerson(savedPerson);
+        staff.setPerson(person);
         staff.setStaffAccountCreation(OffsetDateTime.now());
         staff.setRole(requestDTO.role());
 

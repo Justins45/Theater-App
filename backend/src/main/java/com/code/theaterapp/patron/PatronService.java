@@ -9,7 +9,10 @@ import com.code.theaterapp.patron.dtos.PatronMeResponse;
 import com.code.theaterapp.shared.enums.Role;
 import com.code.theaterapp.shared.person.Person;
 import com.code.theaterapp.shared.person.PersonRepo;
+import com.code.theaterapp.shared.person.PersonService;
 import com.code.theaterapp.shared.person.PersonValidationService;
+import com.code.theaterapp.shared.person.dtos.CreatePersonDTO;
+import com.code.theaterapp.shared.person.dtos.PersonDetailsDTO;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,28 +24,23 @@ import java.time.OffsetDateTime;
 @RequiredArgsConstructor
 public class PatronService {
 
-    private final PersonValidationService personValidationService;
-    private final PersonRepo personRepo;
+    private final PersonService personService;
     private final PatronRepo patronRepo;
     private final PatronMapper patronMapper;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
     public PatronRegisterConfirmationDTO createPatron(PatronRegisterDTO registerDTO) {
 
-        personValidationService.validateUniqueEmail(registerDTO.email());
-        personValidationService.validateUniqueUsername(registerDTO.username());
+        CreatePersonDTO createPersonDTO = new CreatePersonDTO(
+                registerDTO.username(),
+                registerDTO.password(),
+                registerDTO.email()
+        );
 
-        Person person = new Person();
-        person.setUsername(registerDTO.username());
-        person.setPassword(bCryptPasswordEncoder.encode(registerDTO.password()));
-        person.setEmail(registerDTO.email());
-        person.setAccountCreated(OffsetDateTime.now());
-
-        Person savedPerson = personRepo.save(person);
+        Person person = personService.createPerson(createPersonDTO);
 
         Patron patron = new Patron();
-        patron.setPerson(savedPerson);
+        patron.setPerson(person);
         patron.setRole(Role.ROLE_PATRON);
 
         Patron savedPatron = patronRepo.save(patron);
