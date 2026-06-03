@@ -21,9 +21,15 @@ public class AdminController {
         return "Welcome to the admin root path";
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<StaffRegisterConfirmationDTO> register(@RequestBody StaffRegisterDTO request) {
-        StaffRegisterConfirmationDTO dto = staffService.createStaff(request);
+    @PostMapping("/register-new")
+    public ResponseEntity<StaffRegisterConfirmationDTO> registerNew(@RequestBody StaffRegisterDTO request) {
+        StaffRegisterConfirmationDTO dto = staffService.createStaffNoAccount(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(dto);
+    }
+
+    @PostMapping("/register-existing")
+    public ResponseEntity<StaffRegisterConfirmationDTO> registerExisting(@RequestBody StaffRegisterDTO request) {
+        StaffRegisterConfirmationDTO dto = staffService.createStaffExistingAccount(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 
