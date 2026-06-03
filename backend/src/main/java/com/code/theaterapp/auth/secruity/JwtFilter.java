@@ -102,12 +102,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
                 String userType = jwTservice.extractUserType(authToken);
 
-                UserDetails userDetails;
-                if ("STAFF".equals(userType)) {
-                    userDetails = staffDetailsService.loadUserByUsername(username);
-                } else {
-                    userDetails = patronDetailsService.loadUserByUsername(username);
-                }
+                UserDetails userDetails = loadUserDetails(username, userType);
 
                 if (jwTservice.validateToken(authToken, userDetails.getUsername())) {
 
@@ -146,5 +141,12 @@ public class JwtFilter extends OncePerRequestFilter {
             log.warn("Invalid JWT token, treating as unauthenticated: {}", e.getMessage());
         }
         return null;
+    }
+
+    private UserDetails loadUserDetails(String username, String userType) {
+        if ("STAFF".equals(userType)) {
+            return staffDetailsService.loadUserByUsername(username);
+        }
+        return patronDetailsService.loadUserByUsername(username);
     }
 }
