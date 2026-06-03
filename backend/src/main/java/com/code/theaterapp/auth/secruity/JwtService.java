@@ -29,6 +29,8 @@ public class JwtService {
     @Value("${remember.token.name}")
     private String rememberTokenName;
 
+    private final String BASE_URL = "http://localhost:8080";
+
     /**
      * Generates a signed JWT and packages it as a {@link ResponseCookie}.
      * Defaults to a 1-hour token unless the {@link #rememberTokenName} cookie is requested, which extends to 24 hours.
@@ -62,6 +64,7 @@ public class JwtService {
 
         JwtBuilder builder = Jwts.builder()
                 .subject(username)
+                .issuer(BASE_URL)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(tokenDuration)))
                 .signWith(getKey());
@@ -101,35 +104,20 @@ public class JwtService {
     }
 
     /*
-     * TODO: Expand validation to check both token expiry (done ✅) and full token validity (not done ❌).
-     *
-     *  - extractAllClaims() currently handles:
-     *       • Signature verification  -> verifyWith(getKey())
-     *       • Structure integrity (header, payload, signature)  -> parseSignedClaims(token)
-     *
-     *   - Still needed:
-     *     Must-Have:
-     *       • Issuer (iss) validation       -> .requireIssuer(...)  on JwtParserBuilder
-     *       • Algorithm allowlist (alg)     -> research: JwtParserBuilder does not allow alg header override,
-     *                                          but explicitly set verifyWith() key type to restrict (e.g. SecretKey -> HS256 only)
-     *       • Required claims presence      -> research: manually assert Claims.get("sub"), ("iss"), ("exp") != null
-     *                                          after extractAllClaims()
-     *     Should-Have:
-     *       • Token revocation / blocklist  -> research: Redis denylist, check jti or token hash on each request
-     *       • Audience (aud) validation     -> research: .requireAudience(...) on JwtParserBuilder
-     *
-     * TODO: Update Javadocs once validation checks are finalized.
+     * NOTE: Add token - Token revocation / blocklist - when needed
+     *      also Audience (aud) validation when frontend end backend come into play
      */
 
     /**
-     * Validates a JWT token — additional checks are pending implementation.
+     * Validates a JWT token
      *
      * @param token the JWT token to validate
      * @return {@code true} if the token passes all currently implemented checks
      */
     public boolean validateToken(String token) {
         try {
-            return !isTokenExpired(token);
+            extractAllClaims(token);
+            return true;
         } catch (JwtException | IllegalArgumentException e) {
             return false;
         }
@@ -196,18 +184,27 @@ public class JwtService {
     }
 
     /**
-     * Parses and validates the JWT token's signature, returning all contained {@link Claims}.
+     * Parses and validates the JWT token, verifying its signature, issuer, and
+     * required claims, then returns the contained {@link Claims}.
      *
      * @param token the signed JWT token to parse
      * @return the {@link Claims} payload from the verified token
+     * @throws JwtException if the token is invalid or missing required claims
      */
     private Claims extractAllClaims(String token) {
-        return Jwts
+        Claims claims = Jwts
                 .parser()
                 .verifyWith(getKey())
+                .requireIssuer(BASE_URL)
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
+
+        if (claims.getSubject() == null || claims.getExpiration() == null || claims.getIssuer() == null) {
+            throw new JwtException("Token is missing required claims");
+        }
+
+        return claims;
     }
 }
 
