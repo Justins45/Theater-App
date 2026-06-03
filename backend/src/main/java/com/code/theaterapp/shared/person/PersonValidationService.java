@@ -17,13 +17,13 @@ public class PersonValidationService {
 
     public void validateUniqueEmail(String email) {
         personRepo.findByEmail(email).ifPresent(
-                p -> { throw new EmailAlreadyExistsException(email); }
+                _ -> { throw new EmailAlreadyExistsException(email); }
         );
     }
 
     public void validateUniqueUsername(String username) {
         personRepo.findByUsername(username).ifPresent(
-                p -> { throw new UsernameAlreadyExistsException(username); }
+                _ -> { throw new UsernameAlreadyExistsException(username); }
         );
     }
 
@@ -34,7 +34,7 @@ public class PersonValidationService {
         );
 
         staffRepo.findByPerson(person).ifPresent(
-                s -> { throw new AccountAlreadyExistsException("Staff account already exists"); }
+                _ -> { throw new AccountAlreadyExistsException("Staff account already exists"); }
         );
     }
 
