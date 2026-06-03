@@ -8,6 +8,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,7 +38,6 @@ import java.util.concurrent.TimeUnit;
  * </ol>
  */
 
-// TODO: Refactor into single purpose methods (not all in one method - OOD 🤮)
 @Component
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
@@ -56,9 +56,9 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            FilterChain filterChain
+            @NonNull HttpServletRequest request,
+            @NonNull HttpServletResponse response,
+            @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
 
 
@@ -80,35 +80,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         authToken = refreshTokenOrSetNew(authToken, rememberToken, username, response);
 
-        // set authentication for user
-        if (SecurityContextHolder.getContext().getAuthentication() == null) {
-            try {
-
-                String userType = jwTservice.extractUserType(authToken);
-
-                UserDetails userDetails = loadUserDetails(username, userType);
-
-                if (jwTservice.validateToken(authToken, userDetails.getUsername())) {
-
-                    UsernamePasswordAuthenticationToken authentication =
-                            new UsernamePasswordAuthenticationToken(
-                                    userDetails,
-                                    null,
-                                    userDetails.getAuthorities()
-                            );
-                    authentication.setDetails(
-                            new WebAuthenticationDetailsSource().buildDetails(request)
-                    );
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-                }
-            } catch (JwtException | IllegalArgumentException e) {
-                log.warn("JWT auth context setup failed for user '{}' on {}: {}",
-                        username, request.getRequestURI(), e.getMessage());
-                // leave SecurityContext unauthenticated
-
-            }
-
-        }
+        setAuthentication(authToken, username, request);
 
         // proceed to subsequent filters
         filterChain.doFilter(request, response);
@@ -142,8 +114,12 @@ public class JwtFilter extends OncePerRequestFilter {
      * If the auth token is within 10 minutes of expiry and a valid remember token exists,
      * issue a new auth token cookie and return its value. Otherwise, return the original.
      */
-    private String refreshTokenOrSetNew(String authToken, String rememberToken, String username,
-                                 HttpServletResponse response) {
+    private String refreshTokenOrSetNew(
+            String authToken,
+            String rememberToken,
+            String username,
+            HttpServletResponse response
+    ) {
 
         if (authToken == null || rememberToken == null) return null;
         if (!jwTservice.validateToken(rememberToken)) return authToken;
@@ -163,5 +139,36 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         return authToken;
+    }
+
+    /**
+     * Populate the SecurityContext if it isn't already authenticated.
+     */
+    private void setAuthentication(
+            String authToken,
+            String username,
+            HttpServletRequest request
+    ) {
+        if (authToken == null) return;
+        if (SecurityContextHolder.getContext().getAuthentication() != null) return;
+
+        try {
+            String userType = jwTservice.extractUserType(authToken);
+            UserDetails userDetails = loadUserDetails(username, userType);
+
+            if (jwTservice.validateToken(authToken, userDetails.getUsername())) {
+                UsernamePasswordAuthenticationToken authentication =
+                        new UsernamePasswordAuthenticationToken(
+                                userDetails, null, userDetails.getAuthorities()
+                        );
+                authentication.setDetails(
+                        new WebAuthenticationDetailsSource().buildDetails(request)
+                );
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+        } catch (JwtException | IllegalArgumentException e) {
+            log.warn("JWT auth context setup failed for user '{}' on {}: {}",
+                    username, request.getRequestURI(), e.getMessage());
+        }
     }
 }
