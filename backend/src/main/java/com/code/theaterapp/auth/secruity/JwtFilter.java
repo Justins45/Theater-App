@@ -156,7 +156,7 @@ public class JwtFilter extends OncePerRequestFilter {
             String userType = jwTservice.extractUserType(authToken);
             UserDetails userDetails = loadUserDetails(email, userType);
 
-            if (jwTservice.validateToken(authToken, userDetails.getUsername())) {
+            if (jwTservice.validateToken(authToken)) {
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(
                                 userDetails, null, userDetails.getAuthorities()
