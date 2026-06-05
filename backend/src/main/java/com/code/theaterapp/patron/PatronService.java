@@ -24,9 +24,8 @@ public class PatronService {
     public PatronRegisterConfirmationDTO createPatron(PatronRegisterDTO registerDTO) {
 
         CreatePersonDTO createPersonDTO = new CreatePersonDTO(
-                registerDTO.username(),
-                registerDTO.password(),
-                registerDTO.email()
+                registerDTO.email(),
+                registerDTO.password()
         );
 
         Person person = personService.createPerson(createPersonDTO);
@@ -41,10 +40,10 @@ public class PatronService {
 
     public PatronMeResponse getMe(PatronAccount account) {
         return new PatronMeResponse(
-                account.getUsername(),
                 account.getEmail(),
                 account.getFirstname(),
-                account.getLastname()
+                account.getLastname(),
+                account.getDisplayName()
         );
     }
 

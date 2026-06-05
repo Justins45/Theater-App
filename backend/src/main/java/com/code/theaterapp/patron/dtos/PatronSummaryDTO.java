@@ -4,8 +4,8 @@ import java.util.UUID;
 
 public record PatronSummaryDTO(
         UUID id,
-        String username,
         String firstName,
-        String lastName
+        String lastName,
+        String displayname
 ) {
 }

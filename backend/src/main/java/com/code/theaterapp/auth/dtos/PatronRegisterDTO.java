@@ -7,18 +7,12 @@ import jakarta.validation.constraints.Size;
 
 public record PatronRegisterDTO(
         @NotBlank
-        @Size(min = 3, max = 50)
-        @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Username may only contain letters, numbers, underscores, and hyphens")
-        String username,
+        @Size(max = 254)
+        @Email
+        String email,
 
         @NotBlank
         @Size(min = 8,max = 72)
-        String password,
-
-
-        @NotBlank
-        @Size(max = 254)
-        @Email
-        String email
+        String password
 ) {
 }
