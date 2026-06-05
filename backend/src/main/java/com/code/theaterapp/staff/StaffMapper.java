@@ -4,8 +4,6 @@ import com.code.theaterapp.auth.dtos.StaffRegisterConfirmationDTO;
 import com.code.theaterapp.staff.dtos.StaffDetailsDTO;
 import org.springframework.stereotype.Component;
 
-import java.util.function.Function;
-
 @Component
 public class StaffMapper {
     public StaffDetailsDTO toDetails(Staff staff) {

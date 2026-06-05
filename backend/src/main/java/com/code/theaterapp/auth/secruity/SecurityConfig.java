@@ -64,15 +64,13 @@ public class SecurityConfig {
     /**
      * Exposes Spring Security's {@link AuthenticationManager} as a bean,
      * used in the login flow to trigger credential validation.
-     *
-     * @throws Exception if the manager cannot be retrieved from config
      */
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration config,
             @Qualifier("staffAuthProvider") AuthenticationProvider staffProvider,
             @Qualifier("patronAuthProvider") AuthenticationProvider patronProvider
-    ) throws Exception {
+    ) {
         return new ProviderManager(List.of(staffProvider, patronProvider));
     }
 
@@ -100,15 +98,13 @@ public class SecurityConfig {
      *   <li>Registers the {@link JwtFilter} to validate tokens before Spring's auth filter</li>
      *   <li>Sets session policy to stateless since auth state lives in cookies, not the server</li>
      * </ul>
-     *
-     * @throws Exception if the filter chain cannot be built
      */
     @Bean
     public SecurityFilterChain securityFilterChain(
             HttpSecurity http,
             @Qualifier("staffAuthProvider") AuthenticationProvider staffProvider,
             @Qualifier("patronAuthProvider") AuthenticationProvider patronProvider
-    ) throws Exception {
+    ) {
 
         // Keep separate like this to allow for comment addition
 

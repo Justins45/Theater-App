@@ -1,7 +1,6 @@
 package com.code.theaterapp.shared.person;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,7 +24,7 @@ public class Person {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false)
     private String password;
 
     @Column(nullable = false)
@@ -33,7 +32,7 @@ public class Person {
 
     private String firstName;
     private String lastName;
-    
+
     private String displayName;
 
     /**

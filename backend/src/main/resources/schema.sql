@@ -1,7 +1,0 @@
--- VENUE CREATION WHILE USING create-drop FOR POSTGRES
-CREATE TABLE IF NOT EXISTS venue
-(
-    id       INT PRIMARY KEY,
-    name     VARCHAR(100),
-    timezone VARCHAR(50)
-);
