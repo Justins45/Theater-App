@@ -6,9 +6,9 @@ import java.util.UUID;
 
 public record StaffSummaryDTO(
         UUID id,
-        String username,
         String firstName,
         String lastName,
+        String displayname,
         Role role
 ) {
 }

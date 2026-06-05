@@ -10,17 +10,16 @@ import java.util.function.Function;
 public class StaffMapper {
     public StaffDetailsDTO toDetails(Staff staff) {
         return new StaffDetailsDTO(
-                staff.getPerson().getUsername(),
                 staff.getPerson().getEmail(),
                 staff.getPerson().getFirstName(),
                 staff.getPerson().getLastName(),
+                staff.getPerson().getAccountName(),
                 staff.getRole()
         );
     }
 
     public StaffRegisterConfirmationDTO toRegisterConfirmation(Staff staff) {
         return new StaffRegisterConfirmationDTO(
-                staff.getPerson().getUsername(),
                 staff.getPerson().getEmail(),
                 staff.getRole()
         );

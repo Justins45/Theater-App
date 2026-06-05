@@ -28,10 +28,8 @@ public class StaffService {
     public StaffRegisterConfirmationDTO createStaffNoAccount(StaffRegisterDTO requestDTO) {
 
         personValidationService.validateUniqueEmail(requestDTO.email());
-        personValidationService.validateUniqueUsername(requestDTO.username());
 
         PatronRegisterDTO patronRegisterDTO = new PatronRegisterDTO(
-                requestDTO.username(),
                 requestDTO.password(),
                 requestDTO.email()
         );
@@ -77,10 +75,10 @@ public class StaffService {
     @Transactional
     public StaffMeResponse getMe(StaffAccount account) {
         return new StaffMeResponse(
-                account.getUsername(),
                 account.getEmail(),
                 account.getFirstname(),
                 account.getLastname(),
+                account.getDisplayName(),
                 account.getRole(),
                 account.getAccountCreation()
         );
