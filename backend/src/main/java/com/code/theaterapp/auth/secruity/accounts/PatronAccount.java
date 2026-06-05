@@ -33,14 +33,18 @@ public class PatronAccount implements UserDetails {
         return person.getPassword();
     }
 
+    /**
+     * We return EMAIL because we do not use username
+     */
     @Override
     public @NullMarked String getUsername() {
-        return person.getUsername();
+        return getEmail();
     }
 
     public String getEmail() { return person.getEmail(); }
     public String getFirstname() { return person.getFirstName(); }
     public String getLastname() { return person.getLastName(); }
+    public String getDisplayName() { return person.getDisplayName(); }
     public UUID getId() { return patron.getId(); }
 
     @Override

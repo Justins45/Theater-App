@@ -13,7 +13,7 @@ public class StaffMapper {
                 staff.getPerson().getEmail(),
                 staff.getPerson().getFirstName(),
                 staff.getPerson().getLastName(),
-                staff.getPerson().getAccountName(),
+                staff.getPerson().getDisplayName(),
                 staff.getRole()
         );
     }

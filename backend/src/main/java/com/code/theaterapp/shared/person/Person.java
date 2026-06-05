@@ -1,6 +1,7 @@
 package com.code.theaterapp.shared.person;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,6 +33,7 @@ public class Person {
 
     private String firstName;
     private String lastName;
+    
     private String displayName;
 
     /**
@@ -42,9 +44,9 @@ public class Person {
      *   <li>Falls back to null if no display name is set, and no first name is set</li>
      * </ul>
      */
-    public String getAccountName() {
+    public String getDisplayName() {
         if(!displayName.isBlank()) {
-            return getDisplayName();
+            return this.displayName;
         }
         if (!firstName.isBlank()) {
             return getFirstName();

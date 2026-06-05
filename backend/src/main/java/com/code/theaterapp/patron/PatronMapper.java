@@ -12,7 +12,7 @@ public class PatronMapper {
                 patron.getPerson().getEmail(),
                 patron.getPerson().getFirstName(),
                 patron.getPerson().getLastName(),
-                patron.getPerson().getAccountName()
+                patron.getPerson().getDisplayName()
         );
     }
 
