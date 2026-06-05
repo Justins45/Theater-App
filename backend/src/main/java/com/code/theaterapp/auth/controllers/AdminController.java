@@ -3,7 +3,6 @@ package com.code.theaterapp.auth.controllers;
 import com.code.theaterapp.auth.dtos.StaffRegisterConfirmationDTO;
 import com.code.theaterapp.auth.dtos.StaffRegisterDTO;
 import com.code.theaterapp.staff.StaffService;
-import com.code.theaterapp.staff.dtos.StaffDetailsDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

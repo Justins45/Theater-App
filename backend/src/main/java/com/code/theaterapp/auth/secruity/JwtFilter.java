@@ -72,26 +72,26 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
 
-        String username = getUsernameFromToken(authToken, rememberToken);
-        if (username == null) {
+        String email = getEmailFromToken(authToken, rememberToken);
+        if (email == null) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        authToken = refreshTokenOrSetNew(authToken, rememberToken, username, response);
+        authToken = refreshTokenOrSetNew(authToken, rememberToken, email, response);
 
-        setAuthentication(authToken, username, request);
+        setAuthentication(authToken, email, request);
 
         // proceed to subsequent filters
         filterChain.doFilter(request, response);
     }
 
-    private String getUsernameFromToken(String authToken, String rememberToken) {
+    private String getEmailFromToken(String authToken, String rememberToken) {
         try {
             if (authToken != null) {
-                return jwTservice.extractUsername(authToken);
+                return jwTservice.extractEmail(authToken);
             } else if (jwTservice.validateToken(rememberToken)) {
-                return jwTservice.extractUsername(rememberToken);
+                return jwTservice.extractEmail(rememberToken);
             }
         } catch (JwtException | IllegalArgumentException e) {
             log.warn("Invalid JWT token, treating as unauthenticated: {}", e.getMessage());
@@ -100,14 +100,14 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
     /**
-     * Extract a username from whichever token is usable.
-     * Returns null if neither token yields a valid username.
+     * Extract an email from whichever token is usable.
+     * Returns null if neither token yields a valid email.
      */
-    private UserDetails loadUserDetails(String username, String userType) {
+    private UserDetails loadUserDetails(String email, String userType) {
         if ("STAFF".equals(userType)) {
-            return staffDetailsService.loadUserByUsername(username);
+            return staffDetailsService.loadUserByUsername(email);
         }
-        return patronDetailsService.loadUserByUsername(username);
+        return patronDetailsService.loadUserByUsername(email);
     }
 
     /**
@@ -117,7 +117,7 @@ public class JwtFilter extends OncePerRequestFilter {
     private String refreshTokenOrSetNew(
             String authToken,
             String rememberToken,
-            String username,
+            String email,
             HttpServletResponse response
     ) {
 
@@ -130,12 +130,12 @@ public class JwtFilter extends OncePerRequestFilter {
             String userType = jwTservice.extractUserType(authToken);
 
             if (millisUntilExpiry < TimeUnit.MINUTES.toMillis(10)) {
-                ResponseCookie newAuthCookie = jwTservice.generateToken(username, userType, authTokenName);
+                ResponseCookie newAuthCookie = jwTservice.generateToken(email, userType, authTokenName);
                 response.addHeader(HttpHeaders.SET_COOKIE, newAuthCookie.toString());
                 return newAuthCookie.getValue();
             }
         } catch (JwtException | IllegalArgumentException e) {
-            log.warn("JWT refresh attempt failed for user '{}': {}", username, e.getMessage());
+            log.warn("JWT refresh attempt failed for user '{}': {}", email, e.getMessage());
         }
 
         return authToken;
@@ -146,7 +146,7 @@ public class JwtFilter extends OncePerRequestFilter {
      */
     private void setAuthentication(
             String authToken,
-            String username,
+            String email,
             HttpServletRequest request
     ) {
         if (authToken == null) return;
@@ -154,9 +154,9 @@ public class JwtFilter extends OncePerRequestFilter {
 
         try {
             String userType = jwTservice.extractUserType(authToken);
-            UserDetails userDetails = loadUserDetails(username, userType);
+            UserDetails userDetails = loadUserDetails(email, userType);
 
-            if (jwTservice.validateToken(authToken, userDetails.getUsername())) {
+            if (jwTservice.validateToken(authToken)) {
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(
                                 userDetails, null, userDetails.getAuthorities()
@@ -168,7 +168,7 @@ public class JwtFilter extends OncePerRequestFilter {
             }
         } catch (JwtException | IllegalArgumentException e) {
             log.warn("JWT auth context setup failed for user '{}' on {}: {}",
-                    username, request.getRequestURI(), e.getMessage());
+                    email, request.getRequestURI(), e.getMessage());
         }
     }
 }

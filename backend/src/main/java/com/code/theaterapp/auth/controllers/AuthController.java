@@ -7,7 +7,6 @@ import com.code.theaterapp.auth.dtos.PatronRegisterConfirmationDTO;
 import com.code.theaterapp.auth.dtos.PatronRegisterDTO;
 import com.code.theaterapp.auth.secruity.accounts.PatronAccount;
 import com.code.theaterapp.patron.PatronService;
-import com.code.theaterapp.patron.dtos.PatronDetailsDTO;
 import com.code.theaterapp.patron.dtos.PatronMeResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

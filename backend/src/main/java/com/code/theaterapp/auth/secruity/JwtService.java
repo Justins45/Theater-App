@@ -44,11 +44,11 @@ public class JwtService {
      *   <li>{@code path} — {@code "/"} makes the cookie available across the whole domain</li>
      * </ul>
      *
-     * @param username  the subject to encode into the JWT
+     * @param email  the subject to encode into the JWT
      * @param tokenName the cookie name; determines token duration
      * @return a {@link ResponseCookie} containing the signed JWT
      */
-    public ResponseCookie generateToken(String username, String userType, String tokenName) {
+    public ResponseCookie generateToken(String email, String userType, String tokenName) {
 
         // Durations are in HOURS — tokenDuration controls JWT expiry, cookieMaxAge controls browser lifetime
         // Defaults to 1 hour; rememberMe extends both to 24 hours
@@ -63,7 +63,7 @@ public class JwtService {
 
 
         JwtBuilder builder = Jwts.builder()
-                .subject(username)
+                .subject(email)
                 .issuer(BASE_URL)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(tokenDuration)))
@@ -124,13 +124,6 @@ public class JwtService {
     }
 
     /**
-     * Silly extra check for places where username is added (will be fixed with Token only validate)
-     */
-    public boolean validateToken(String token, String username) {
-        return (username != null && !isTokenExpired(token));
-    }
-
-    /**
      * Decodes the Base64 secret key into a {@link SecretKey} for signing and verification.
      */
     private SecretKey getKey() {
@@ -139,12 +132,12 @@ public class JwtService {
     }
 
     /**
-     * Extracts the username (subject) from a JWT token.
+     * Extracts the email (subject) from a JWT token.
      *
      * @param token the JWT token
-     * @return the username stored in the token's subject claim
+     * @return the email stored in the token's subject claim
      */
-    public String extractUsername(String token) {
+    public String extractEmail(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
