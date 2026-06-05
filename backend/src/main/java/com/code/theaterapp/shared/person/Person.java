@@ -13,10 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "person", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "username"),
-        @UniqueConstraint(columnNames = "email")
-})
+@Table(name = "person")
 public class Person {
 
     @Id
@@ -35,7 +32,7 @@ public class Person {
 
     private String firstName;
     private String lastName;
-    private String preferredName;
+    private String displayName;
 
     /**
      * Returns the best available display name for the user.
@@ -45,12 +42,12 @@ public class Person {
      *   <li>Falls back to null if no display name is set, and no first name is set</li>
      * </ul>
      */
-    public String getDisplayName() {
-        if(!preferredName.isBlank()) {
-            return getPreferredName();
+    public String getAccountName() {
+        if(!displayName.isBlank()) {
+            return getDisplayName();
         }
         if (!firstName.isBlank()) {
-            return getLastName();
+            return getFirstName();
         }
         return null;
     }

@@ -3,22 +3,14 @@ package com.code.theaterapp.patron;
 import com.code.theaterapp.auth.dtos.PatronRegisterConfirmationDTO;
 import com.code.theaterapp.auth.dtos.PatronRegisterDTO;
 import com.code.theaterapp.auth.secruity.accounts.PatronAccount;
-import com.code.theaterapp.exceptions.UsernameAlreadyExistsException;
-import com.code.theaterapp.patron.dtos.PatronDetailsDTO;
 import com.code.theaterapp.patron.dtos.PatronMeResponse;
 import com.code.theaterapp.shared.enums.Role;
 import com.code.theaterapp.shared.person.Person;
-import com.code.theaterapp.shared.person.PersonRepo;
 import com.code.theaterapp.shared.person.PersonService;
-import com.code.theaterapp.shared.person.PersonValidationService;
 import com.code.theaterapp.shared.person.dtos.CreatePersonDTO;
-import com.code.theaterapp.shared.person.dtos.PersonDetailsDTO;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.time.OffsetDateTime;
 
 @Service
 @RequiredArgsConstructor
