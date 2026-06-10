@@ -1,17 +1,38 @@
 <script setup lang="ts">
 import { SharedButton } from "@theater/shared";
+import { RouterLink, RouterView } from "vue-router";
 </script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <nav>
+    <ul>
+      <li><RouterLink to="/">Home</RouterLink></li>
+      <li><RouterLink to="/events">events</RouterLink></li>
+    </ul>
+
+  </nav>
   <SharedButton />
+  <router-view></router-view>
 </template>
 
 <style scoped lang="scss">
+ul {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+  display: flex;
+  li {
+    margin-right: 1rem;
+    a {
+      color: red;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+      color: green;
+    }
+  }
+}
 p {
   color: $primary-colour;
 }
