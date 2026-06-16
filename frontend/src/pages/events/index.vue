@@ -1,30 +1,31 @@
 <script setup lang="ts">
 import EventSummaryItem from '@/components/EventSummaryItem.vue'
+import { api } from '@/api/axios'
+import { ref } from 'vue'
+
+const information = ref([])
 // get data from api events
-const data = [
-  {
-    "id": "019eacb8-f6e4-77da-afda-86d103b67915",
-    "title": "First Event yay!",
-    "showTime": "17:15",
-    "stageId": 1,
-    "stageName": "main stage"
-  },
-  {
-    "id": "019eb33d-aafe-716c-99c3-d65c5d2cfe67",
-    "title": "Cat Sitting the Musical!",
-    "showTime": "09:55",
-    "stageId": 1,
-    "stageName": "main stage"
-  }
-]
+async function getInformation() {
+  const res = await api.get("/events")
+  information.value = res.data
+}
+
+getInformation()
 </script>
 
 <template>
   <div>
     <h2>Events</h2>
-    <div v-for="item in data" :key="item.id" class="event">
-        <EventSummaryItem v-bind="item"></EventSummaryItem>
-    </div>
+    <template v-if="information.length > 0">
+      <div v-for="item in information" :key="item.id" class="event-list">
+          <EventSummaryItem v-bind="item"></EventSummaryItem>
+      </div>
+    </template>
+    <template v-else>
+      <div>
+        <p>No Events to be seen</p>
+      </div>
+    </template>
   </div>
 </template>
 
