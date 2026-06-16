@@ -10,7 +10,7 @@ defineProps({
 
 <template>
   <div class="event">
-    <RouterLink :to="'events/:' + id">
+    <RouterLink :to="'/events/' + id">
       <h3>{{ title }}</h3>
       <p>Show Time: {{ showTime }}</p>
       <p>Playing at {{ stageName }}</p>
