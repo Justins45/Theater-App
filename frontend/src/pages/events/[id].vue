@@ -7,7 +7,8 @@ const route = useRoute()
 const event = ref()
 
 async function getInformation(newId: string) {
-  event.value = await api.get(newId)
+  const res = await api.get("/events/" + newId)
+  event.value = res.data
 }
 
 // if URL updates re fetch
@@ -23,8 +24,9 @@ watch(() => route.params.id, (newId) => {
 
 <template>
   <div>
-    <p>GET EVENT BY ID :)</p>
-    <p>{{ event }}</p>
+    <h1>{{ event.title}}</h1>
+    <p>Show Time: {{ event.showTime }}</p>
+    <p>Playing at {{ event.stageName }}</p>
   </div>
 </template>
 
