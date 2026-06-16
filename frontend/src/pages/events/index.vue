@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import EventSummaryItem from '@/components/EventSummaryItem.vue'
-import { api } from '@/api/axios'
+import apiClient from '@/api/axios'
 import { ref } from 'vue'
 
 const information = ref([])
 // get data from api events
 async function getInformation() {
-  const res = await api.get("/events")
+  const res = await apiClient.get("/events")
   information.value = res.data
 }
 
