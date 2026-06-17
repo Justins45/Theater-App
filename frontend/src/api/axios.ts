@@ -9,7 +9,7 @@ const apiClient = axios.create({
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response && error.response.status === 404 ) {
+    if (error.response ) {
       router.push('/404-not-found');
       return new Promise(() => {})
     }
