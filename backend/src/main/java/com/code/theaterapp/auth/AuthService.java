@@ -29,13 +29,8 @@ public class AuthService {
     private final PersonRepo personRepo;
     private final StaffRepo staffRepo;
 
-    @Qualifier("staffAuthManager")
-    AuthenticationManager staffAuthManager;
-
-    @Qualifier("patronAuthManager")
-    AuthenticationManager patronAuthManager;
-
-    private static final Logger log = LoggerFactory.getLogger(AuthService.class);
+    private final AuthenticationManager staffAuthManager;
+    private final AuthenticationManager patronAuthManager;
 
     @Value("${auth.token.name}")
     private String authTokenName;
@@ -45,11 +40,7 @@ public class AuthService {
 
     public ResponseEntity<LoginResponseDTO> login(LoginRequestDTO login, String userType) {
 
-        AuthenticationManager manager = switch (userType) {
-            case "STAFF"  -> staffAuthManager;
-            case "PATRON" -> patronAuthManager;
-            default -> throw new IllegalStateException("Unexpected value: " + userType);
-        };
+        AuthenticationManager manager = "STAFF".equals(userType) ?  staffAuthManager :  patronAuthManager;
 
         manager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -57,22 +48,15 @@ public class AuthService {
                         login.password()
         ));
 
-        log.debug("userType claim: '{}'", userType);
-        log.debug("Attempting patron login for: '{}'", login.email());
-
         // Credentials passed — now verify they actually have profile
         Person person = personRepo.findByEmail(login.email())
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
-
-        log.debug("Before Staff Check");
 
         // check for staff profile
         if ("STAFF".equals(userType)) {
             staffRepo.findByPerson(person)
                     .orElseThrow(() -> new AccessDeniedException("No staff profile for this user"));
         }
-
-        log.debug("Passed staff check, proceeding with patron auth");
 
         ResponseCookie authCookie = jwTservice.generateToken(login.email(), userType, authTokenName);
         ResponseCookie rememberCookie = jwTservice.generateToken(login.email(), null, rememberTokenName);

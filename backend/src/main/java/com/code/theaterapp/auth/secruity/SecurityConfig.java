@@ -48,12 +48,31 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    @Qualifier("staffAuthProvider")
+    public AuthenticationProvider staffAuthenticationProvider() {
+        DaoAuthenticationProvider provider =
+                new DaoAuthenticationProvider(staffDetailsService);
+
+        provider.setPasswordEncoder(bCryptPasswordEncoder());
+        return provider;
+    }
 
     @Bean
     @Qualifier("staffAuthManager")
     public AuthenticationManager staffAuthenticationManager(
             @Qualifier("staffAuthProvider") AuthenticationProvider staffProvider) {
         return new ProviderManager(List.of(staffProvider));
+    }
+
+    @Bean
+    @Qualifier("patronAuthProvider")
+    public AuthenticationProvider patronAuthenticationProvider() {
+        DaoAuthenticationProvider provider =
+                new DaoAuthenticationProvider(patronDetailsService);
+
+        provider.setPasswordEncoder(bCryptPasswordEncoder());
+        return provider;
     }
 
     @Bean
