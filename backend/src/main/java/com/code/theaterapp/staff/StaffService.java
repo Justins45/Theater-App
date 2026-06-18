@@ -30,8 +30,8 @@ public class StaffService {
         personValidationService.validateUniqueEmail(requestDTO.email());
 
         PatronRegisterDTO patronRegisterDTO = new PatronRegisterDTO(
-                requestDTO.password(),
-                requestDTO.email()
+                requestDTO.email(),
+                requestDTO.password()
         );
 
         PatronRegisterConfirmationDTO patron = patronService.createPatron(patronRegisterDTO);
