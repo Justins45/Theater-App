@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -49,36 +50,18 @@ public class SecurityConfig {
 
 
     @Bean
-    @Qualifier("staffAuthProvider")
-    public AuthenticationProvider staffAuthenticationProvider() {
-        DaoAuthenticationProvider provider =
-                new DaoAuthenticationProvider(staffDetailsService);
-
-        provider.setPasswordEncoder(bCryptPasswordEncoder());
-        return provider;
+    @Qualifier("staffAuthManager")
+    public AuthenticationManager staffAuthenticationManager(
+            @Qualifier("staffAuthProvider") AuthenticationProvider staffProvider) {
+        return new ProviderManager(List.of(staffProvider));
     }
 
     @Bean
-    @Qualifier("patronAuthProvider")
-    public AuthenticationProvider patronAuthenticationProvider() {
-        DaoAuthenticationProvider provider =
-                new DaoAuthenticationProvider(patronDetailsService);
-
-        provider.setPasswordEncoder(bCryptPasswordEncoder());
-        return provider;
-    }
-
-    /**
-     * Exposes Spring Security's {@link AuthenticationManager} as a bean,
-     * used in the login flow to trigger credential validation.
-     */
-    @Bean
-    public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration config,
-            @Qualifier("staffAuthProvider") AuthenticationProvider staffProvider,
-            @Qualifier("patronAuthProvider") AuthenticationProvider patronProvider
-    ) {
-        return new ProviderManager(List.of(staffProvider, patronProvider));
+    @Primary
+    @Qualifier("patronAuthManager")
+    public AuthenticationManager patronAuthenticationManager(
+            @Qualifier("patronAuthProvider") AuthenticationProvider patronProvider) {
+        return new ProviderManager(List.of(patronProvider));
     }
 
     @Bean
