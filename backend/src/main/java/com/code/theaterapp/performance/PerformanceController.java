@@ -6,13 +6,12 @@ import com.code.theaterapp.performance.dtos.PerformanceSummaryDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 // Use events URL to get the pathing ID for the Event
 @RequestMapping(value = "/events")
