@@ -1,9 +1,8 @@
 package com.code.theaterapp.tickets;
 
-import com.code.theaterapp.event.Event;
 import com.code.theaterapp.patron.Patron;
+import com.code.theaterapp.performance.Performance;
 import com.code.theaterapp.shared.enums.TicketStatus;
-import com.code.theaterapp.venue.Venue;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,12 +37,8 @@ public class Ticket {
     private Patron patron;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "venue_id")
-    private Venue venue;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "event_id")
-    private Event event;
+    @JoinColumn(name = "performance_id")
+    private Performance performance;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -51,5 +46,4 @@ public class Ticket {
 
     @Column(nullable = false)
     private Instant createdAt;
-
 }

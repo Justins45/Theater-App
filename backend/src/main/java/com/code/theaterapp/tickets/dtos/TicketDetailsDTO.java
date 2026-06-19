@@ -9,8 +9,7 @@ public record TicketDetailsDTO(
         UUID id,
         BigDecimal price,
         UUID patronId,
-        UUID eventId,
-        Integer venueId,
+        UUID performanceID,
         TicketStatus ticketStatus
 ) {
 }

@@ -48,19 +48,9 @@ public class TicketService {
         Patron patron = patronRepo.findById(createTicketDTO.patronId())
                 .orElseThrow(() -> new EntityNotFoundException("Patron not found"));
 
-        Event event = eventRepo.findById(createTicketDTO.eventId())
-                .orElseThrow(() -> new EntityNotFoundException("Event not found"));
-
-        Venue venue = venueRepo.findById(createTicketDTO.venueId())
-                .orElseThrow(() -> new EntityNotFoundException("Venue not found"));
-
-
-
         Ticket ticket = new Ticket();
         ticket.setPrice(createTicketDTO.price());
         ticket.setPatron(patron);
-        ticket.setVenue(venue);
-        ticket.setEvent(event);
         ticket.setTicketStatus(TicketStatus.ISSUED);
         ticket.setCreatedAt(Instant.now());
 

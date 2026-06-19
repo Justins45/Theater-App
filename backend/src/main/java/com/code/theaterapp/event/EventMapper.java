@@ -11,7 +11,6 @@ public class EventMapper {
         return new EventDetailsDTO(
                 event.getId(),
                 event.getTitle(),
-                event.getWallClock(),
                 event.getStage().getName(),
                 event.getStage().getCapacity()
         );
@@ -21,7 +20,6 @@ public class EventMapper {
         return new EventSummaryDTO(
                 event.getId(),
                 event.getTitle(),
-                event.getWallClock(),
                 event.getStage().getId(),
                 event.getStage().getName()
 

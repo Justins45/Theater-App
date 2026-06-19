@@ -28,8 +28,6 @@ public class Event {
 
     @Column(nullable = false)
     private String title;
-    @Column(nullable = false)
-    private LocalTime showTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stage_id")
@@ -37,14 +35,5 @@ public class Event {
 
     @Column(nullable = false)
     private Instant eventCreated;
-
-    public void setShowTime(String newShowTime) {
-        this.showTime = LocalTime.parse(newShowTime);
-    }
-
-    public String getWallClock() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm a");
-        return this.showTime.format(formatter);
-    }
 
 }
