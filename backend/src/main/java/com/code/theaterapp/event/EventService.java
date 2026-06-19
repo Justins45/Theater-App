@@ -39,7 +39,6 @@ public class EventService {
 
         Event event = new Event();
         event.setTitle(createEventDTO.title());
-        event.setShowTime(createEventDTO.showTime());
         event.setStage(stage);
         event.setEventCreated(Instant.now());
 
