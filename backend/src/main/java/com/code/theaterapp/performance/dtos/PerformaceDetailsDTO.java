@@ -8,6 +8,6 @@ public record PerformaceDetailsDTO(
         UUID id,
         String showTime,
         PerformanceStatus status,
-        Integer event_id
+        UUID event_id
 ) {
 }
