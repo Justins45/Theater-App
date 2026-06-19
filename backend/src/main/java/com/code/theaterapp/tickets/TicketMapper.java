@@ -11,8 +11,7 @@ public class TicketMapper {
                 ticket.getId(),
                 ticket.getPrice(),
                 ticket.getPatron().getId(),
-                ticket.getEvent().getId(),
-                ticket.getVenue().getId(),
+                ticket.getPerformance().getId(),
                 ticket.getTicketStatus()
         );
     }
@@ -22,8 +21,7 @@ public class TicketMapper {
                 ticket.getId(),
                 ticket.getPrice(),
                 ticket.getPatron().getId(),
-                ticket.getEvent().getId(),
-                ticket.getVenue().getId(),
+                ticket.getPerformance().getId(),
                 ticket.getTicketStatus()
         );
     }

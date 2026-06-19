@@ -6,8 +6,6 @@ import java.util.UUID;
 public record CreateTicketDTO(
         BigDecimal price,
         UUID patronId,
-        UUID eventId,
-        Integer venueId
-
+        UUID performanceID
 ) {
 }
