@@ -13,7 +13,7 @@ async function handleLogin() {
   try {
     const res = await apiClient.post("/auth/login", loginInfo)
 
-    responseMessage.value = `Successfully logged in ${res.data.id}`
+    responseMessage.value = `Successfully logged in ${res.data.message}`
   } catch (error: any) {
     console.log(error)
     responseMessage.value = `Error: ${error.message}`;
