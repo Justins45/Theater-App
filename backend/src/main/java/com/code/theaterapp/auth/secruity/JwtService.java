@@ -79,7 +79,7 @@ public class JwtService {
                 .httpOnly(true)
                 .secure(false)
                 .maxAge(cookieMaxAge * 60 * 60)
-                .sameSite("Strict")
+                .sameSite("Lax")
                 .path("/")
                 .build();
     }

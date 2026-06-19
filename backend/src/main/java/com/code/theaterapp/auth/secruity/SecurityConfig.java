@@ -5,8 +5,10 @@ import com.code.theaterapp.patron.PatronDetailsService;
 import com.code.theaterapp.staff.StaffDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,6 +24,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
@@ -34,12 +39,14 @@ public class SecurityConfig {
     private final PatronDetailsService patronDetailsService;
     private final JwtFilter jwtFilter;
 
+    @Value("${frontend.url}")
+    private String frontEndURL;
+
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 
     @Bean
     @Qualifier("staffAuthProvider")
@@ -52,6 +59,13 @@ public class SecurityConfig {
     }
 
     @Bean
+    @Qualifier("staffAuthManager")
+    public AuthenticationManager staffAuthenticationManager(
+            @Qualifier("staffAuthProvider") AuthenticationProvider staffProvider) {
+        return new ProviderManager(List.of(staffProvider));
+    }
+
+    @Bean
     @Qualifier("patronAuthProvider")
     public AuthenticationProvider patronAuthenticationProvider() {
         DaoAuthenticationProvider provider =
@@ -61,17 +75,26 @@ public class SecurityConfig {
         return provider;
     }
 
-    /**
-     * Exposes Spring Security's {@link AuthenticationManager} as a bean,
-     * used in the login flow to trigger credential validation.
-     */
     @Bean
-    public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration config,
-            @Qualifier("staffAuthProvider") AuthenticationProvider staffProvider,
-            @Qualifier("patronAuthProvider") AuthenticationProvider patronProvider
-    ) {
-        return new ProviderManager(List.of(staffProvider, patronProvider));
+    @Primary
+    @Qualifier("patronAuthManager")
+    public AuthenticationManager patronAuthenticationManager(
+            @Qualifier("patronAuthProvider") AuthenticationProvider patronProvider) {
+        return new ProviderManager(List.of(patronProvider));
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(List.of(frontEndURL));
+        config.setAllowedMethods(List.of("GET", "POST", "PATCH", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(List.of("Content-Type"));
+        config.setAllowCredentials(true);
+        config.setMaxAge(3600L); // set age of preflight for 1 hour
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 
     /**
@@ -108,8 +131,9 @@ public class SecurityConfig {
 
         // Keep separate like this to allow for comment addition
 
-        // TODO: Add CSRF and CORS configuration when frontend origin is known
+        // TODO: Add CSRF configuration when frontend origin is known
         http.csrf(AbstractHttpConfigurer::disable);
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
 
         http.authenticationProvider(staffProvider);
         http.authenticationProvider(patronProvider);
