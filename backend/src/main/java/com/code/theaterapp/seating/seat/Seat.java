@@ -30,7 +30,7 @@ public class Seat {
     @Column(nullable = false)
     private String section;      // (Orchestra, Mezzanine, Balcony, Left, Right, etc.)
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String uiIdentifier; // orch-AA-6 | main-AG-19
 
     @ManyToOne(fetch = FetchType.LAZY)

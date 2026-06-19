@@ -28,6 +28,7 @@ public class Stage {
     @Column(nullable = false)
     private Instant dateCreated;
 
+    // TODO: remove as SEAT has this information
     @Column(nullable = false)
     private Integer capacity;
 
