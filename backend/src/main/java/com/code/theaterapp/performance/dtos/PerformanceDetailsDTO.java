@@ -4,7 +4,7 @@ import com.code.theaterapp.shared.enums.PerformanceStatus;
 
 import java.util.UUID;
 
-public record PerformaceDetailsDTO(
+public record PerformanceDetailsDTO(
         UUID id,
         String showTime,
         PerformanceStatus status,

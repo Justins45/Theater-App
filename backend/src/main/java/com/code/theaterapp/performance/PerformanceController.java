@@ -1,7 +1,7 @@
 package com.code.theaterapp.performance;
 
 import com.code.theaterapp.performance.dtos.CreatePerformanceDTO;
-import com.code.theaterapp.performance.dtos.PerformaceDetailsDTO;
+import com.code.theaterapp.performance.dtos.PerformanceDetailsDTO;
 import com.code.theaterapp.performance.dtos.PerformanceSummaryDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,11 +29,11 @@ public class PerformanceController {
 
     // create performance
     @PostMapping(URL_PATH)
-    public ResponseEntity<PerformaceDetailsDTO> createPerformance(
+    public ResponseEntity<PerformanceDetailsDTO> createPerformance(
             @RequestBody CreatePerformanceDTO request,
             @PathVariable UUID eventId
     ) {
-        PerformaceDetailsDTO dto = performanceService.createPerformance(request, eventId);
+        PerformanceDetailsDTO dto = performanceService.createPerformance(request, eventId);
         return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 }
