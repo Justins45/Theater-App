@@ -1,6 +1,7 @@
 package com.code.theaterapp.seating.event_seating;
 
 import com.code.theaterapp.event.Event;
+import com.code.theaterapp.performance.Performance;
 import com.code.theaterapp.seating.seat.Seat;
 import com.code.theaterapp.shared.enums.SeatStatus;
 import jakarta.persistence.*;
@@ -32,8 +33,8 @@ public class EventSeating {
     private SeatStatus seatStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "event_id")
-    private Event event;
+    @JoinColumn(name = "performance_id")
+    private Performance performance;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seat_id")

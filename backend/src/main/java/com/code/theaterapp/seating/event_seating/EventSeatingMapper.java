@@ -10,7 +10,7 @@ public class EventSeatingMapper {
         return new EventSeatingDetailsDTO(
                eventSeating.getId(),
                eventSeating.getSeatStatus(),
-               eventSeating.getEvent().getId(),
+               eventSeating.getPerformance().getId(),
                eventSeating.getSeat().getId(),
                eventSeating.getHoldExpiry()
         );

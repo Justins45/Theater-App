@@ -8,7 +8,7 @@ import java.util.UUID;
 public record EventSeatingDetailsDTO(
         UUID id,
         SeatStatus seatStatus,
-        UUID eventId,
+        UUID performanceId,
         Integer seatId,
         Instant holdExpiry
 ) {
