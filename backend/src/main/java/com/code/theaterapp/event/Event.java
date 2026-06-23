@@ -9,8 +9,6 @@ import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.Instant;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Entity

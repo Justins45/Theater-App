@@ -6,6 +6,7 @@ import com.code.theaterapp.exceptions.EntityNotFoundException;
 import com.code.theaterapp.performance.dtos.CreatePerformanceDTO;
 import com.code.theaterapp.performance.dtos.PerformanceDetailsDTO;
 import com.code.theaterapp.performance.dtos.PerformanceSummaryDTO;
+import com.code.theaterapp.seating.event_seating.EventSeatingService;
 import com.code.theaterapp.shared.enums.PerformanceStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class PerformanceService {
 
+    private final EventSeatingService eventSeatingService;
     private final PerformanceRepo performanceRepo;
     private final PerformanceMapper performanceMapper;
     private final EventRepo eventRepo;
@@ -31,6 +33,10 @@ public class PerformanceService {
         performance.setPerformanceStatus(PerformanceStatus.SCHEDULED);
 
         Performance savedPerformance = performanceRepo.save(performance);
+
+        // Create seating --> not using the values here so no need to make a variable.
+        eventSeatingService.createEventSeating(event.getStage().getId(), performance.getId());
+
         return performanceMapper.toDetails(savedPerformance);
     }
 
