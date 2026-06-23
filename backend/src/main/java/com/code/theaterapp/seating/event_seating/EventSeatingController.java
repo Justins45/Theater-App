@@ -1,5 +1,6 @@
 package com.code.theaterapp.seating.event_seating;
 
+import com.code.theaterapp.seating.event_seating.dtos.EventSeatingDetailsDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,12 +16,12 @@ import java.util.UUID;
 @RequestMapping(value = "/events")
 public class EventSeatingController {
 
-    private final EventSeatingRepo eventSeatingRepo;
+    private final EventSeatingService eventSeatingService;
     private final String URL_PATH = "/{eventId}/performances/{performanceId}/seating";
 
     // get performances for an event
     @GetMapping(URL_PATH)
-    public List<EventSeating> findAllSeats(@PathVariable UUID performanceId) {
-        return eventSeatingRepo.findAllByPerformanceId(performanceId);
+    public List<EventSeatingDetailsDTO> findAllSeats(@PathVariable UUID performanceId) {
+        return eventSeatingService.getAllEventSeatsByPerformanceId(performanceId);
     }
 }
