@@ -1,6 +1,6 @@
 package com.code.theaterapp.seating.event_seating;
 
-import com.code.theaterapp.event.Event;
+
 import com.code.theaterapp.performance.Performance;
 import com.code.theaterapp.seating.seat.Seat;
 import com.code.theaterapp.shared.enums.SeatStatus;

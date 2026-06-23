@@ -1,6 +1,5 @@
 package com.code.theaterapp.tickets;
 
-import com.code.theaterapp.event.Event;
 import com.code.theaterapp.event.EventRepo;
 import com.code.theaterapp.exceptions.EntityNotFoundException;
 import com.code.theaterapp.patron.Patron;
@@ -9,7 +8,6 @@ import com.code.theaterapp.shared.enums.TicketStatus;
 import com.code.theaterapp.tickets.dtos.CreateTicketDTO;
 import com.code.theaterapp.tickets.dtos.TicketDetailsDTO;
 import com.code.theaterapp.tickets.dtos.TicketSummaryDTO;
-import com.code.theaterapp.venue.Venue;
 import com.code.theaterapp.venue.VenueRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

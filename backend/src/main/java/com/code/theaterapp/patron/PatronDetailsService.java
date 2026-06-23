@@ -5,7 +5,7 @@ import com.code.theaterapp.exceptions.EntityNotFoundException;
 import com.code.theaterapp.shared.person.Person;
 import com.code.theaterapp.shared.person.PersonRepo;
 import lombok.RequiredArgsConstructor;
-import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.NullMarked;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class PatronDetailsService implements UserDetailsService {
 
     // NOTE: Email is Username here
     @Override
-    public UserDetails loadUserByUsername(@NonNull String email) throws EntityNotFoundException {
+    public @NullMarked UserDetails loadUserByUsername(String email) throws EntityNotFoundException {
         Person person = personRepo.findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("User Not found"));
 
