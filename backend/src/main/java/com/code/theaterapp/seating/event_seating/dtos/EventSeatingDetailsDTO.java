@@ -1,5 +1,6 @@
 package com.code.theaterapp.seating.event_seating.dtos;
 
+import com.code.theaterapp.seating.seat.Seat;
 import com.code.theaterapp.shared.enums.SeatStatus;
 
 import java.time.Instant;
@@ -10,6 +11,7 @@ public record EventSeatingDetailsDTO(
         SeatStatus seatStatus,
         UUID performanceId,
         Integer seatId,
-        Instant holdExpiry
+        Instant holdExpiry,
+        Seat seat
 ) {
 }

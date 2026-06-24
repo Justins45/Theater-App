@@ -15,7 +15,7 @@ async function getInformation(pId: string, eId: string) {
     console.log(res.data)
     seating.value = res.data
   } catch (error: any) {
-    router.push({ path: '/404-not-found', state: { originalPath: `/events/${eId}/performances/${pId}` } })
+    router.push({ path: '/404-not-found', state: { originalPath: `/events/${eId}/seating` } })
   }
 }
 
@@ -43,9 +43,13 @@ onMounted(async () => {
 
 <template>
 <p>EVENT SEATING</p>
-  <pre>
-    {{ seating }}
-  </pre>
+  <div>
+    <p v-for="seat in seating" :key="seat.id">
+      <span>{{ seat.seatStatus}}</span> |
+      <span>{{ seat.seatId }}</span>
+      <span> + {{ seat.seat.row }} + {{ seat.seat.seatNumber}} + {{ seat.seat.section }} + {{ seat.seat.uiIdentifier }}</span>
+    </p>
+  </div>
 </template>
 
 <style scoped lang="scss">
