@@ -4,6 +4,8 @@ import com.code.theaterapp.event.dtos.CreateEventDTO;
 import com.code.theaterapp.event.dtos.EventDetailsDTO;
 import com.code.theaterapp.event.dtos.EventSummaryDTO;
 import com.code.theaterapp.exceptions.EntityNotFoundException;
+import com.code.theaterapp.performance.PerformanceService;
+import com.code.theaterapp.performance.dtos.PerformanceSummaryDTO;
 import com.code.theaterapp.stage.Stage;
 import com.code.theaterapp.stage.StageRepo;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -21,6 +22,7 @@ public class EventService {
     private final EventRepo eventRepo;
     private final StageRepo stageRepo;
     private final EventMapper eventMapper;
+    private final PerformanceService performanceService;
 
     public List<EventSummaryDTO> getAllEvents() {
         return eventRepo.findAll().stream()
@@ -28,8 +30,14 @@ public class EventService {
                 .toList();
     }
 
-    public Optional<EventDetailsDTO> getEventById(UUID id) {
-        return eventRepo.findById(id).map(eventMapper::toDetails);
+    public EventDetailsDTO getEventById(UUID id) {
+        Event event = eventRepo.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Event not found")
+        );
+
+        List<PerformanceSummaryDTO> performances = performanceService.getAllPerformancesByEvent(id);
+
+        return eventMapper.toDetails(event, performances);
     }
 
     public EventDetailsDTO createEvent(CreateEventDTO createEventDTO) {
@@ -43,7 +51,7 @@ public class EventService {
         event.setEventCreated(Instant.now());
 
         Event savedEvent = eventRepo.save(event);
-        return eventMapper.toDetails(savedEvent);
+        return eventMapper.toDetails(savedEvent, null);
 
     }
 
