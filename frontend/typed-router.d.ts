@@ -65,11 +65,18 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
-    '/events/[id]': RouteRecordInfo<
-      '/events/[id]',
-      '/events/:id',
-      { id: ParamValue<true> },
-      { id: ParamValue<false> },
+    '/events/[eventId]/': RouteRecordInfo<
+      '/events/[eventId]/',
+      '/events/:eventId',
+      { eventId: ParamValue<true> },
+      { eventId: ParamValue<false> },
+      | never
+    >,
+    '/events/[eventId]/performances/[performanceId]': RouteRecordInfo<
+      '/events/[eventId]/performances/[performanceId]',
+      '/events/:eventId/performances/:performanceId',
+      { eventId: ParamValue<true>, performanceId: ParamValue<true> },
+      { eventId: ParamValue<false>, performanceId: ParamValue<false> },
       | never
     >,
     '/patrons/': RouteRecordInfo<
@@ -122,9 +129,15 @@ declare module 'vue-router/auto-routes' {
       views:
         | never
     }
-    'src/pages/events/[id].vue': {
+    'src/pages/events/[eventId]/index.vue': {
       routes:
-        | '/events/[id]'
+        | '/events/[eventId]/'
+      views:
+        | never
+    }
+    'src/pages/events/[eventId]/performances/[performanceId].vue': {
+      routes:
+        | '/events/[eventId]/performances/[performanceId]'
       views:
         | never
     }
