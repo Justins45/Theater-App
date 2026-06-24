@@ -42,16 +42,36 @@ onMounted(async () => {
 </script>
 
 <template>
-<p>EVENT SEATING</p>
   <div>
-    <p v-for="seat in seating" :key="seat.id">
-      <span>{{ seat.seatStatus}}</span> |
-      <span>{{ seat.seatId }}</span>
-      <span> + {{ seat.seat.row }} + {{ seat.seat.seatNumber}} + {{ seat.seat.section }} + {{ seat.seat.uiIdentifier }}</span>
-    </p>
+    <h2>Event seating</h2>
+    <table>
+      <thead>
+      <tr>
+        <th>Status</th>
+        <th>Row</th>
+        <th>Seat</th>
+        <th>Section</th>
+        <th>Label</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-if="!seating">
+        <td colspan="5">No seats found.</td>
+      </tr>
+      <tr v-for="seat in seating" :key="seat.id">
+        <td>{{ seat.seatStatus }}</td>
+        <td>{{ seat.seat.row }}</td>
+        <td>{{ seat.seat.seatNumber }}</td>
+        <td>{{ seat.seat.section }}</td>
+        <td>{{ seat.seat.uiIdentifier }}</td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
 <style scoped lang="scss">
-
+td {
+  padding: 0 15px;
+}
 </style>

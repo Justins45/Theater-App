@@ -45,9 +45,14 @@ onMounted(async () => {
       </div>
       <div>
         <h2>Show times</h2>
-        <div v-for="item in event.performances" :key="item.eventId">
-          <RouterLink :to="'/events/' + event.id + '/seating?performanceId=' + item.id" v-if="item.status != 'CANCELED'">{{ item.showTime }}</RouterLink>
-        </div>
+        <template v-if="event.performances.length > 0">
+          <div v-for="item in event.performances" :key="item.eventId">
+            <RouterLink :to="'/events/' + event.id + '/seating?performanceId=' + item.id" v-if="item.status != 'CANCELED'">{{ item.showTime }}</RouterLink>
+          </div>
+        </template>
+        <template v-else>
+          <p>No Performances available</p>
+        </template>
       </div>
     </div>
   </template>
