@@ -72,11 +72,11 @@ declare module 'vue-router/auto-routes' {
       { eventId: ParamValue<false> },
       | never
     >,
-    '/events/[eventId]/performances/[performanceId]': RouteRecordInfo<
-      '/events/[eventId]/performances/[performanceId]',
-      '/events/:eventId/performances/:performanceId',
-      { eventId: ParamValue<true>, performanceId: ParamValue<true> },
-      { eventId: ParamValue<false>, performanceId: ParamValue<false> },
+    '/events/[eventId]/seating': RouteRecordInfo<
+      '/events/[eventId]/seating',
+      '/events/:eventId/seating',
+      { eventId: ParamValue<true> },
+      { eventId: ParamValue<false> },
       | never
     >,
     '/patrons/': RouteRecordInfo<
@@ -135,9 +135,9 @@ declare module 'vue-router/auto-routes' {
       views:
         | never
     }
-    'src/pages/events/[eventId]/performances/[performanceId].vue': {
+    'src/pages/events/[eventId]/seating.vue': {
       routes:
-        | '/events/[eventId]/performances/[performanceId]'
+        | '/events/[eventId]/seating'
       views:
         | never
     }

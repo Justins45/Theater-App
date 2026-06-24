@@ -5,21 +5,20 @@ import apiClient from '@/api/axios'
 
 const router = useRouter()
 const route = useRoute()
-const performance = ref()
+const seating = ref()
 const eventId = ref("")
+
 
 async function getInformation(pId: string, eId: string) {
   try {
     const res = await apiClient.get("/events/" + eId + "/performances/" + pId + "/seating")
     console.log(res.data)
-    performance.value = res.data
+    seating.value = res.data
   } catch (error: any) {
     router.push({ path: '/404-not-found', state: { originalPath: `/events/${eId}/performances/${pId}` } })
   }
 }
 
-
-// events/[eventId]/performances/[performanceId]
 
 // // if URL updates re fetch
 watch(() => route.params.performanceId, async (pid) => {
@@ -32,7 +31,7 @@ watch(() => route.params.performanceId, async (pid) => {
 
 // Handle initial load separately, after component is mounted
 onMounted(async () => {
-  const pid = route.params.performanceId
+  const pid = route.query.performanceId
   const eid = route.params.eventId
 
   if (pid && eid) {
@@ -40,14 +39,13 @@ onMounted(async () => {
     await getInformation(pid.toString(), eventId.value);
   }
 })
-
-
 </script>
 
 <template>
-<div>
-  <p>Hello Performance</p>
-</div>
+<p>EVENT SEATING</p>
+  <pre>
+    {{ seating }}
+  </pre>
 </template>
 
 <style scoped lang="scss">
