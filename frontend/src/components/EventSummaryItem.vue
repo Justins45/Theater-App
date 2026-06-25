@@ -3,7 +3,6 @@ import { RouterLink } from "vue-router";
 defineProps({
     id: String,
     title: String,
-    showTime: String,
     stageName: String,
 })
 </script>
@@ -12,7 +11,6 @@ defineProps({
   <div class="event">
     <RouterLink :to="'/events/' + id">
       <h3>{{ title }}</h3>
-      <p>Show Time: {{ showTime }}</p>
       <p>Playing at {{ stageName }}</p>
     </RouterLink>
   </div>

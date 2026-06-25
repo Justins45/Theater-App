@@ -65,11 +65,18 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
-    '/events/[id]': RouteRecordInfo<
-      '/events/[id]',
-      '/events/:id',
-      { id: ParamValue<true> },
-      { id: ParamValue<false> },
+    '/events/[eventId]/': RouteRecordInfo<
+      '/events/[eventId]/',
+      '/events/:eventId',
+      { eventId: ParamValue<true> },
+      { eventId: ParamValue<false> },
+      | never
+    >,
+    '/events/[eventId]/seating': RouteRecordInfo<
+      '/events/[eventId]/seating',
+      '/events/:eventId/seating',
+      { eventId: ParamValue<true> },
+      { eventId: ParamValue<false> },
       | never
     >,
     '/patrons/': RouteRecordInfo<
@@ -122,9 +129,15 @@ declare module 'vue-router/auto-routes' {
       views:
         | never
     }
-    'src/pages/events/[id].vue': {
+    'src/pages/events/[eventId]/index.vue': {
       routes:
-        | '/events/[id]'
+        | '/events/[eventId]/'
+      views:
+        | never
+    }
+    'src/pages/events/[eventId]/seating.vue': {
+      routes:
+        | '/events/[eventId]/seating'
       views:
         | never
     }

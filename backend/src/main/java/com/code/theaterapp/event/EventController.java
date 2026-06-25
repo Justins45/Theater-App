@@ -26,9 +26,7 @@ public class EventController {
 
     @GetMapping("/{id}")
     public EventDetailsDTO getEvent(@PathVariable("id") UUID id) {
-        return eventService.getEventById(id).orElseThrow(
-                () -> new EntityNotFoundException("Event not found")
-        );
+        return eventService.getEventById(id);
     }
 
     @PostMapping

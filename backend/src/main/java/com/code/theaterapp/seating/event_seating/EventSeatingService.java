@@ -10,6 +10,7 @@ import com.code.theaterapp.shared.enums.SeatStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,6 +39,7 @@ public class EventSeatingService {
                     e.setSeatStatus(SeatStatus.AVAILABLE);
                     e.setPerformance(performance);
                     e.setHoldExpiry(null);
+                    e.setSeat(seat);
                     return e;
                 }).toList();
 
@@ -51,7 +53,8 @@ public class EventSeatingService {
                         es.getSeatStatus(),
                         performanceId,
                         es.getSeat().getId(),
-                        null
+                        null,
+                        es.getSeat()
                 ))
                 .toList();
     }
@@ -61,10 +64,8 @@ public class EventSeatingService {
         Performance performance = performanceRepo.findById(performanceId).orElseThrow(
                 () -> new EntityNotFoundException("Performance not found")
         );
-
-        List<EventSeating> list = eventSeatingRepo.findAllByPerformanceId(performance.getId());
-
-        return list.stream()
+        return eventSeatingRepo.findAllByPerformanceIdWithSeat(performance.getId())
+                .stream()
                 .map(eventSeatingMapper::toDetails)
                 .toList();
     }
