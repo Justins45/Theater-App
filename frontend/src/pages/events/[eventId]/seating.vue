@@ -9,7 +9,6 @@ const route = useRoute()
 const seating = ref()
 const eventId = ref("")
 
-
 async function getInformation(pId: string, eId: string) {
   try {
     const res = await apiClient.get("/events/" + eId + "/performances/" + pId + "/seating")
@@ -20,6 +19,9 @@ async function getInformation(pId: string, eId: string) {
   }
 }
 
+const getSeatClick = (receivedData: any) => {
+  console.log(receivedData)
+}
 
 // // if URL updates re fetch
 watch(() => route.params.performanceId, async (pid) => {
@@ -46,7 +48,12 @@ onMounted(async () => {
   <div>
     <h2>Event seating</h2>
   </div>
-  <MainStageMap :seats="seating" />
+  <template v-if="seating">
+    <MainStageMap :seats="seating" @clicked-seat="getSeatClick"/>
+  </template>
+  <template v-else>
+    Loading...
+  </template>
 </template>
 
 <style scoped lang="scss">

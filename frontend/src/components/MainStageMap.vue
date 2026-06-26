@@ -1,23 +1,24 @@
 <script setup lang="ts">
 import { defineProps } from 'vue'
 
+const emit = defineEmits(['clicked-seat'])
 const props = defineProps<{
   seats: Array<any>
 }>()
 
+function sendUp(data: any) {
+  emit('clicked-seat', data)
+}
+
 function selectSeat(event: { target: { closest: (arg0: string) => any } }) {
   const e = event.target.closest('[data-seat-id]')
-  if (!e) return null
 
-  // click seat
+  if (!e) return null
   const uiIdentifier = e.attributes['data-seat-id'].value
-  // get uiIdentifier
-  console.log(uiIdentifier)
-  // match clicked seat to seat from prop
+
   if (props.seats.length < 1) { return null }
   const clickedSeat = props.seats.find(seat => seat.seat.uiIdentifier === uiIdentifier)
-  // print seat information
-  console.log(clickedSeat)
+  sendUp(clickedSeat)
 }
 
 </script>
