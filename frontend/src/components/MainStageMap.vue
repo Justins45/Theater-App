@@ -17,7 +17,7 @@ function selectSeat(event: { target: { closest: (arg0: string) => any } }) {
   const uiIdentifier = e.attributes['data-seat-id'].value
 
   if (props.seats.length < 1) { return null }
-  const clickedSeat = props.seats.find(seat => seat.seat.uiIdentifier === uiIdentifier)
+  const clickedSeat = props.seats.find(seat => seat.uiIdentifier === uiIdentifier)
   sendUp(clickedSeat)
 }
 

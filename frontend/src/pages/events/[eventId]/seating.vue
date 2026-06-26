@@ -8,6 +8,7 @@ const router = useRouter()
 const route = useRoute()
 const seating = ref()
 const eventId = ref("")
+const clickedSeat = ref()
 
 async function getInformation(pId: string, eId: string) {
   try {
@@ -20,7 +21,7 @@ async function getInformation(pId: string, eId: string) {
 }
 
 const getSeatClick = (receivedData: any) => {
-  console.log(receivedData)
+  clickedSeat.value = receivedData
 }
 
 // // if URL updates re fetch
@@ -50,6 +51,9 @@ onMounted(async () => {
   </div>
   <template v-if="seating">
     <MainStageMap :seats="seating" @clicked-seat="getSeatClick"/>
+    <template v-if="clickedSeat">
+      <pre>{{ clickedSeat }}</pre>
+    </template>
   </template>
   <template v-else>
     Loading...

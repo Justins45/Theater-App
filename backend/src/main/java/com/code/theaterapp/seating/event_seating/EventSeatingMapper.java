@@ -11,9 +11,13 @@ public class EventSeatingMapper {
                 eventSeating.getId(),
                 eventSeating.getSeatStatus(),
                 eventSeating.getPerformance().getId(),
-                eventSeating.getSeat().getId(),
                 eventSeating.getHoldExpiry(),
-                eventSeating.getSeat()
+                eventSeating.getSeat().getId(),
+                eventSeating.getSeat().getRow(),
+                eventSeating.getSeat().getSeatNumber(),
+                eventSeating.getSeat().getSection(),
+                eventSeating.getSeat().getUiIdentifier(),
+                eventSeating.getSeat().getStage().getId()
         );
     }
 }

@@ -10,7 +10,6 @@ import com.code.theaterapp.shared.enums.SeatStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,7 +20,6 @@ public class EventSeatingService {
     private final PerformanceRepo performanceRepo;
     private final SeatRepo seatRepo;
     private final EventSeatingRepo eventSeatingRepo;
-    private final EventSeatingMapper eventSeatingMapper;
 
 
     public List<EventSeatingDetailsDTO> createEventSeating(Integer stageId, UUID performanceId) {
@@ -52,9 +50,13 @@ public class EventSeatingService {
                         es.getId(),
                         es.getSeatStatus(),
                         performanceId,
-                        es.getSeat().getId(),
                         null,
-                        es.getSeat()
+                        es.getSeat().getId(),
+                        es.getSeat().getRow(),
+                        es.getSeat().getSeatNumber(),
+                        es.getSeat().getSection(),
+                        es.getSeat().getUiIdentifier(),
+                        es.getSeat().getStage().getId()
                 ))
                 .toList();
     }
@@ -66,7 +68,18 @@ public class EventSeatingService {
         );
         return eventSeatingRepo.findAllByPerformanceIdWithSeat(performance.getId())
                 .stream()
-                .map(eventSeatingMapper::toDetails)
+                .map(es -> new EventSeatingDetailsDTO(
+                        es.getId(),
+                        es.getSeatStatus(),
+                        performanceId,
+                        null,
+                        es.getSeat().getId(),
+                        es.getSeat().getRow(),
+                        es.getSeat().getSeatNumber(),
+                        es.getSeat().getSection(),
+                        es.getSeat().getUiIdentifier(),
+                        es.getSeat().getStage().getId()
+                ))
                 .toList();
     }
 }
