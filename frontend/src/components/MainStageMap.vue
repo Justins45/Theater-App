@@ -10,11 +10,13 @@ function sendUp(data: any) {
   emit('clicked-seat', data)
 }
 
-function selectSeat(event: { target: { closest: (arg0: string) => any } }) {
-  const e = event.target.closest('[data-seat-id]')
+function selectSeat(event: PointerEvent) {
+  const target = event.target as HTMLElement | SVGElement | null
+
+  const e = target?.closest<SVGElement>('[data-seat-id]')
 
   if (!e) return null
-  const uiIdentifier = e.attributes['data-seat-id'].value
+  const uiIdentifier = e.dataset.seatId
 
   if (props.seats.length < 1) { return null }
   const clickedSeat = props.seats.find(seat => seat.uiIdentifier === uiIdentifier)
