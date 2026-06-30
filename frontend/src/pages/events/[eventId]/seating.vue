@@ -9,6 +9,7 @@ const route = useRoute()
 const seating = ref()
 const eventId = ref("")
 const clickedSeat = ref()
+const seatList = ref([])
 
 async function getInformation(pId: string, eId: string) {
   try {
@@ -21,7 +22,15 @@ async function getInformation(pId: string, eId: string) {
 }
 
 const getSeatClick = (receivedData: any) => {
+
   clickedSeat.value = receivedData
+
+  if (seatList.value.includes(receivedData.id)) {
+    seatList.value = seatList.value.filter(item => item !== receivedData.id)
+  } else {
+    seatList.value.push(receivedData.id)
+  }
+
 }
 
 // // if URL updates re fetch
@@ -48,6 +57,7 @@ onMounted(async () => {
 <template>
   <div>
     <h2>Event seating</h2>
+    {{ seatList }}
   </div>
   <template v-if="seating">
     <MainStageMap :seats="seating" @clicked-seat="getSeatClick"/>

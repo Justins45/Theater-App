@@ -18,6 +18,9 @@ function selectSeat(event: { target: { closest: (arg0: string) => any } }) {
 
   if (props.seats.length < 1) { return null }
   const clickedSeat = props.seats.find(seat => seat.uiIdentifier === uiIdentifier)
+
+  e.classList.toggle('selected')
+
   sendUp(clickedSeat)
 }
 
@@ -500,6 +503,10 @@ function selectSeat(event: { target: { closest: (arg0: string) => any } }) {
 
 .seat:hover {
   fill: #f0a500;
+}
+
+.selected {
+  fill: #7c0d0e;
 }
 
 .row-label {
