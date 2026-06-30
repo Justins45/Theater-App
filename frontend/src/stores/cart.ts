@@ -2,30 +2,25 @@ import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 
 export const useCartStore = defineStore("cart", () => {
-  const cart = ref([])
+  const cart = ref([]);
 
-  const cartSize = computed(() => {
-    return cart.value.length;
-  })
+  // get total items in cart
 
-  const totalPrice = computed(() => {
-    let price = 0;
-    cart.value.forEach((item) => {price += item.price});
-    return price;
-  })
 
+  // add item to cart
   function addToCart(item) {
-    cart.value.push(item);
+    if (!cart.value.includes(item)) {
+      cart.value.push(item);
+    }
   }
 
-  function removeFromCart(item) {
-    cart.value.splice(cart.value.indexOf(item), 1);
-  }
+  // remove item from cart
 
-  function clearCart() {
-    cart.value = [];
-  }
 
-  return {cart, cartSize, totalPrice, addToCart, removeFromCart, clearCart};
+  // get total price (every addition and deletion + checks)
+
+
+
+  return {cart, addToCart};
 
 });

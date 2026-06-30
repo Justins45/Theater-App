@@ -3,6 +3,7 @@ import { ref, watch, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import apiClient from '@/api/axios'
 import MainStageMap from '@/components/MainStageMap.vue'
+import { useCartStore } from '@/stores/cart'
 
 const router = useRouter()
 const route = useRoute()
@@ -10,6 +11,7 @@ const seating = ref()
 const eventId = ref("")
 const clickedSeat = ref()
 const seatList = ref([])
+const cartStore = useCartStore()
 
 async function getInformation(pId: string, eId: string) {
   try {
@@ -31,6 +33,12 @@ const getSeatClick = (receivedData: any) => {
     seatList.value.push(receivedData.id)
   }
 
+}
+
+const addItemsToCart = () => {
+  for (const index in seatList.value) {
+    cartStore.addToCart(seatList.value[index])
+  }
 }
 
 // // if URL updates re fetch
@@ -57,7 +65,8 @@ onMounted(async () => {
 <template>
   <div>
     <h2>Event seating</h2>
-    {{ seatList }}
+    <pre>{{ seatList }}</pre>
+    <button v-if="clickedSeat" @click="addItemsToCart">Add items to cart</button>
   </div>
   <template v-if="seating">
     <MainStageMap :seats="seating" @clicked-seat="getSeatClick"/>

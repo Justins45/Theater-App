@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { SharedButton } from "@theater/shared";
 import { RouterLink, RouterView } from "vue-router";
+import { useCartStore } from '@/stores/cart'
+
+const cartStore = useCartStore()
+
 </script>
 
 <template>
@@ -14,6 +18,7 @@ import { RouterLink, RouterView } from "vue-router";
 
   </nav>
   <SharedButton />
+  <pre>{{ cartStore }}</pre>
   <router-view></router-view>
 </template>
 
