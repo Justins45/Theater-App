@@ -2,12 +2,14 @@
 import { ref, watch, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import apiClient from '@/api/axios'
+import MainStageMap from '@/components/MainStageMap.vue'
 
 const router = useRouter()
 const route = useRoute()
 const seating = ref()
 const eventId = ref("")
-
+const clickedSeat = ref()
+const seatList = ref([])
 
 async function getInformation(pId: string, eId: string) {
   try {
@@ -19,6 +21,17 @@ async function getInformation(pId: string, eId: string) {
   }
 }
 
+const getSeatClick = (receivedData: any) => {
+
+  clickedSeat.value = receivedData
+
+  if (seatList.value.includes(receivedData.id)) {
+    seatList.value = seatList.value.filter(item => item !== receivedData.id)
+  } else {
+    seatList.value.push(receivedData.id)
+  }
+
+}
 
 // // if URL updates re fetch
 watch(() => route.params.performanceId, async (pid) => {
@@ -44,30 +57,17 @@ onMounted(async () => {
 <template>
   <div>
     <h2>Event seating</h2>
-    <table>
-      <thead>
-      <tr>
-        <th>Status</th>
-        <th>Row</th>
-        <th>Seat</th>
-        <th>Section</th>
-        <th>Label</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr v-if="!seating">
-        <td colspan="5">No seats found.</td>
-      </tr>
-      <tr v-for="seat in seating" :key="seat.id">
-        <td>{{ seat.seatStatus }}</td>
-        <td>{{ seat.seat.row }}</td>
-        <td>{{ seat.seat.seatNumber }}</td>
-        <td>{{ seat.seat.section }}</td>
-        <td>{{ seat.seat.uiIdentifier }}</td>
-      </tr>
-      </tbody>
-    </table>
+    {{ seatList }}
   </div>
+  <template v-if="seating">
+    <MainStageMap :seats="seating" @clicked-seat="getSeatClick"/>
+    <template v-if="clickedSeat">
+      <pre>{{ clickedSeat }}</pre>
+    </template>
+  </template>
+  <template v-else>
+    Loading...
+  </template>
 </template>
 
 <style scoped lang="scss">
