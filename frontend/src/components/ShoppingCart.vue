@@ -5,12 +5,34 @@ const cartStore = useCartStore()
 </script>
 
 <template>
-  <div>
+  <div class="cart">
     <template v-if="cartStore.cart.length > 0">
-      <p>{{ cartStore.totalItems }}</p>
-      <div v-for="(item, index) in cartStore.cart" :key="index">
-        <!-- TODO: ADD UI FOR DELETE AND VIEW ITEMS PROPERLY -->
-        {{ item }}
+      <div class="cart-item" v-for="(item, index) in cartStore.cart" :key="index">
+        <div class="cart-item-sub">
+          <table>
+            <thead>
+            <tr>
+              <th>SECTION</th>
+              <th>ROW</th>
+              <th>SEAT NUMBER</th>
+              <th>PRICE</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ item.section }}</td>
+                <td>{{ item.row }}</td>
+                <td>{{ item.seatNumber }}</td>
+                <td>$</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button @click="cartStore.removeFromCart(index)">X</button>
+      </div>
+      <div>
+        <!-- Total tickets # + Total Cost + breakdown -->
+        <p>Total Tickets: {{ cartStore.totalItems }}</p>
       </div>
     </template>
     <template v-else>
@@ -20,5 +42,39 @@ const cartStore = useCartStore()
 </template>
 
 <style scoped lang="scss">
+
+.cart {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: #dfe1e6;
+}
+
+.cart-item {
+  border: #222222 solid 1px;
+  width: 27rem;
+  padding: 0.25rem 1rem;
+  display: flex;
+  border-radius: 0.2rem;
+
+  .cart-item-sub {
+    display: flex;
+    flex-direction: row;
+
+    table {
+      border-spacing: 8px 0;
+    }
+
+    td, th {
+      text-align: center;
+      padding: 5px 10px;
+    }
+
+  }
+
+  button {
+    display: block;
+  }
+}
 
 </style>

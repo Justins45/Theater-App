@@ -28,9 +28,9 @@ const getSeatClick = (receivedData: any) => {
   clickedSeat.value = receivedData
 
   if (seatList.value.includes(receivedData.id)) {
-    seatList.value = seatList.value.filter(item => item !== receivedData.id)
+    seatList.value = seatList.value.filter(item => item.id !== receivedData.id)
   } else {
-    seatList.value.push(receivedData.id)
+    seatList.value.push(receivedData)
   }
 
 }
@@ -65,7 +65,6 @@ onMounted(async () => {
 <template>
   <div>
     <h2>Event seating</h2>
-    <pre>{{ seatList }}</pre>
     <button v-if="clickedSeat" @click="addItemsToCart">Add items to cart</button>
   </div>
   <template v-if="seating">
