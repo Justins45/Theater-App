@@ -33,6 +33,9 @@ const cartStore = useCartStore()
       <div>
         <!-- Total tickets # + Total Cost + breakdown -->
         <p>Total Tickets: {{ cartStore.totalItems }}</p>
+        <p>Subtotal: $ {{ cartStore.subtotal }}</p>
+        <p>Tax: $ {{ cartStore.totalTax }}</p>
+        <p>Total Price: $ {{ cartStore.totalPrice }}</p>
       </div>
     </template>
     <template v-else>
@@ -42,7 +45,6 @@ const cartStore = useCartStore()
 </template>
 
 <style scoped lang="scss">
-
 .cart {
   display: flex;
   flex-direction: column;
@@ -69,7 +71,6 @@ const cartStore = useCartStore()
       text-align: center;
       padding: 5px 10px;
     }
-
   }
 
   button {

@@ -24,8 +24,10 @@ export const useCartStore = defineStore("cart", () => {
 
   // get total price (every addition and deletion + checks)
   // TODO: SOMEHOW GET PRICES FROM ITEMS
+  const subtotal = computed(() => {})
+  const totalTax = computed(() => {})
   const totalPrice = computed(() => {})
 
-  return {cart, totalItems, addToCart, removeFromCart, totalPrice};
+  return {cart, totalItems, addToCart, removeFromCart, subtotal, totalTax, totalPrice};
 
 });
