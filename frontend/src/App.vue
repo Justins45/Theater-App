@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { SharedButton } from "@theater/shared";
 import { RouterLink, RouterView } from "vue-router";
-import { useCartStore } from '@/stores/cart'
-
-const cartStore = useCartStore()
+import ShoppingCart from '@/components/ShoppingCart.vue'
 
 </script>
 
@@ -18,7 +16,7 @@ const cartStore = useCartStore()
 
   </nav>
   <SharedButton />
-  <pre>{{ cartStore }}</pre>
+  <ShoppingCart />
   <router-view></router-view>
 </template>
 

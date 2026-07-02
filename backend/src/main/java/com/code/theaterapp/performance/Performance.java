@@ -31,6 +31,8 @@ public class Performance {
     @Column(nullable = false)
     private LocalTime showTime;
 
+    // TODO: add ticket price here
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private PerformanceStatus performanceStatus;
