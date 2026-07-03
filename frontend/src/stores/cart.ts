@@ -26,29 +26,15 @@ export const useCartStore = defineStore("cart", () => {
   }
 
   // get total price (every addition and deletion + checks)
-  const subtotalNum = computed(() => {
-    return cart.value.reduce((total, item) => {
-      return total + item.price;
-    }, 0);
+  const subtotalNum  = computed(() => {
+    return cart.value.reduce((sum, item) => sum + item.price, 0)
+  })
+  const totalTaxNum  = computed(() => subtotalNum.value * 0.05)
+  const totalPriceNum = computed(() => subtotalNum.value + totalTaxNum.value)
 
-  })
-  const totalTaxNum = computed(() => {
-    return 0.05 * subtotal.value;
-  })
-  const totalPriceNum = computed(() => {
-    return Number(subtotal.value) + Number(totalTaxNum.value);
-  })
-
-
-  const subtotal = computed(() => {
-    return formatToString(subtotalNum.value);
-  })
-  const totalTax = computed(() => {
-    return formatToString(totalTaxNum.value);
-  })
-  const totalPrice = computed(() => {
-    return formatToString(totalPriceNum.value);
-  })
+  const subtotal   = computed(() => formatToString(subtotalNum.value))
+  const totalTax   = computed(() => formatToString(totalTaxNum.value))
+  const totalPrice = computed(() => formatToString(totalPriceNum.value))
 
   return {cart, totalItems, addToCart, removeFromCart, subtotal, totalTax, totalPrice};
 
