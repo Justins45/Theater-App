@@ -51,6 +51,14 @@ watch(() => route.params.performanceId, async (performance_id) => {
   }
 })
 
+watch(() => cartStore.cart.map(item => item), (newCartIds, oldCartIds) => {
+  const removedIds = oldCartIds.filter(id => !newCartIds.includes(id))
+
+  if (removedIds.length > 0) {
+    selectedSeats.value = selectedSeats.value.filter(id => !removedIds.includes(id))
+  }
+})
+
 // Handle initial load separately, after component is mounted
 onMounted(async () => {
   const performance_id = route.query.performanceId
