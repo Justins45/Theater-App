@@ -13,7 +13,7 @@ export const useCartStore = defineStore("cart", () => {
 
   // add item to cart
   function addToCart(item: any) {
-    const exists = cart.value.some(cartItem => cartItem === item);
+    const exists = cart.value.some(cartItem => cartItem.id === item.id);
     if (!exists) {
       cart.value.push(item);
     }

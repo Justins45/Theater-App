@@ -10,7 +10,7 @@ const route = useRoute()
 const seating = ref()
 const eventId = ref("")
 const clickedSeat = ref()
-const seatList = ref([])
+const selectedSeats = ref([])
 const cartStore = useCartStore()
 
 async function getInformation(pId: string, eId: string) {
@@ -27,37 +27,38 @@ const getSeatClick = (receivedData: any) => {
 
   clickedSeat.value = receivedData
 
-  if (seatList.value.includes(receivedData.id)) {
-    seatList.value = seatList.value.filter(item => item.id !== receivedData.id)
+  if (selectedSeats.value.includes(receivedData)) {
+    selectedSeats.value = selectedSeats.value.filter(item => item !== receivedData)
   } else {
-    seatList.value.push(receivedData)
+    selectedSeats.value.push(receivedData)
   }
 
 }
 
 const addItemsToCart = () => {
-  for (const index in seatList.value) {
-    cartStore.addToCart(seatList.value[index])
+  for (const index in selectedSeats.value) {
+    cartStore.addToCart(selectedSeats.value[index])
   }
 }
 
 // // if URL updates re fetch
-watch(() => route.params.performanceId, async (pid) => {
-  if (pid) {
-    // newId comes as type "string | string[]"
-    console.log(pid)
-    await getInformation(pid.toString(), eventId.value)
+watch(() => route.params.performanceId, async (performance_id) => {
+
+  if (performance_id) {
+    // performance_id comes as type "string | string[]"
+    console.log(performance_id)
+    await getInformation(performance_id.toString(), eventId.value)
   }
 })
 
 // Handle initial load separately, after component is mounted
 onMounted(async () => {
-  const pid = route.query.performanceId
-  const eid = route.params.eventId
+  const performance_id = route.query.performanceId
+  const event_id = route.params.eventId
 
-  if (pid && eid) {
-    eventId.value = eid.toString()
-    await getInformation(pid.toString(), eventId.value);
+  if (performance_id && event_id) {
+    eventId.value = event_id.toString()
+    await getInformation(performance_id.toString(), eventId.value);
   }
 })
 </script>
@@ -68,10 +69,8 @@ onMounted(async () => {
     <button v-if="clickedSeat" @click="addItemsToCart">Add items to cart</button>
   </div>
   <template v-if="seating">
-    <MainStageMap :seats="seating" @clicked-seat="getSeatClick"/>
-    <template v-if="clickedSeat">
-      <pre>{{ clickedSeat }}</pre>
-    </template>
+    <MainStageMap :seats="seating" :selectedSeats="selectedSeats" @clicked-seat="getSeatClick"/>
+    <pre>{{ selectedSeats }}</pre>
   </template>
   <template v-else>
     Loading...
