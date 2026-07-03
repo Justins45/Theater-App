@@ -23,7 +23,7 @@ const cartStore = useCartStore()
                 <td>{{ item.section }}</td>
                 <td>{{ item.row }}</td>
                 <td>{{ item.seatNumber }}</td>
-                <td>$</td>
+                <td>${{ item.price }}</td>
               </tr>
             </tbody>
           </table>
@@ -33,9 +33,9 @@ const cartStore = useCartStore()
       <div>
         <!-- Total tickets # + Total Cost + breakdown -->
         <p>Total Tickets: {{ cartStore.totalItems }}</p>
-        <p>Subtotal: $ {{ cartStore.subtotal }}</p>
-        <p>Tax: $ {{ cartStore.totalTax }}</p>
-        <p>Total Price: $ {{ cartStore.totalPrice }}</p>
+        <p>Subtotal: ${{ cartStore.subtotal }}</p>
+        <p>Tax: ${{ cartStore.totalTax }}</p>
+        <p>Total Price: ${{ cartStore.totalPrice }}</p>
       </div>
     </template>
     <template v-else>

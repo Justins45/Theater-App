@@ -17,6 +17,7 @@ public class EventSeatingMapper {
                 eventSeating.getSeat().getSeatNumber(),
                 eventSeating.getSeat().getSection(),
                 eventSeating.getSeat().getUiIdentifier(),
+                eventSeating.getPerformance().getPrice(),
                 eventSeating.getSeat().getStage().getId()
         );
     }

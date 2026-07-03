@@ -7,9 +7,12 @@ export const useCartStore = defineStore("cart", () => {
   // get total items in cart
   const totalItems = computed(() => cart.value.length);
 
+  function formatToString(num:number): string {
+    return num.toFixed(2);
+  }
+
   // add item to cart
   function addToCart(item: any) {
-    // TODO: ADD PROPER TICKET UI VIEW
     const exists = cart.value.some(cartItem => cartItem === item);
     if (!exists) {
       cart.value.push(item);
@@ -23,10 +26,29 @@ export const useCartStore = defineStore("cart", () => {
   }
 
   // get total price (every addition and deletion + checks)
-  // TODO: SOMEHOW GET PRICES FROM ITEMS
-  const subtotal = computed(() => {})
-  const totalTax = computed(() => {})
-  const totalPrice = computed(() => {})
+  const subtotalNum = computed(() => {
+    return cart.value.reduce((total, item) => {
+      return total + item.price;
+    }, 0);
+
+  })
+  const totalTaxNum = computed(() => {
+    return 0.05 * subtotal.value;
+  })
+  const totalPriceNum = computed(() => {
+    return Number(subtotal.value) + Number(totalTaxNum.value);
+  })
+
+
+  const subtotal = computed(() => {
+    return formatToString(subtotalNum.value);
+  })
+  const totalTax = computed(() => {
+    return formatToString(totalTaxNum.value);
+  })
+  const totalPrice = computed(() => {
+    return formatToString(totalPriceNum.value);
+  })
 
   return {cart, totalItems, addToCart, removeFromCart, subtotal, totalTax, totalPrice};
 

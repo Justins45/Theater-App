@@ -56,6 +56,7 @@ public class EventSeatingService {
                         es.getSeat().getSeatNumber(),
                         es.getSeat().getSection(),
                         es.getSeat().getUiIdentifier(),
+                        es.getPerformance().getPrice(),
                         es.getSeat().getStage().getId()
                 ))
                 .toList();
@@ -78,6 +79,7 @@ public class EventSeatingService {
                         es.getSeat().getSeatNumber(),
                         es.getSeat().getSection(),
                         es.getSeat().getUiIdentifier(),
+                        es.getPerformance().getPrice(),
                         es.getSeat().getStage().getId()
                 ))
                 .toList();
