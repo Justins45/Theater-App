@@ -1,13 +1,14 @@
 package com.code.theaterapp.shoppingCart.cart;
 
-import com.code.theaterapp.auth.secruity.accounts.PatronAccount;
 import com.code.theaterapp.exceptions.EntityNotFoundException;
+import com.code.theaterapp.seating.event_seating.EventSeatingRepo;
+import com.code.theaterapp.shared.person.PersonRepo;
 import com.code.theaterapp.shoppingCart.cart.dtos.CartDetailsDTO;
+import com.code.theaterapp.shoppingCart.cartItem.CartItem;
 import com.code.theaterapp.shoppingCart.cartItem.CartItemMapper;
 import com.code.theaterapp.shoppingCart.cartItem.CartItemRepo;
 import com.code.theaterapp.shoppingCart.cartItem.dtos.CartItemDetailsDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,41 +20,55 @@ public class CartService {
 
     private final CartRepo cartRepo;
     private final CartItemRepo cartItemRepo;
+    private final PersonRepo personRepo;
+    private final EventSeatingRepo eventSeatingRepo;
     private final CartMapper cartMapper;
     private final CartItemMapper cartItemMapper;
 
-    // return CartSummaryDTO
-    public String createCart() {
-        // get person UUID + validate
-
-        // get cart -> early exit
-
-        // create cart
-
-        return "";
+    public CartDetailsDTO getOrCreateCart(UUID personId) {
+        return cartRepo.findCartByPersonIdAndActive(personId)
+                .map(cart -> {
+                    List<CartItemDetailsDTO> cartItems = cartItemRepo.findAllByCartId(cart.getId())
+                            .stream()
+                            .map(cartItemMapper::toDetails)
+                            .toList();
+                    return cartMapper.toDetails(cart, cartItems);
+                })
+                .orElseGet(() -> createCart(personId));
     }
 
-    // return CartDetailsDTO
-    public String populateCart(UUID cartId) {
-        // get cart
+    private CartDetailsDTO createCart(UUID personId) {
+        Cart cart = new Cart();
+        cart.setPerson(personRepo.getReferenceById(personId));
 
-        // add each item to cart_items with cartId attached
-
-        return "";
+        Cart saved = cartRepo.save(cart);
+        // Empty list as cart is created empty
+        return cartMapper.toDetails(saved, List.of());
     }
 
-    // return CartDetailsDTO
-    public CartDetailsDTO getCart(@AuthenticationPrincipal PatronAccount patronAccount) {
-        Cart cart = cartRepo.findCartByPersonIdAndActive(patronAccount.getId()).orElseThrow(
-                () -> new EntityNotFoundException("No Carts found")
+    public CartDetailsDTO populateCart(UUID cartId, List<CartItemDetailsDTO> items) {
+        Cart cart = cartRepo.findById(cartId).orElseThrow(
+                () -> new EntityNotFoundException("Cart not found")
         );
 
-        List<CartItemDetailsDTO> cartItems = cartItemRepo.findAllByCartId(cart.getId())
-                .stream()
-                .map(cartItemMapper::toDetails)
-                .toList();
+        List<CartItem> cartItems = items.stream()
+                .map(item -> {
+                    CartItem ci = new CartItem();
+                    ci.setCart(cart);
+                    ci.setItemType(item.cartItemType());
+                    ci.setEventSeating(
+                            eventSeatingRepo.findById(item.eventSeatingId())
+                                    .orElse(null)
+                    );
+                    ci.setUnitPrice(item.unitPrice());
+                    return ci;
+                }).toList();
 
-        return cartMapper.toDetails(cart, cartItems);
+        List<CartItem> savedCartItems = cartItemRepo.saveAll(cartItems);
+        return cartMapper.toDetails(
+                cart,
+                savedCartItems.stream()
+                        .map(cartItemMapper::toDetails)
+                        .toList());
     }
-
 }
