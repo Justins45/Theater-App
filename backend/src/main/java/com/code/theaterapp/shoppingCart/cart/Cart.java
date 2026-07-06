@@ -1,4 +1,4 @@
-package com.code.theaterapp.shoppingCart;
+package com.code.theaterapp.shoppingCart.cart;
 
 import com.code.theaterapp.shared.person.Person;
 import jakarta.persistence.*;

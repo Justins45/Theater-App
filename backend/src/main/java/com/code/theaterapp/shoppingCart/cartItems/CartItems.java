@@ -1,7 +1,8 @@
-package com.code.theaterapp.shoppingCart;
+package com.code.theaterapp.shoppingCart.cartItems;
 
 import com.code.theaterapp.seating.event_seating.EventSeating;
 import com.code.theaterapp.shared.enums.CartItemType;
+import com.code.theaterapp.shoppingCart.cart.Cart;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
