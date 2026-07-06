@@ -1,6 +1,7 @@
 package com.code.theaterapp.shoppingCart;
 
 import com.code.theaterapp.seating.event_seating.EventSeating;
+import com.code.theaterapp.shared.enums.CartItemType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,7 +30,8 @@ public class CartItems {
     private Cart cart;
 
     @Column(nullable = false)
-    private String itemType;
+    @Enumerated(EnumType.STRING)
+    private CartItemType itemType;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
