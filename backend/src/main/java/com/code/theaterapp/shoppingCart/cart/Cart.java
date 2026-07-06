@@ -1,5 +1,6 @@
 package com.code.theaterapp.shoppingCart.cart;
 
+import com.code.theaterapp.shared.enums.CartStatus;
 import com.code.theaterapp.shared.person.Person;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -27,6 +28,10 @@ public class Cart {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "person_id", nullable = false)
     private Person person;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private CartStatus cartStatus;
 
     @Column(nullable = false)
     private Instant eventCreated;

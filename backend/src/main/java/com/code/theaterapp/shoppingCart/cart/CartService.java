@@ -1,13 +1,26 @@
 package com.code.theaterapp.shoppingCart.cart;
 
+import com.code.theaterapp.auth.secruity.accounts.PatronAccount;
+import com.code.theaterapp.exceptions.EntityNotFoundException;
+import com.code.theaterapp.shoppingCart.cart.dtos.CartDetailsDTO;
+import com.code.theaterapp.shoppingCart.cartItem.CartItemMapper;
+import com.code.theaterapp.shoppingCart.cartItem.CartItemRepo;
+import com.code.theaterapp.shoppingCart.cartItem.dtos.CartItemDetailsDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class CartService {
+
+    private final CartRepo cartRepo;
+    private final CartItemRepo cartItemRepo;
+    private final CartMapper cartMapper;
+    private final CartItemMapper cartItemMapper;
 
     // return CartSummaryDTO
     public String createCart() {
@@ -30,16 +43,17 @@ public class CartService {
     }
 
     // return CartDetailsDTO
-    public String getCart(UUID personId) {
-        // get cart by personId
+    public CartDetailsDTO getCart(@AuthenticationPrincipal PatronAccount patronAccount) {
+        Cart cart = cartRepo.findCartByPersonIdAndActive(patronAccount.getId()).orElseThrow(
+                () -> new EntityNotFoundException("No Carts found")
+        );
 
-        // if not real -> 404
+        List<CartItemDetailsDTO> cartItems = cartItemRepo.findAllByCartId(cart.getId())
+                .stream()
+                .map(cartItemMapper::toDetails)
+                .toList();
 
-        // if not active -> 404
-
-        // return cart
-
-        return "";
+        return cartMapper.toDetails(cart, cartItems);
     }
-    
+
 }
