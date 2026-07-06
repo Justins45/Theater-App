@@ -1,4 +1,4 @@
-package com.code.theaterapp.shoppingCart.cartItems;
+package com.code.theaterapp.shoppingCart.cartItem;
 
 import com.code.theaterapp.seating.event_seating.EventSeating;
 import com.code.theaterapp.shared.enums.CartItemType;
@@ -19,7 +19,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @Table(name = "cart_items")
-public class CartItems {
+public class CartItem {
 
     @Id
     @GeneratedValue
