@@ -1,11 +1,13 @@
 package com.code.theaterapp.shoppingCart.cartItem.dtos;
 
+import com.code.theaterapp.shared.enums.CartItemType;
+
 import java.util.UUID;
 
-public record CartItemSummaryDTO(
+public record CartItemDetailsDTO(
         UUID id,
         UUID cartId,
-        String cartItemType,
+        CartItemType cartItemType,
         UUID eventSeatingId,
         String unitPrice
 ) {
