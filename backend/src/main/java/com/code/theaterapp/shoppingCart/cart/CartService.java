@@ -17,6 +17,7 @@ import com.code.theaterapp.shoppingCart.cartItem.CartItemRepo;
 import com.code.theaterapp.shoppingCart.cartItem.dtos.CartItemDetailsDTO;
 import com.code.theaterapp.shoppingCart.cartItem.dtos.CartItemSummaryDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -78,6 +79,7 @@ public class CartService {
             // TODO: make custom exception
             throw new RuntimeException("Seat is not available");
         }
+        // TODO: UPDATE EVENT_SEATING SEAT TO BE HELD UNTIL SOLD
 
         CartItem cartItem = new CartItem();
         cartItem.setCart(cart);
@@ -95,6 +97,7 @@ public class CartService {
     }
 
     public ResponseEntity<CartItemSummaryDTO> addMerchItemToCart(UUID cartId, AddMerchandiseRequest merchandiseRequest) {
-
+        // TODO: TEMP METHOD FOR OTHER STUFF BEFORE IT
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
     }
 }

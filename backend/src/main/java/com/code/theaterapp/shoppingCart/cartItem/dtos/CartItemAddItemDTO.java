@@ -6,7 +6,6 @@ import java.util.UUID;
 
 public record CartItemAddItemDTO(
         CartItemType itemType,
-        UUID itemId,
-        Integer quantity
+        UUID itemId
 ) {
 }
