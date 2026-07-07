@@ -9,6 +9,7 @@ import com.code.theaterapp.shoppingCart.cartItem.CartItem;
 import com.code.theaterapp.shoppingCart.cartItem.CartItemMapper;
 import com.code.theaterapp.shoppingCart.cartItem.CartItemRepo;
 import com.code.theaterapp.shoppingCart.cartItem.dtos.CartItemDetailsDTO;
+import com.code.theaterapp.shoppingCart.cartItem.dtos.CartItemAddItemDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -50,7 +51,7 @@ public class CartService {
         return cartMapper.toDetails(saved, List.of());
     }
 
-    public CartDetailsDTO populateCart(UUID cartId, List<CartItemDetailsDTO> items) {
+    public CartDetailsDTO addItem(UUID cartId, List<CartItemAddItemDTO> items) {
         Cart cart = cartRepo.findById(cartId).orElseThrow(
                 () -> new EntityNotFoundException("Cart not found")
         );
@@ -64,7 +65,8 @@ public class CartService {
                             eventSeatingRepo.findById(item.eventSeatingId())
                                     .orElse(null)
                     );
-                    ci.setUnitPrice(item.unitPrice());
+                    // get unit price elsewhere
+                    ci.setUnitPrice("24.99");
                     return ci;
                 }).toList();
 
