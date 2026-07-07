@@ -89,8 +89,9 @@ public class CartService {
 
         CartItem savedCartItem = cartItemRepo.save(cartItem);
 
-        return cartItemMapper.toSummary(savedCartItem);
-
+        return ResponseEntity.ok(
+                cartItemMapper.toSummary(savedCartItem)
+        );
     }
 
     public ResponseEntity<CartItemSummaryDTO> addMerchItemToCart(UUID cartId, AddMerchandiseRequest merchandiseRequest) {

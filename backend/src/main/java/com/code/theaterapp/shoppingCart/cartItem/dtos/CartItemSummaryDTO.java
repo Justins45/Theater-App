@@ -7,7 +7,6 @@ import java.util.UUID;
 public record CartItemSummaryDTO(
         UUID id,
         CartItemType itemType,
-        Integer quantity,
         String price
 ) {
 }
