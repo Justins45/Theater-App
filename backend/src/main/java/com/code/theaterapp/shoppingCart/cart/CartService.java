@@ -2,6 +2,7 @@ package com.code.theaterapp.shoppingCart.cart;
 
 import com.code.theaterapp.exceptions.EntityNotFoundException;
 import com.code.theaterapp.seating.event_seating.EventSeatingRepo;
+import com.code.theaterapp.shared.enums.CartStatus;
 import com.code.theaterapp.shared.person.PersonRepo;
 import com.code.theaterapp.shoppingCart.cart.dtos.CartDetailsDTO;
 import com.code.theaterapp.shoppingCart.cartItem.CartItem;
@@ -11,6 +12,7 @@ import com.code.theaterapp.shoppingCart.cartItem.dtos.CartItemDetailsDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,6 +42,8 @@ public class CartService {
     private CartDetailsDTO createCart(UUID personId) {
         Cart cart = new Cart();
         cart.setPerson(personRepo.getReferenceById(personId));
+        cart.setCartCreated(Instant.now());
+        cart.setStatus(CartStatus.ACTIVE);
 
         Cart saved = cartRepo.save(cart);
         // Empty list as cart is created empty

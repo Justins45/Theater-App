@@ -5,7 +5,6 @@ import com.code.theaterapp.shared.person.Person;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
 
@@ -15,7 +14,6 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
-@RequiredArgsConstructor
 @NoArgsConstructor
 @Table(name = "cart")
 public class Cart {
@@ -31,10 +29,10 @@ public class Cart {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private CartStatus cartStatus;
+    private CartStatus status;
 
     @Column(nullable = false)
-    private Instant eventCreated;
+    private Instant cartCreated;
 
 
 }
