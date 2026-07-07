@@ -1,4 +1,8 @@
 package com.code.theaterapp.shoppingCart.cart.interfaces;
 
-public record AddTicketRequest() implements AddCartItemRequest {
+import java.util.UUID;
+
+public record AddTicketRequest(
+        UUID itemId
+) implements AddCartItemRequest {
 }

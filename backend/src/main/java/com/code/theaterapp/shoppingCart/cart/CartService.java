@@ -1,16 +1,23 @@
 package com.code.theaterapp.shoppingCart.cart;
 
 import com.code.theaterapp.exceptions.EntityNotFoundException;
+import com.code.theaterapp.seating.event_seating.EventSeating;
 import com.code.theaterapp.seating.event_seating.EventSeatingRepo;
+import com.code.theaterapp.shared.enums.CartItemType;
 import com.code.theaterapp.shared.enums.CartStatus;
+import com.code.theaterapp.shared.enums.SeatStatus;
 import com.code.theaterapp.shared.person.PersonRepo;
 import com.code.theaterapp.shoppingCart.cart.dtos.CartDetailsDTO;
+import com.code.theaterapp.shoppingCart.cart.interfaces.AddCartItemRequest;
+import com.code.theaterapp.shoppingCart.cart.interfaces.AddMerchandiseRequest;
+import com.code.theaterapp.shoppingCart.cart.interfaces.AddTicketRequest;
 import com.code.theaterapp.shoppingCart.cartItem.CartItem;
 import com.code.theaterapp.shoppingCart.cartItem.CartItemMapper;
 import com.code.theaterapp.shoppingCart.cartItem.CartItemRepo;
 import com.code.theaterapp.shoppingCart.cartItem.dtos.CartItemDetailsDTO;
-import com.code.theaterapp.shoppingCart.cartItem.dtos.CartItemAddItemDTO;
+import com.code.theaterapp.shoppingCart.cartItem.dtos.CartItemSummaryDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -51,30 +58,42 @@ public class CartService {
         return cartMapper.toDetails(saved, List.of());
     }
 
-    public CartDetailsDTO addItem(UUID cartId, List<CartItemAddItemDTO> items) {
+    public ResponseEntity<CartItemSummaryDTO> addItem(UUID cartId, AddCartItemRequest item) {
+        return switch (item) {
+            case AddTicketRequest request -> addTicketToCart(cartId, request);
+            case AddMerchandiseRequest request -> addMerchItemToCart(cartId, request);
+        };
+    }
+
+    public ResponseEntity<CartItemSummaryDTO> addTicketToCart(UUID cartId, AddTicketRequest ticketRequest) {
         Cart cart = cartRepo.findById(cartId).orElseThrow(
                 () -> new EntityNotFoundException("Cart not found")
         );
 
-        List<CartItem> cartItems = items.stream()
-                .map(item -> {
-                    CartItem ci = new CartItem();
-                    ci.setCart(cart);
-                    ci.setItemType(item.cartItemType());
-                    ci.setEventSeating(
-                            eventSeatingRepo.findById(item.eventSeatingId())
-                                    .orElse(null)
-                    );
-                    // get unit price elsewhere
-                    ci.setUnitPrice("24.99");
-                    return ci;
-                }).toList();
+        EventSeating eventSeating = eventSeatingRepo.findById(ticketRequest.itemId()).orElseThrow(
+                () -> new EntityNotFoundException("Ticket not found")
+        );
 
-        List<CartItem> savedCartItems = cartItemRepo.saveAll(cartItems);
-        return cartMapper.toDetails(
-                cart,
-                savedCartItems.stream()
-                        .map(cartItemMapper::toDetails)
-                        .toList());
+        if (eventSeating.getSeatStatus() != SeatStatus.AVAILABLE) {
+            // TODO: make custom exception
+            throw new RuntimeException("Seat is not available");
+        }
+
+        CartItem cartItem = new CartItem();
+        cartItem.setCart(cart);
+        cartItem.setItemType(CartItemType.TICKET);
+        cartItem.setEventSeating(eventSeating);
+        // TODO: get price from map NOT performance
+        cartItem.setUnitPrice(eventSeating.getPerformance().getPrice().toString());
+        cartItem.setAddedAt(Instant.now());
+
+        CartItem savedCartItem = cartItemRepo.save(cartItem);
+
+        return cartItemMapper.toSummary(savedCartItem);
+
+    }
+
+    public ResponseEntity<CartItemSummaryDTO> addMerchItemToCart(UUID cartId, AddMerchandiseRequest merchandiseRequest) {
+
     }
 }

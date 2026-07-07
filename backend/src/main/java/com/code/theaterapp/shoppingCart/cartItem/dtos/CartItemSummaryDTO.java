@@ -4,9 +4,10 @@ import com.code.theaterapp.shared.enums.CartItemType;
 
 import java.util.UUID;
 
-public record CartItemAddItemDTO(
+public record CartItemSummaryDTO(
+        UUID id,
         CartItemType itemType,
-        UUID itemId,
-        Integer quantity
+        Integer quantity,
+        String price
 ) {
 }
