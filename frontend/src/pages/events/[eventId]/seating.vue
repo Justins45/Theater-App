@@ -16,10 +16,22 @@ const cartStore = useCartStore()
 async function getInformation(pId: string, eId: string) {
   try {
     const res = await apiClient.get("/events/" + eId + "/performances/" + pId + "/seating")
-    console.log(res.data)
+    // console.log(res.data)
     seating.value = res.data
   } catch (error: any) {
     router.push({ path: '/404-not-found', state: { originalPath: `/events/${eId}/seating` } })
+  }
+}
+
+async function sendInformation(itemID: string, itemType: string) {
+  try {
+    const res = await apiClient.post("/cart", {
+      itemId: itemID,
+      itemType: itemType
+    })
+    console.log(res.data)
+  } catch (error: any) {
+    console.error(error)
   }
 }
 
@@ -38,6 +50,7 @@ const getSeatClick = (receivedData: any) => {
 const addItemsToCart = () => {
   for (const index in selectedSeats.value) {
     cartStore.addToCart(selectedSeats.value[index])
+    sendInformation(selectedSeats.value[index].id, "TICKET")
   }
 }
 
@@ -46,7 +59,7 @@ watch(() => route.params.performanceId, async (performance_id) => {
 
   if (performance_id) {
     // performance_id comes as type "string | string[]"
-    console.log(performance_id)
+    // console.log(performance_id)
     await getInformation(performance_id.toString(), eventId.value)
   }
 })

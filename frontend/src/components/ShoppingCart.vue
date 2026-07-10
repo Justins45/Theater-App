@@ -1,7 +1,26 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useCartStore } from '@/stores/cart'
+import apiClient from '@/api/axios'
 
+const data = ref()
 const cartStore = useCartStore()
+
+
+async function getCart() {
+  try {
+    const res = await apiClient.get("/cart")
+    console.log(res.data)
+    data.value = res.data
+  } catch (error: any) {
+    console.error(error)
+  }
+}
+
+
+
+getCart()
+
 </script>
 
 <template>
@@ -37,10 +56,13 @@ const cartStore = useCartStore()
         <p>Tax: ${{ cartStore.totalTax }}</p>
         <p>Total Price: ${{ cartStore.totalPrice }}</p>
       </div>
+
     </template>
     <template v-else>
       <p>No items in the cart</p>
     </template>
+    <p>Data:</p>
+    <pre>{{ data }}</pre>
   </div>
 </template>
 

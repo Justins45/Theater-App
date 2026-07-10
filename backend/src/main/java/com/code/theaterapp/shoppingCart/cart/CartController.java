@@ -9,6 +9,7 @@ import com.code.theaterapp.shoppingCart.cartItem.dtos.CartItemAddItemDTO;
 import com.code.theaterapp.shoppingCart.cartItem.dtos.CartItemSummaryDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,13 @@ public class CartController {
     public ResponseEntity<CartDetailsDTO> getCart(
             @AuthenticationPrincipal PatronAccount patronAccount
     ) {
+
+        if (patronAccount == null) {
+            // used as temp for frontend before a login check is implemented there
+            return ResponseEntity.ok(null);
+            // TODO: use then check when frontend has a login checkpoint
+            // return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         return ResponseEntity.ok(cartService.getOrCreateCart(patronAccount.getId()));
     }
 
