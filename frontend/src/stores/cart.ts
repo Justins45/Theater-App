@@ -2,30 +2,40 @@ import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 
 export const useCartStore = defineStore("cart", () => {
-  const cart = ref([])
+  const cart = ref([]);
 
-  const cartSize = computed(() => {
-    return cart.value.length;
+  // get total items in cart
+  const totalItems = computed(() => cart.value.length);
+
+  function formatToString(num:number): string {
+    return num.toFixed(2);
+  }
+
+  // add item to cart
+  function addToCart(item: any) {
+    const exists = cart.value.some(cartItem => cartItem.id === item.id);
+    if (!exists) {
+      cart.value.push(item);
+    }
+  }
+
+  // remove item from cart
+  function removeFromCart(index: number) {
+    // TODO: FIX DIS TO BE BETTER (idk dawg my brain foggy)
+    cart.value.splice(index, 1);
+  }
+
+  // get total price (every addition and deletion + checks)
+  const subtotalNum  = computed(() => {
+    return cart.value.reduce((sum, item) => sum + item.price, 0)
   })
+  const totalTaxNum  = computed(() => subtotalNum.value * 0.05)
+  const totalPriceNum = computed(() => subtotalNum.value + totalTaxNum.value)
 
-  const totalPrice = computed(() => {
-    let price = 0;
-    cart.value.forEach((item) => {price += item.price});
-    return price;
-  })
+  const subtotal   = computed(() => formatToString(subtotalNum.value))
+  const totalTax   = computed(() => formatToString(totalTaxNum.value))
+  const totalPrice = computed(() => formatToString(totalPriceNum.value))
 
-  function addToCart(item) {
-    cart.value.push(item);
-  }
-
-  function removeFromCart(item) {
-    cart.value.splice(cart.value.indexOf(item), 1);
-  }
-
-  function clearCart() {
-    cart.value = [];
-  }
-
-  return {cart, cartSize, totalPrice, addToCart, removeFromCart, clearCart};
+  return {cart, totalItems, addToCart, removeFromCart, subtotal, totalTax, totalPrice};
 
 });

@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { defineProps } from 'vue'
+import { defineProps, watch, ref } from 'vue'
 
 const emit = defineEmits(['clicked-seat'])
 const props = defineProps<{
-  seats: Array<any>
+  seats: Array<any>,
+  selectedSeats: Array<any>,
 }>()
+const svgMap = ref()
 
 function sendUp(data: any) {
   emit('clicked-seat', data)
@@ -21,15 +23,25 @@ function selectSeat(event: PointerEvent) {
   if (props.seats.length < 1) { return null }
   const clickedSeat = props.seats.find(seat => seat.uiIdentifier === uiIdentifier)
 
-  e.classList.toggle('selected')
-
   sendUp(clickedSeat)
 }
+
+watch(() => props.selectedSeats, (newIds) => {
+
+  svgMap.value?.querySelectorAll(`[data-seat-id]`).forEach( el => {
+    el.classList.remove('selected')
+  })
+
+  newIds.forEach( id => {
+    svgMap.value?.querySelector(`[data-seat-id="${id.uiIdentifier}"]`)?.classList.add('selected')
+  })
+  }, { deep: true }
+)
 
 </script>
 
 <template>
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1208 388" width="1208" height="388" @click="selectSeat">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1208 388" width="1208" height="388" @click="selectSeat" ref="svgMap">
     <rect class="stage" x="44" y="35" width="1134" height="40" />
     <text class="stage-label" x="611.0" y="55.0">STAGE</text>
     <text class="section-label" x="160.0" y="98">LEFT</text>
