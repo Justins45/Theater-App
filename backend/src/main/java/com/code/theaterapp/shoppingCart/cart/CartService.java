@@ -86,7 +86,7 @@ public class CartService {
         cartItem.setItemType(CartItemType.TICKET);
         cartItem.setEventSeating(eventSeating);
         // TODO: get price from map NOT performance
-        cartItem.setUnitPrice(eventSeating.getPerformance().getPrice().toString());
+        cartItem.setUnitPrice(eventSeating.getPerformance().getPrice());
         cartItem.setAddedAt(Instant.now());
 
         CartItem savedCartItem = cartItemRepo.save(cartItem);
