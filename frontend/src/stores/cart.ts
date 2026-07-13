@@ -1,5 +1,6 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
+import apiClient from '@/api/axios'
 
 export const useCartStore = defineStore("cart", () => {
   const cart = ref([]);
@@ -25,9 +26,19 @@ export const useCartStore = defineStore("cart", () => {
     cart.value.splice(index, 1);
   }
 
+  async function loadCart() {
+    try {
+      const res = await apiClient.get("/cart")
+      console.log(res.data.cartItems)
+      cart.value = res.data.cartItems
+    } catch (error: any) {
+      console.error(error)
+    }
+  }
+
   // get total price (every addition and deletion + checks)
   const subtotalNum  = computed(() => {
-    return cart.value.reduce((sum, item) => sum + item.price, 0)
+    return cart.value.reduce((sum, item) => sum + Number(item.unitPrice), 0)
   })
   const totalTaxNum  = computed(() => subtotalNum.value * 0.05)
   const totalPriceNum = computed(() => subtotalNum.value + totalTaxNum.value)
@@ -36,6 +47,6 @@ export const useCartStore = defineStore("cart", () => {
   const totalTax   = computed(() => formatToString(totalTaxNum.value))
   const totalPrice = computed(() => formatToString(totalPriceNum.value))
 
-  return {cart, totalItems, addToCart, removeFromCart, subtotal, totalTax, totalPrice};
+  return {cart, totalItems, addToCart, removeFromCart, loadCart, subtotal, totalTax, totalPrice};
 
 });
