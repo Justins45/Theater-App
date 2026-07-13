@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useCartStore } from '@/stores/cart'
+import CartTicket from '@/components/CartTicket.vue'
 const cartStore = useCartStore()
 
 </script>
@@ -8,27 +9,13 @@ const cartStore = useCartStore()
   <div class="cart">
     <template v-if="cartStore.cart.length > 0">
       <div class="cart-item" v-for="item in cartStore.cart" :key="item.id">
-        <div class="cart-item-sub">
-          <table>
-            <thead>
-            <tr>
-              <th>SECTION</th>
-              <th>ROW</th>
-              <th>SEAT NUMBER</th>
-              <th>PRICE</th>
-            </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{{ item.section }}</td>
-                <td>{{ item.row }}</td>
-                <td>{{ item.seatNumber }}</td>
-                <td>${{ item.price }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <button @click="cartStore.removeFromCart(index)">X</button>
+        <template v-if="item.itemType === 'TICKET'">
+          <CartTicket :price="item.unitPrice" />
+        </template>
+        <template v-else>
+          <p>Not an item lol</p>
+        </template>
+        <button @click="cartStore.removeFromCart(item.id)">X</button>
       </div>
       <div>
         <!-- Total tickets # + Total Cost + breakdown -->
@@ -59,20 +46,6 @@ const cartStore = useCartStore()
   padding: 0.25rem 1rem;
   display: flex;
   border-radius: 0.2rem;
-
-  .cart-item-sub {
-    display: flex;
-    flex-direction: row;
-
-    table {
-      border-spacing: 8px 0;
-    }
-
-    td, th {
-      text-align: center;
-      padding: 5px 10px;
-    }
-  }
 
   button {
     display: block;
