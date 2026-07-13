@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 public record CartTicketItem(
+    UUID id,
     UUID cartItemId,
     String eventName,
     String stageName,
