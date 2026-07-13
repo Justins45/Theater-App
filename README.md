@@ -1,118 +1,174 @@
-# Theater App
+# 🎭 Theater App
 
-A full-stack theater ticketing platform. Patrons browse events, pick seats, and purchase tickets through the web app. Theater staff manage orders and scan tickets at the door through the desktop admin app. A shared REST API powers both surfaces.
+A full-stack all-in-one theater ticketing platform intented to lower costs, and streamline management for theaters.
 
-_**NOTE: not all portions of this README.md are fully setup, some parts are still in development and will be added soon.**_
+## Quick Links <!-- omit in toc -->
 
-_**NOTE: This program was written and testing on Mac OS Tahoe v26.3. Not all Operating systems are fully tested as of may 4th 2026.**_
+- [What It Does](#what-it-does)
+- [The Three Flows](#the-three-flows)
+- [Architecture Overview](#architecture-overview)
+- [Backend — Spring Boot 4](#backend--spring-boot-4)
+  - [Domain model](#domain-model)
+  - [Cart system](#cart-system)
+  - [Security](#security)
+  - [API design](#api-design)
+- [Frontend — Vue 3 (Patron App)](#frontend--vue-3-patron-app)
+  - [Interactive SVG seating map](#interactive-svg-seating-map)
+  - [Cart store](#cart-store)
+  - [Patterns](#patterns)
+- [Admin App — Tauri + Rust](#admin-app--tauri--rust)
+- [Infrastructure \& Tooling](#infrastructure--tooling)
+  - [CI/CD — GitHub Actions](#cicd--github-actions)
+  - [Monorepo tooling](#monorepo-tooling)
+  - [Observability (planned)](#observability-planned)
+- [Tech Stack at a Glance](#tech-stack-at-a-glance)
+- [What This Project Demonstrates](#what-this-project-demonstrates)
+- [Roadmap](#roadmap)
 
-## What's in This Repo
+## What It Does
+
+Theater App is a complete ticketing system for live theater venues. It handles the full lifecycle of a ticket:
+
+- **Patrons** browse events, select seats on an interactive map, add tickets to a cart, and check out.
+- **Admins** manage venues, stages, events, performances, and seating through a native multi-platform desktop app.
+- **Door staff** scan QR codes at the door to validate tickets in real time.
+
+Three distinct user flows, three distinct interfaces — all sharing a single backend.
+
+## The Three Flows
+
+| Flow                | Interface          | Stack                |
+| ------------------- | ------------------ | -------------------- |
+| Patron purchasing   | Vue 3 web app      | Vue 3 · Pinia · Vite |
+| Admin management    | Native desktop app | Tauri · Rust · Vue 3 |
+| Door staff scanning | (same desktop app) | Tauri · Rust · Vue 3 |
+
+## Architecture Overview
 
 ```txt
 theater-app/
-├── .github/
-│   └── workflows/       ← CI/CD pipelines
-├── backend/             ← Spring Boot REST API
-├── frontend/            ← Vue 3 web app (patron-facing)
-├── admin/               ← Tauri + Vue desktop admin app
-└── docs/
+├── backend/          # Spring Boot 4 REST API + PostgreSQL
+├── frontend/         # Vue 3 patron web app
+├── admin/            # Tauri (Rust) native admin desktop app
+│   └── src-tauri/    # Rust application shell
+├── shared/           # shared Vue + TypeScript library
+├── docs/             # Architecture decisions, roadmap, security notes
+└── .github/workflows # CI/CD Actions
 ```
 
-## Running Locally
+This is a **monorepo** — one repo, four workspaces, one shared component library, one CI pipeline.
 
-Start each part of the project in its own terminal (_ran from root directory_):
+## Backend — Spring Boot 4
 
-**Make sure you have your databse information inside the** `backend/src/main/resources/secretes.properties` **file .**
+The API is the core of the system. Key engineering decisions:
 
-| Service      | Command                                         |
-| ------------ | ----------------------------------------------- |
-| Dependencies | `npm install`                                   |
-| Frontend     | `npm run start:frontend`                        |
-| Admin        | `npm run start:admin`                           |
-| Backend      | `npm run start:backend`                         |
-| Database     | Start PostgreSQL via your local service manager |
+### Domain model
 
-The backend runs on `localhost:8080` and the frontend on `localhost:5173` and admin runs on `localhost:1420` by default.
+```txt
+Venue → Stage → Event → Performance → Ticket
+```
 
-## Main Sections
+Seats are **permanent physical records** on a `Stage`, while a seperate table grabs the seats and links them with the performance and tracks performance availability (`AVAILABLE` / `HELD` / `SOLD`). Keeping the physical layout stable and the availability state clean.
 
-### Backend (`/backend`)
+### Cart system
 
----
+- Polymorphic cart items (tickets, merchandise, gift cards) using Java sealed interfaces + Jackson `@JsonTypeInfo` / `@JsonSubTypes`.
+- Four-level pricing hierarchy: performance → section → event → global fallback.
+- Prices are **snapshot at purchase time** to protect against mid-session changes.
+- Seat holds are synchronized within transactions to prevent double-booking.
 
-A Spring Boot REST API that serves both the web app and the desktop admin app. It handles all business logic, authentication, seat locking, payment processing, and ticket management.
+### Security
 
-The backend serves to gather information for the front end, and take in and return information for the admin sections.
+- JWT authentication with issuer validation, algorithm allowlisting, and required-claims null checks.
+- Rotating refresh token architecture with `__Host-` cookie prefix conventions.
+- `Person` as a shared identity anchor; `Patron` and `Staff` as independent associated entities using `@MapsId` (not JPA inheritance).
 
-### Frontend (`/frontend`)
+### API design
 
----
+- Slug-based event URLs; `display_number` scoped per event for clean performance URLs.
+- Spring Data JPA Specifications for reusable, composable query filters.
 
-A Vue 3 web app for patrons. Users browse events, select seats on a seat map, check out via Stripe, and view their tickets with QR codes.
+## Frontend — Vue 3 (Patron App)
 
-The frontend communicates exclusively with the backend API. `VITE_API_BASE_URL` is the single configuration point for the API address across environments.
+### Interactive SVG seating map
 
-### Admin (`/admin`)
+- Seats are SVG elements with `data-seat-id` attributes
+- Selection/deselection handled via event delegation (`closest()`) — no per-seat listeners
+- Pinia store drives seat state; `watch` syncs SVG class state on every change (clear-and-reapply pattern to handle both mutated and replaced arrays)
 
----
+### Cart store
 
-A Tauri desktop app (Windows and Mac) for theater staff and administrators. Built with Vue 3 using the same patterns as the frontend where possible.
+- Pinia as a reactive in-memory cache hydrated from the server
+- Computed subtotal / tax / total pairs keep the UI in sync without redundant API calls
 
-Intended to be a standalone app for easy access and easy seperation of content flow for admins and staff using the program.
+### Patterns
 
-## Tech Stack
+- File-based routing with `watch({ immediate: true })` over `onMounted` for dynamic route params
+- Custom fetch wrapper (not Axios) — chosen for native cookie-based auth support
+- Global interceptor handles 401 / 403 / 500 uniformly
 
-| Layer        | Technology                                          |
-| ------------ | --------------------------------------------------- |
-| Backend      | Java, Spring Boot, Spring Security, Spring Data JPA |
-| Database     | PostgreSQL (local), NeonDB (staging/production)     |
-| Web frontend | Vue 3, Pinia, Vue Router, Axios, SASS, Vite         |
-| Desktop      | Tauri (Rust shell), Vue 3, SASS                     |
-| Payments     | Stripe Checkout + Webhooks                          |
-| Tickets      | QR codes (HMAC-signed payloads)                     |
-| CI/CD        | GitHub Actions                                      |
-| Containers   | Docker                                              |
+## Admin App — Tauri + Rust
 
-## General Setup
+The admin interface is a **native desktop app** — not an Electron wrapper, not a web app in a frame. Tauri compiles to a lean native binary using the OS webview, with a Rust application shell for system-level operations.
 
-### Prerequisites
+- Shared Vue component library (`@theater-app/shared`) used across both the admin app and the patron web app
+- Multi-platform builds (macOS, Windows, Linux) gated to tagged releases in CI
 
-Before running any part of the project you will need the following installed:
+## Infrastructure & Tooling
 
-- **Java 21+** — for the Spring Boot backend
-- **Node.js 20+** — for the Vue frontends and Vite build tooling
-- **Rust + Cargo** — for Tauri (the desktop app shell)
-- **PostgreSQL** — local database for development
-- **Docker** — optional, for running the backend in a container
+### CI/CD — GitHub Actions
 
-You will also need accounts and credentials for:
+- Per-workspace jobs: Vue lint / test / build; Rust `fmt` / `clippy` / `test`; Tauri multi-platform builds
+- Tauri release builds gated to tagged releases — no accidental deploys
 
-- **Stripe** — test API keys for local development
-- **NeonDB** — only required for testing on the cloud
+### Monorepo tooling
 
-### Configuration and Secrets
+- ESLint, Prettier, and Vitest configs at repo root, shared across `frontend/`, `shared/`, and `admin/`
+- Single source of truth for code style and test configuration
 
-All secrets are passed via environment variables. Nothing is hardcoded or committed to git.
+### Observability (planned)
 
-Each part of the project has its own environment configuration:
+- Grafana LGTM stack (Loki · Grafana · Tempo · Mimir)
+- Micrometer + OpenTelemetry for metrics and distributed tracing
 
-- **Backend** Required variables include the database connection string, JWT secret, and Stripe keys. See `/backend` for the full list.
-- **Frontend and Admin** use Vite environment files (`.env`). `VITE_API_BASE_URL` is the only required variable pointing to the backend API address. See `/frontend` and `/admin` respectively.
+## Tech Stack at a Glance
 
-Docker images never have secrets baked in — they are always passed at runtime.
+| Layer           | Technology                                            |
+| --------------- | ----------------------------------------------------- |
+| API             | Spring Boot 4 · Spring Security 7 · Spring Data JPA 4 |
+| Database        | PostgreSQL · NeonDB (planned)                         |
+| Patron frontend | Vue 3 · Pinia · Vue Router · Vite                     |
+| Admin app       | Tauri · Rust · Vue 3                                  |
+| Shared UI       | `@theater-app/shared` (Vue component library)         |
+| Auth            | JWT · Rotating refresh tokens · `__Host-` cookies     |
+| CI/CD           | GitHub Actions                                        |
+| Observability   | Grafana LGTM · Micrometer · OpenTelemetry             |
+| Data types      | UUIDv7 · BigDecimal · IANA timezones                  |
 
-### Installation
+## What This Project Demonstrates
 
-Each part of the project is set up independently. Refer to the README in each directory for exact commands:
+This is a **solo, part-time build** — designed from a multi-day planning session that produced a roadmap, MVP scope doc, security & scalability notes.
 
-- **`/backend`** — Maven build, database migrations, and how to run the Spring Boot server locally
-- **`/frontend`** — npm install and Vite dev server
-- **`/admin`** — npm install and Tauri dev mode (requires Rust toolchain)
+Engineering decisions that reflect deliberate thinking:
 
-### CI/CD
+- **Polymorphic cart items** using sealed interfaces + Jackson discriminators — extensible without schema changes
+- **Dual security filter chains** — patron and staff auth share an identity model but are independently secured
+- **Snapshot pricing** — prices locked at cart creation, not recalculated at checkout
+- **Seat holds in transactions** — concurrent seat selection doesn't race
+- **UUIDv7** — time-ordered UUIDs that are friendly to B-tree indexes
+- **`BigDecimal` everywhere money appears** — a deliberate choice, not a default
+- **Tauri over Electron** — a meaningful tradeoff toward a smaller binary and native OS integration
 
-Three GitHub Actions pipelines run automatically:
+These aren't accidental — they're the result of learning the *why* before writing the *what*.
 
-- **`backend.yml`** — triggers on pushes to `backend/**`; builds the jar and runs tests
-- **`frontend.yml`** — triggers on pushes to `frontend/**`; lints and builds the Vue app
-- **`admin.yml`** — triggers on pushes to `admin/**`; lints and runs tests || also triggers on tagged releases (e.g. `v1.0.0`); builds and attaches Windows and Mac installers to the GitHub Release
+## Roadmap
+
+- [x] Domain model + seating schema
+- [x] Auth (JWT + refresh tokens)
+- [x] Event / performance / seating APIs
+- [x] Cart system (polymorphic items, pricing hierarchy, seat holds)
+- [ ] Checkout + payment integration
+- [ ] QR code generation + door scanning
+- [ ] Admin UI (Tauri app)
+- [ ] Observability stack
+- [ ] Production deployment
