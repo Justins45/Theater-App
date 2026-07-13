@@ -1,14 +1,12 @@
 package com.code.theaterapp.shoppingCart.cartItem.dtos;
 
-import com.code.theaterapp.shared.enums.CartItemType;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-import java.util.UUID;
-
-public record CartItemDetailsDTO(
-        UUID id,
-        UUID cartId,
-        CartItemType itemType,
-        UUID itemId,
-        String unitPrice
-) {
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "itemType")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = CartTicketItem.class, name = "TICKET"),
+        @JsonSubTypes.Type(value = CartMerchItem.class, name = "MERCH")
+})
+public sealed interface CartItemDetailsDTO permits CartTicketItem, CartMerchItem {
 }
