@@ -21,7 +21,6 @@ public class CartItemMapper {
         return switch (cartItem.getItemType()) {
             case TICKET -> new CartTicketItem(
                         cartItem.getId(),
-                        cartItem.getCart().getId(),
                         cartItem.getEventSeating().getPerformance().getEvent().getTitle(),
                         cartItem.getEventSeating().getPerformance().getEvent().getStage().getName(),
                         cartItem.getEventSeating().getPerformance().getWallClock(),

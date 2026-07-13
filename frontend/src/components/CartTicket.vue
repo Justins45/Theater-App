@@ -1,14 +1,15 @@
 <script setup lang="ts">
 
-const props = defineProps<{
-  price: string;
+defineProps<{
+  item: object;
 }>()
 </script>
 
 <template>
 <div>
-  <p>TICKET</p>
-  <p>Price: {{ props.price }}</p>
+  <p>{{ item.itemType }}: for {{ item.eventName }} at {{ item.stageName }} at {{ item.performanceTime }}</p>
+  <p>Seat: {{ item.section }} | {{ item.row }} | {{ item.seatNumber }}</p>
+  <p>Price: {{ item.price }}</p>
 </div>
 </template>
 

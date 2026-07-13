@@ -10,7 +10,7 @@ const cartStore = useCartStore()
     <template v-if="cartStore.cart.length > 0">
       <div class="cart-item" v-for="item in cartStore.cart" :key="item.id">
         <template v-if="item.itemType === 'TICKET'">
-          <CartTicket :price="item.unitPrice" />
+          <CartTicket :item="item" />
         </template>
         <template v-else>
           <p>Not an item lol</p>

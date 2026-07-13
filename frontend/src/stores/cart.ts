@@ -38,7 +38,7 @@ export const useCartStore = defineStore("cart", () => {
 
   // get total price (every addition and deletion + checks)
   const subtotalNum  = computed(() => {
-    return cart.value.reduce((sum, item) => sum + Number(item.unitPrice), 0)
+    return cart.value.reduce((sum, item) => sum + item.price, 0)
   })
   const totalTaxNum  = computed(() => subtotalNum.value * 0.05)
   const totalPriceNum = computed(() => subtotalNum.value + totalTaxNum.value)

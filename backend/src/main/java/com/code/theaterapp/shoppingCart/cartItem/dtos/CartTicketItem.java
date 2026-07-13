@@ -5,13 +5,12 @@ import java.util.UUID;
 
 public record CartTicketItem(
     UUID id,
-    UUID cartItemId,
     String eventName,
     String stageName,
     String performanceTime,
     BigDecimal price,
     String row,
-    String Section,
+    String section,
     Short seatNumber
 ) implements CartItemDetailsDTO {
 }
