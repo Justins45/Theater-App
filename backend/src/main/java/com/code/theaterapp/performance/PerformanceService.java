@@ -9,6 +9,7 @@ import com.code.theaterapp.performance.dtos.PerformanceSummaryDTO;
 import com.code.theaterapp.seating.event_seating.EventSeatingService;
 import com.code.theaterapp.shared.enums.PerformanceStatus;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,5 +45,12 @@ public class PerformanceService {
         return performanceRepo.findAllByEventId(eventId).stream()
                 .map(performanceMapper::toSummary)
                 .toList();
+    }
+
+    public ResponseEntity<PerformanceDetailsDTO> getPerformanceById(UUID id) {
+        Performance perf = performanceRepo.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Performance not found")
+        );
+        return ResponseEntity.ok(performanceMapper.toDetails(perf));
     }
 }

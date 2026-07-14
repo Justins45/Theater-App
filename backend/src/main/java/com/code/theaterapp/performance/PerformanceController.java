@@ -26,6 +26,11 @@ public class PerformanceController {
         return performanceService.getAllPerformancesByEvent(eventId);
     }
 
+    @GetMapping(URL_PATH + "/{performanceId}/info")
+    public ResponseEntity<PerformanceDetailsDTO> getPerformanceInformation(@PathVariable UUID performanceId) {
+        return performanceService.getPerformanceById(performanceId);
+    }
+
     // create performance
     @PostMapping(URL_PATH)
     public ResponseEntity<PerformanceDetailsDTO> createPerformance(
