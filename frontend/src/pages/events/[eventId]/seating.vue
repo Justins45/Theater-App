@@ -9,6 +9,7 @@ const router = useRouter()
 const route = useRoute()
 const seating = ref()
 const eventId = ref("")
+const performanceInfo = ref()
 const clickedSeat = ref()
 const selectedSeats = ref([])
 const cartStore = useCartStore()
@@ -16,18 +17,20 @@ const cartStore = useCartStore()
 async function getInformation(pId: string, eId: string) {
   try {
     const res = await apiClient.get("/events/" + eId + "/performances/" + pId + "/seating")
+    const res2 = await apiClient.get("/events/" + eId + "/performances/" + pId + "/info")
     // console.log(res.data)
     seating.value = res.data
+    performanceInfo.value = res2.data
   } catch (error: any) {
     router.push({ path: '/404-not-found', state: { originalPath: `/events/${eId}/seating` } })
   }
 }
 
-async function sendInformation(itemID: string, itemType: string) {
+async function sendInformation(item: object) {
   try {
     const res = await apiClient.post("/cart", {
-      itemId: itemID,
-      itemType: itemType
+      itemId: item.id,
+      itemType: item.itemType
     })
     console.log(res.data)
   } catch (error: any) {
@@ -49,8 +52,21 @@ const getSeatClick = (receivedData: any) => {
 
 const addItemsToCart = () => {
   for (const index in selectedSeats.value) {
-    cartStore.addToCart(selectedSeats.value[index])
-    sendInformation(selectedSeats.value[index].id, "TICKET")
+    cartStore.addToCart({
+      eventName: performanceInfo.value.eventName,
+      id: selectedSeats.value[index].id,
+      itemType: "TICKET",
+      performanceTime: performanceInfo.value.performanceTime,
+      price: selectedSeats.value[index].price,
+      row: selectedSeats.value[index].row,
+      seatNumber: selectedSeats.value[index].seatNumber,
+      section: selectedSeats.value[index].section,
+      stageName: performanceInfo.value.stageName
+    })
+    sendInformation({
+      id: selectedSeats.value[index].id,
+      itemType: "TICKET",
+    })
   }
 }
 

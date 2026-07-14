@@ -2,6 +2,7 @@ package com.code.theaterapp.performance;
 
 import com.code.theaterapp.performance.dtos.CreatePerformanceDTO;
 import com.code.theaterapp.performance.dtos.PerformanceDetailsDTO;
+import com.code.theaterapp.performance.dtos.PerformanceInformationDTO;
 import com.code.theaterapp.performance.dtos.PerformanceSummaryDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
