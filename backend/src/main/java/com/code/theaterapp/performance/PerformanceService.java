@@ -5,6 +5,7 @@ import com.code.theaterapp.event.EventRepo;
 import com.code.theaterapp.exceptions.EntityNotFoundException;
 import com.code.theaterapp.performance.dtos.CreatePerformanceDTO;
 import com.code.theaterapp.performance.dtos.PerformanceDetailsDTO;
+import com.code.theaterapp.performance.dtos.PerformanceInformationDTO;
 import com.code.theaterapp.performance.dtos.PerformanceSummaryDTO;
 import com.code.theaterapp.seating.event_seating.EventSeatingService;
 import com.code.theaterapp.shared.enums.PerformanceStatus;
@@ -47,10 +48,10 @@ public class PerformanceService {
                 .toList();
     }
 
-    public ResponseEntity<PerformanceDetailsDTO> getPerformanceById(UUID id) {
+    public ResponseEntity<PerformanceInformationDTO> getPerformanceById(UUID id) {
         Performance perf = performanceRepo.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Performance not found")
         );
-        return ResponseEntity.ok(performanceMapper.toDetails(perf));
+        return ResponseEntity.ok(performanceMapper.toInformation(perf));
     }
 }

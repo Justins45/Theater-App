@@ -27,7 +27,7 @@ public class PerformanceController {
     }
 
     @GetMapping(URL_PATH + "/{performanceId}/info")
-    public ResponseEntity<PerformanceDetailsDTO> getPerformanceInformation(@PathVariable UUID performanceId) {
+    public ResponseEntity<PerformanceInformationDTO> getPerformanceInformation(@PathVariable UUID performanceId) {
         return performanceService.getPerformanceById(performanceId);
     }
 
