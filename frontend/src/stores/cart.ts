@@ -21,9 +21,17 @@ export const useCartStore = defineStore("cart", () => {
   }
 
   // remove item from cart
-  function removeFromCart(index: number) {
-    // TODO: FIX DIS TO BE BETTER (idk dawg my brain foggy)
-    cart.value.splice(index, 1);
+  async function removeFromCart(id: string) {
+    cart.value = cart.value.filter(cartItem => cartItem.id !== id);
+
+    try {
+      await apiClient.delete("/cart", {
+        itemId: id
+      });
+      await loadCart()
+    } catch (error: any) {
+      console.error(error)
+    }
   }
 
   async function loadCart() {
