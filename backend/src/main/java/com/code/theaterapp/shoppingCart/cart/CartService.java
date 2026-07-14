@@ -100,4 +100,11 @@ public class CartService {
         // TODO: TEMP METHOD FOR OTHER STUFF BEFORE IT
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
     }
+
+    // 204 - NO CONTENT (deleted success) | 404 NOT FOUND (deleted failed)
+    public ResponseEntity<Void> removeItemFromCart(UUID cartId, UUID itemId) {
+        return cartItemRepo.deleteByCartIdAndItemId(cartId, itemId) > 0
+                ? ResponseEntity.status(HttpStatus.NO_CONTENT).build()
+                : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
 }

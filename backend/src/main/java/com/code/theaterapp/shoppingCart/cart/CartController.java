@@ -5,6 +5,7 @@ import com.code.theaterapp.shoppingCart.cart.dtos.CartDetailsDTO;
 import com.code.theaterapp.shoppingCart.cart.dtos.AddMerchandiseRequest;
 import com.code.theaterapp.shoppingCart.cart.dtos.AddTicketRequest;
 import com.code.theaterapp.shoppingCart.cartItem.dtos.CartItemAddItemDTO;
+import com.code.theaterapp.shoppingCart.cartItem.dtos.CartItemDelete;
 import com.code.theaterapp.shoppingCart.cartItem.dtos.CartItemSummaryDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -50,5 +51,14 @@ public class CartController {
                         new AddMerchandiseRequest(cartItem.itemId(), 1)
                 );
         };
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> removeItem(
+            @AuthenticationPrincipal PatronAccount patronAccount,
+            @RequestBody CartItemDelete cartItemDelete
+    ) {
+        CartDetailsDTO cart = getCart(patronAccount).getBody();
+        return cartService.removeItemFromCart(cart.id(), cartItemDelete.itemId());
     }
 }
