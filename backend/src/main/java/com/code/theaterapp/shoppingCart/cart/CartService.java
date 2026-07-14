@@ -8,9 +8,9 @@ import com.code.theaterapp.shared.enums.CartStatus;
 import com.code.theaterapp.shared.enums.SeatStatus;
 import com.code.theaterapp.shared.person.PersonRepo;
 import com.code.theaterapp.shoppingCart.cart.dtos.CartDetailsDTO;
-import com.code.theaterapp.shoppingCart.cart.interfaces.AddCartItemRequest;
-import com.code.theaterapp.shoppingCart.cart.interfaces.AddMerchandiseRequest;
-import com.code.theaterapp.shoppingCart.cart.interfaces.AddTicketRequest;
+import com.code.theaterapp.shoppingCart.cart.dtos.AddCartItemRequest;
+import com.code.theaterapp.shoppingCart.cart.dtos.AddMerchandiseRequest;
+import com.code.theaterapp.shoppingCart.cart.dtos.AddTicketRequest;
 import com.code.theaterapp.shoppingCart.cartItem.CartItem;
 import com.code.theaterapp.shoppingCart.cartItem.CartItemMapper;
 import com.code.theaterapp.shoppingCart.cartItem.CartItemRepo;
@@ -86,7 +86,7 @@ public class CartService {
         cartItem.setItemType(CartItemType.TICKET);
         cartItem.setEventSeating(eventSeating);
         // TODO: get price from map NOT performance
-        cartItem.setUnitPrice(eventSeating.getPerformance().getPrice().toString());
+        cartItem.setUnitPrice(eventSeating.getPerformance().getPrice());
         cartItem.setAddedAt(Instant.now());
 
         CartItem savedCartItem = cartItemRepo.save(cartItem);

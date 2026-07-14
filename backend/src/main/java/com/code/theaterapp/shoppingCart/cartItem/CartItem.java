@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -41,7 +42,7 @@ public class CartItem {
     // TODO: alternative columns to add (Merch, Gift Cards?, Donations)
 
     @Column(nullable = false)
-    private String unitPrice;
+    private BigDecimal unitPrice;
 
     @Column(nullable = false)
     private Instant addedAt;

@@ -1,4 +1,4 @@
-package com.code.theaterapp.shoppingCart.cart.interfaces;
+package com.code.theaterapp.shoppingCart.cart.dtos;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

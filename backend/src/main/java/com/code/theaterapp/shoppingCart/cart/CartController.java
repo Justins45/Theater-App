@@ -1,15 +1,12 @@
 package com.code.theaterapp.shoppingCart.cart;
 
 import com.code.theaterapp.auth.secruity.accounts.PatronAccount;
-import com.code.theaterapp.shared.enums.CartItemType;
 import com.code.theaterapp.shoppingCart.cart.dtos.CartDetailsDTO;
-import com.code.theaterapp.shoppingCart.cart.interfaces.AddMerchandiseRequest;
-import com.code.theaterapp.shoppingCart.cart.interfaces.AddTicketRequest;
+import com.code.theaterapp.shoppingCart.cart.dtos.AddMerchandiseRequest;
+import com.code.theaterapp.shoppingCart.cart.dtos.AddTicketRequest;
 import com.code.theaterapp.shoppingCart.cartItem.dtos.CartItemAddItemDTO;
 import com.code.theaterapp.shoppingCart.cartItem.dtos.CartItemSummaryDTO;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;

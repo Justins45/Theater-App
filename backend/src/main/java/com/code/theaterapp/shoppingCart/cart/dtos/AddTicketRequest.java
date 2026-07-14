@@ -1,4 +1,4 @@
-package com.code.theaterapp.shoppingCart.cart.interfaces;
+package com.code.theaterapp.shoppingCart.cart.dtos;
 
 import java.util.UUID;
 
