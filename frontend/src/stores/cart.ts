@@ -26,7 +26,7 @@ export const useCartStore = defineStore("cart", () => {
 
     try {
       await apiClient.delete("/cart", {
-        itemId: id
+        data: { itemId: id }
       });
       await loadCart()
     } catch (error: any) {

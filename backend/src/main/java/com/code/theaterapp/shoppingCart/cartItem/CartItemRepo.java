@@ -11,6 +11,7 @@ import java.util.UUID;
 public interface CartItemRepo extends JpaRepository<CartItem, UUID> {
     List<CartItem> findAllByCartId(UUID cartId);
 
+    // TODO: rename or make others when adding Merch
     @Transactional
-    int deleteByCartIdAndItemId(UUID cartId, UUID itemId);
+    int deleteByIdAndCartId(UUID id, UUID cartId);
 }

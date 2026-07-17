@@ -59,6 +59,6 @@ public class CartController {
             @RequestBody CartItemDelete cartItemDelete
     ) {
         CartDetailsDTO cart = getCart(patronAccount).getBody();
-        return cartService.removeItemFromCart(cart.id(), cartItemDelete.itemId());
+        return cartService.removeItemFromCart(cartItemDelete.itemId(), cart.id());
     }
 }

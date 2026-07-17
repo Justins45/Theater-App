@@ -102,8 +102,8 @@ public class CartService {
     }
 
     // 204 - NO CONTENT (deleted success) | 404 NOT FOUND (deleted failed)
-    public ResponseEntity<Void> removeItemFromCart(UUID cartId, UUID itemId) {
-        return cartItemRepo.deleteByCartIdAndItemId(cartId, itemId) > 0
+    public ResponseEntity<Void> removeItemFromCart(UUID itemId, UUID cartId) {
+        return cartItemRepo.deleteByIdAndCartId(itemId, cartId) > 0
                 ? ResponseEntity.status(HttpStatus.NO_CONTENT).build()
                 : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
