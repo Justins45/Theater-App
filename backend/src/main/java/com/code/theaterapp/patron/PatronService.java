@@ -3,6 +3,8 @@ package com.code.theaterapp.patron;
 import com.code.theaterapp.auth.dtos.PatronRegisterConfirmationDTO;
 import com.code.theaterapp.auth.dtos.PatronRegisterDTO;
 import com.code.theaterapp.auth.secruity.accounts.PatronAccount;
+import com.code.theaterapp.patron.dtos.PatronAccountDetails;
+import com.code.theaterapp.patron.dtos.PatronDetailsDTO;
 import com.code.theaterapp.patron.dtos.PatronMeResponse;
 import com.code.theaterapp.shared.enums.Role;
 import com.code.theaterapp.shared.person.Person;
@@ -10,6 +12,9 @@ import com.code.theaterapp.shared.person.PersonService;
 import com.code.theaterapp.shared.person.dtos.CreatePersonDTO;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -45,6 +50,15 @@ public class PatronService {
                 account.getLastname(),
                 account.getDisplayName()
         );
+    }
+
+    public ResponseEntity<PatronAccountDetails> getPatron(PatronAccount account) {
+
+        if (account == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        return ResponseEntity.ok(patronMapper.toAccountDetails(account));
     }
 
 }

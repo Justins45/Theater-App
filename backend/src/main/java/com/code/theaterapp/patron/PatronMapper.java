@@ -1,6 +1,8 @@
 package com.code.theaterapp.patron;
 
 import com.code.theaterapp.auth.dtos.PatronRegisterConfirmationDTO;
+import com.code.theaterapp.auth.secruity.accounts.PatronAccount;
+import com.code.theaterapp.patron.dtos.PatronAccountDetails;
 import com.code.theaterapp.patron.dtos.PatronDetailsDTO;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +21,15 @@ public class PatronMapper {
     public PatronRegisterConfirmationDTO toRegisterConfirmation(Patron patron) {
         return new PatronRegisterConfirmationDTO(
                 patron.getPerson().getEmail()
+        );
+    }
+
+    public PatronAccountDetails toAccountDetails(PatronAccount account) {
+        return new PatronAccountDetails(
+                account.getEmail(),
+                account.getFirstname(),
+                account.getFirstname(),
+                account.getDisplayName()
         );
     }
 }
