@@ -3,12 +3,11 @@ package com.code.theaterapp.patron;
 import com.code.theaterapp.auth.secruity.accounts.PatronAccount;
 import com.code.theaterapp.patron.dtos.PatronAccountDetails;
 import com.code.theaterapp.patron.dtos.PatronDetailsDTO;
+import com.code.theaterapp.patron.dtos.PatronNamingPatch;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,8 +24,13 @@ public class PatronController {
         return patronService.getPatron(principal);
     }
 
-    
-
+    @PatchMapping("/update-naming")
+    public ResponseEntity<PatronDetailsDTO> updatePatronNaming(
+            @AuthenticationPrincipal PatronAccount patronAccount,
+            @RequestBody PatronNamingPatch patronNamingPatch
+    ) {
+        return patronService.updatePatronNaming(patronAccount, patronNamingPatch);
+    }
 
 
 }

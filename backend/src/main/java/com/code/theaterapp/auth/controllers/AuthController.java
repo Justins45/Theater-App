@@ -23,7 +23,7 @@ public class AuthController {
     private final PatronService patronService;
 
     @GetMapping("/me")
-    public PatronMeResponse me(@AuthenticationPrincipal PatronAccount account) {
+    public ResponseEntity<PatronMeResponse> me(@AuthenticationPrincipal PatronAccount account) {
         return patronService.getMe(account);
     }
 
