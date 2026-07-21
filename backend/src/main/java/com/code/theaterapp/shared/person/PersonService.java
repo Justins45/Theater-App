@@ -37,17 +37,17 @@ public class PersonService {
         );
 
         // Set first name
-        if (StringUtil.isNullOrEmpty(patch.firstName())) {
+        if (!StringUtil.isNullOrEmpty(patch.firstName())) {
             existingPerson.setFirstName(patch.firstName());
         }
 
         // Set last name
-        if (StringUtil.isNullOrEmpty(patch.lastName())) {
+        if (!StringUtil.isNullOrEmpty(patch.lastName())) {
             existingPerson.setLastName(patch.lastName());
         }
 
         // Set display name
-        if (StringUtil.isNullOrEmpty(patch.displayName())) {
+        if (!StringUtil.isNullOrEmpty(patch.displayName())) {
             existingPerson.setDisplayName(patch.displayName());
         }
 
