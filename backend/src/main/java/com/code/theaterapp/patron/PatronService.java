@@ -4,10 +4,7 @@ import com.code.theaterapp.auth.dtos.PatronRegisterConfirmationDTO;
 import com.code.theaterapp.auth.dtos.PatronRegisterDTO;
 import com.code.theaterapp.auth.secruity.accounts.PatronAccount;
 import com.code.theaterapp.exceptions.EntityNotFoundException;
-import com.code.theaterapp.patron.dtos.PatronAccountDetails;
-import com.code.theaterapp.patron.dtos.PatronDetailsDTO;
-import com.code.theaterapp.patron.dtos.PatronMeResponse;
-import com.code.theaterapp.patron.dtos.PatronNamingPatch;
+import com.code.theaterapp.patron.dtos.*;
 import com.code.theaterapp.shared.enums.Role;
 import com.code.theaterapp.shared.person.Person;
 import com.code.theaterapp.shared.person.PersonService;
@@ -77,6 +74,23 @@ public class PatronService {
 
          return ResponseEntity.ok(patronMapper.toDetails(patron));
 
+    }
+
+    public ResponseEntity<PatronDetailsDTO> removePatronNaming(
+            PatronAccount account,
+            PatronNamingRemovalPatch patronNamingRemovalPatch
+    ) {
+        if (account == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        Person updatedPerson = personService.removePersonNames(account.getId(), patronNamingRemovalPatch);
+
+        Patron patron = patronRepo.findByPerson(updatedPerson).orElseThrow(
+                () -> new EntityNotFoundException("Patron not found")
+        );
+
+        return ResponseEntity.ok(patronMapper.toDetails(patron));
     }
 
 }

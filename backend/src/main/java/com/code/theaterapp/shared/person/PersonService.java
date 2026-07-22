@@ -3,6 +3,7 @@ package com.code.theaterapp.shared.person;
 import ch.qos.logback.core.util.StringUtil;
 import com.code.theaterapp.exceptions.EntityNotFoundException;
 import com.code.theaterapp.patron.dtos.PatronNamingPatch;
+import com.code.theaterapp.patron.dtos.PatronNamingRemovalPatch;
 import com.code.theaterapp.shared.person.dtos.CreatePersonDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -31,7 +32,6 @@ public class PersonService {
     }
 
     public Person updatePersonNames(UUID personId, PatronNamingPatch patch) {
-
         Person existingPerson = personRepo.findById(personId).orElseThrow(
                 () -> new EntityNotFoundException("Person Not found")
         );
@@ -53,5 +53,24 @@ public class PersonService {
 
         return personRepo.save(existingPerson);
 
+    }
+
+    public Person removePersonNames(UUID personId, PatronNamingRemovalPatch patch) {
+        Person existingPerson = personRepo.findById(personId).orElseThrow(
+                () -> new EntityNotFoundException("Person Not found")
+        );
+
+        // unset first / last / display names
+        if (patch.fistName()) {
+            existingPerson.setFirstName(null);
+        }
+        if (patch.lastName()) {
+            existingPerson.setLastName(null);
+        }
+        if (patch.displayName()) {
+            existingPerson.setDisplayName(null);
+        }
+
+        return personRepo.save(existingPerson);
     }
 }
