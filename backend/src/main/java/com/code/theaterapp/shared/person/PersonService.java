@@ -61,13 +61,13 @@ public class PersonService {
         );
 
         // unset first / last / display names
-        if (patch.firstName()) {
+        if (patch.firstName() != null && patch.firstName()) {
             existingPerson.setFirstName(null);
         }
-        if (patch.lastName()) {
+        if (patch.lastName() != null && patch.lastName()) {
             existingPerson.setLastName(null);
         }
-        if (patch.displayName()) {
+        if (patch.displayName() != null && patch.displayName()) {
             existingPerson.setDisplayName(null);
         }
 
