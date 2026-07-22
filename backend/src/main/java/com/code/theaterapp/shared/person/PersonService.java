@@ -61,7 +61,7 @@ public class PersonService {
         );
 
         // unset first / last / display names
-        if (patch.fistName()) {
+        if (patch.firstName()) {
             existingPerson.setFirstName(null);
         }
         if (patch.lastName()) {
