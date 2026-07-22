@@ -27,14 +27,12 @@ async function getInformation() {
 getInformation()
 
 async function clearNames() {
-  console.log(removeName)
   try {
     const res = await apiClient.patch("/patron/remove-naming", {
       'firstName': removeName.firstName,
       'lastName': removeName.lastName,
       'displayName': removeName.displayName
     })
-    console.log(res)
     responseMessage.value = `Successfully updated ${res.data.message}`
     await getInformation()
   } catch (e) {
@@ -70,7 +68,7 @@ async function handleNameChange() {
       <div>
         <form id="nameChangeForm" @submit.prevent="handleNameChange">
         </form>
-        <form id="nameRemovalForm" @submit="clearNames">
+        <form id="nameRemovalForm" @submit.prevent="clearNames">
           <div>
             <label for="firstName">first name <span>(optional)</span></label>
             <input
@@ -133,7 +131,7 @@ async function handleNameChange() {
 
           </div>
           <button type="submit" form="nameChangeForm">Update Information</button>
-          <button type="submit" form="nameChangeForm">Clear selected names</button>
+          <button type="submit" form="nameRemovalForm">Clear selected names</button>
         </form>
         <p v-if="responseMessage">{{ responseMessage }}</p>
       </div>
