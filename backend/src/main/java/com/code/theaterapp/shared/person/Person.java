@@ -44,10 +44,10 @@ public class Person {
      * </ul>
      */
     public String getDisplayName() {
-        if(!displayName.isBlank()) {
+        if(displayName != null) {
             return this.displayName;
         }
-        if (!firstName.isBlank()) {
+        if (firstName != null) {
             return getFirstName();
         }
         return null;
