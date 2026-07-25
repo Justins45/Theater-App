@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { SharedButton } from "@theater/shared";
 import { RouterLink, RouterView } from "vue-router";
-import ShoppingCart from '@/components/ShoppingCart.vue'
 import { useCartStore } from '@/stores/cart'
 
 const cartStore = useCartStore()
@@ -17,11 +16,11 @@ cartStore.loadCart()
       <li><RouterLink to="/account/login">Login</RouterLink></li>
       <li><RouterLink to="/account/register">Register</RouterLink></li>
       <li><RouterLink to="/account/me">My Account</RouterLink></li>
+      <li><RouterLink to="/cart">Cart<span v-if="cartStore.totalItems > 0"> - {{ cartStore.totalItems }}</span></RouterLink></li>
     </ul>
 
   </nav>
   <SharedButton />
-  <ShoppingCart />
   <router-view></router-view>
 </template>
 
