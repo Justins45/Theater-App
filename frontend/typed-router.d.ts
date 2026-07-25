@@ -65,6 +65,13 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
+    '/cart/': RouteRecordInfo<
+      '/cart/',
+      '/cart',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
     '/events/': RouteRecordInfo<
       '/events/',
       '/events',
@@ -133,6 +140,12 @@ declare module 'vue-router/auto-routes' {
     'src/pages/account/register.vue': {
       routes:
         | '/account/register'
+      views:
+        | never
+    }
+    'src/pages/cart/index.vue': {
+      routes:
+        | '/cart/'
       views:
         | never
     }

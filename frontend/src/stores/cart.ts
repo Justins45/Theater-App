@@ -37,7 +37,6 @@ export const useCartStore = defineStore("cart", () => {
   async function loadCart() {
     try {
       const res = await apiClient.get("/cart")
-      console.log(res.data.cartItems)
       cart.value = res.data.cartItems
     } catch (error: any) {
       console.error(error)
