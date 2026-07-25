@@ -38,7 +38,7 @@ public class PatronMapper {
         return new PatronAccountDetails(
                 account.getEmail(),
                 account.getFirstname(),
-                account.getFirstname(),
+                account.getLastname(),
                 account.getDisplayName()
         );
     }

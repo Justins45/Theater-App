@@ -16,6 +16,7 @@ cartStore.loadCart()
       <li><RouterLink to="/events">events</RouterLink></li>
       <li><RouterLink to="/account/login">Login</RouterLink></li>
       <li><RouterLink to="/account/register">Register</RouterLink></li>
+      <li><RouterLink to="/account/me">My Account</RouterLink></li>
     </ul>
 
   </nav>
