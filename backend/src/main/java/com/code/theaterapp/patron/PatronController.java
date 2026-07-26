@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 public class PatronController {
 
     private final PatronService patronService;
-    private final PatronMapper patronMapper;
 
     @GetMapping
     public ResponseEntity<PatronAccountDetails> getPatronInformation(
