@@ -1,5 +1,6 @@
 package com.code.theaterapp.pricing;
 
+import com.code.theaterapp.pricing.dto.PricingRulePrice;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +14,8 @@ public class PricingRuleService {
 
 
 
-    public BigDecimal findBestMatchingRule(UUID performanceId, UUID eventId, String section) {
-        
+    public PricingRulePrice findBestMatchingRule(UUID performanceId, UUID eventId, String section) {
+
         return BigDecimal.valueOf(0.00);
     }
 
