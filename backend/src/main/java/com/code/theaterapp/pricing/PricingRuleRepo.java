@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface PricingRepo extends JpaRepository<PricingRule, UUID> {
+public interface PricingRuleRepo extends JpaRepository<PricingRule, UUID> {
     @Query("""
             SELECT p FROM PricingRule p
             WHERE (p.performance = :performance OR p.performance IS NULL)
