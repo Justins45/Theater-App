@@ -2,21 +2,32 @@ package com.code.theaterapp.pricing;
 
 import com.code.theaterapp.pricing.dto.PricingRulePrice;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PricingRuleService {
 
+    private final PricingRuleRepo pricingRuleRepo;
+    private final PricingRuleMapper pricingRuleMapper;
 
+    public PricingRulePrice findBestMatchingRule(UUID performanceId, String section, UUID eventId) {
 
+        log.info("Performance ID: {} | section: {} | event ID: {}", performanceId, section, eventId);
 
-    public PricingRulePrice findBestMatchingRule(UUID performanceId, UUID eventId, String section) {
+        PricingRule price = pricingRuleRepo.findBestMatchingRule(performanceId, section, eventId).orElse(null);
 
-        return BigDecimal.valueOf(0.00);
+        log.info(String.valueOf(price));
+
+        if (price == null) {
+            return null;
+        }
+
+        return pricingRuleMapper.toPrice(price.getPrice());
     }
 
 }
