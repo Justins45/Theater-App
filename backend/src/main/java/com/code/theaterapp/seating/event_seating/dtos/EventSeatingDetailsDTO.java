@@ -1,8 +1,8 @@
 package com.code.theaterapp.seating.event_seating.dtos;
 
+import com.code.theaterapp.pricing.dto.PricingRulePrice;
 import com.code.theaterapp.shared.enums.SeatStatus;
 
-import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -16,7 +16,7 @@ public record EventSeatingDetailsDTO(
         Short seatNumber,
         String section,
         String uiIdentifier,
-        BigDecimal price,
+        PricingRulePrice price,
         Integer stageId
 ) {
 }

@@ -12,19 +12,19 @@ import java.util.UUID;
 public interface PricingRuleRepo extends JpaRepository<PricingRule, UUID> {
     @Query("""
             SELECT p FROM PricingRule p
-            WHERE (p.performance = :performance OR p.performance IS NULL)
-            AND (p.sectionId = :sectionId OR p.sectionId IS NULL)
-            AND (p.event = :event OR p.event IS NULL)
-            ORDER BY (
-                CASE WHEN p.performance IS NOT NULL THEN 1 ELSE 0 END +
-                CASE WHEN p.sectionId IS NOT NULL THEN 1 ELSE 0 END +
-                CASE WHEN p.event IS NOT NULL THEN 1 ELSE 0 END
-            ) DESC
-            LIMIT 1
+                    WHERE (p.performance IS NULL OR p.performance.id = :performanceId)
+                    AND (p.sectionId IS NULL OR p.sectionId = :sectionId)
+                    AND (p.event IS NULL OR p.event.id = :eventId)
+                    ORDER BY (
+                        CASE WHEN p.performance IS NOT NULL THEN 1 ELSE 0 END +
+                        CASE WHEN p.sectionId IS NOT NULL THEN 1 ELSE 0 END +
+                        CASE WHEN p.event IS NOT NULL THEN 1 ELSE 0 END
+                    ) DESC
+                    LIMIT 1
             """)
     Optional<PricingRule> findBestMatchingRule(
-            @Param("performance") UUID performance,
+            @Param("performanceId") UUID performance,
             @Param("sectionId") String sectionId,
-            @Param("event") UUID event
+            @Param("eventId") UUID event
     );
 }

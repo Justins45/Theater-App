@@ -16,17 +16,10 @@ public class PricingRuleService {
     private final PricingRuleMapper pricingRuleMapper;
 
     public PricingRulePrice findBestMatchingRule(UUID performanceId, String section, UUID eventId) {
-
-        log.info("Performance ID: {} | section: {} | event ID: {}", performanceId, section, eventId);
-
         PricingRule price = pricingRuleRepo.findBestMatchingRule(performanceId, section, eventId).orElse(null);
-
-        log.info(String.valueOf(price));
-
         if (price == null) {
             return null;
         }
-
         return pricingRuleMapper.toPrice(price.getPrice());
     }
 

@@ -1,6 +1,8 @@
 package com.code.theaterapp.shoppingCart.cart;
 
 import com.code.theaterapp.exceptions.EntityNotFoundException;
+import com.code.theaterapp.pricing.PricingRuleService;
+import com.code.theaterapp.pricing.dto.PricingRulePrice;
 import com.code.theaterapp.seating.event_seating.EventSeating;
 import com.code.theaterapp.seating.event_seating.EventSeatingRepo;
 import com.code.theaterapp.shared.enums.CartItemType;
@@ -35,6 +37,7 @@ public class CartService {
     private final EventSeatingRepo eventSeatingRepo;
     private final CartMapper cartMapper;
     private final CartItemMapper cartItemMapper;
+    private final PricingRuleService pricingRuleService;
 
     public CartDetailsDTO getOrCreateCart(UUID personId) {
         return cartRepo.findCartByPersonIdAndActive(personId)
@@ -85,8 +88,16 @@ public class CartService {
         cartItem.setCart(cart);
         cartItem.setItemType(CartItemType.TICKET);
         cartItem.setEventSeating(eventSeating);
-        // TODO: get price from map NOT performance
-        cartItem.setUnitPrice(eventSeating.getPerformance().getPrice());
+
+
+        PricingRulePrice price = pricingRuleService.findBestMatchingRule(
+                eventSeating.getPerformance().getId(),
+                eventSeating.getSeat().getSection(),
+                eventSeating.getPerformance().getEvent().getId()
+                );
+
+
+        cartItem.setUnitPrice(price.price());
         cartItem.setAddedAt(Instant.now());
 
         CartItem savedCartItem = cartItemRepo.save(cartItem);

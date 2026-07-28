@@ -3,6 +3,7 @@ package com.code.theaterapp.seating.event_seating;
 import com.code.theaterapp.exceptions.EntityNotFoundException;
 import com.code.theaterapp.performance.Performance;
 import com.code.theaterapp.performance.PerformanceRepo;
+import com.code.theaterapp.pricing.PricingRuleService;
 import com.code.theaterapp.seating.event_seating.dtos.EventSeatingDetailsDTO;
 import com.code.theaterapp.seating.seat.Seat;
 import com.code.theaterapp.seating.seat.SeatRepo;
@@ -20,6 +21,7 @@ public class EventSeatingService {
     private final PerformanceRepo performanceRepo;
     private final SeatRepo seatRepo;
     private final EventSeatingRepo eventSeatingRepo;
+    private final PricingRuleService pricingRuleService;
 
 
     public List<EventSeatingDetailsDTO> createEventSeating(Integer stageId, UUID performanceId) {
@@ -56,7 +58,8 @@ public class EventSeatingService {
                         es.getSeat().getSeatNumber(),
                         es.getSeat().getSection(),
                         es.getSeat().getUiIdentifier(),
-                        es.getPerformance().getPrice(),
+                        pricingRuleService.findBestMatchingRule(es.getPerformance().getId(),
+                                es.getSeat().getSection(), es.getPerformance().getEvent().getId()),
                         es.getSeat().getStage().getId()
                 ))
                 .toList();
@@ -79,7 +82,8 @@ public class EventSeatingService {
                         es.getSeat().getSeatNumber(),
                         es.getSeat().getSection(),
                         es.getSeat().getUiIdentifier(),
-                        es.getPerformance().getPrice(),
+                        pricingRuleService.findBestMatchingRule(es.getPerformance().getId(),
+                                es.getSeat().getSection(), es.getPerformance().getEvent().getId()),
                         es.getSeat().getStage().getId()
                 ))
                 .toList();

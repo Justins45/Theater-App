@@ -32,10 +32,6 @@ public class Performance {
     @Column(nullable = false)
     private LocalTime showTime;
 
-    // TODO: make into a variable pricing table check call that applies to event_seating seat
-    @Column(precision = 10, scale = 2)
-    private BigDecimal price;
-
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private PerformanceStatus performanceStatus;
