@@ -59,7 +59,7 @@ public class EventSeatingService {
                         es.getSeat().getSection(),
                         es.getSeat().getUiIdentifier(),
                         pricingRuleService.findBestMatchingRule(es.getPerformance().getId(),
-                                es.getSeat().getSection(), es.getPerformance().getEvent().getId()),
+                                es.getSeat().getSection(), es.getPerformance().getEvent().getId()).price(),
                         es.getSeat().getStage().getId()
                 ))
                 .toList();
@@ -83,7 +83,7 @@ public class EventSeatingService {
                         es.getSeat().getSection(),
                         es.getSeat().getUiIdentifier(),
                         pricingRuleService.findBestMatchingRule(es.getPerformance().getId(),
-                                es.getSeat().getSection(), es.getPerformance().getEvent().getId()),
+                                es.getSeat().getSection(), es.getPerformance().getEvent().getId()).price(),
                         es.getSeat().getStage().getId()
                 ))
                 .toList();
