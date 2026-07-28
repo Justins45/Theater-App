@@ -18,7 +18,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "pricing_rules")
-public class PricingRules {
+public class PricingRule {
 
     @Id
     @GeneratedValue
