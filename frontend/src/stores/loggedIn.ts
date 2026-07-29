@@ -20,6 +20,12 @@ export const useLoggedInStore = defineStore("loggedIn", () => {
     }
   }
 
+  async function logOut() {
+    loggedIn.value = false;
+    // TODO: make call to server to kill the current cookies (main and refresh)
+    // NOTE: function might exist on the logged out page not in here
+  }
 
-  return { loggedIn, checkLoggedIn };
+
+  return { loggedIn, checkLoggedIn, logOut };
 });
