@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, watch, ref } from 'vue'
+import { watch, ref } from 'vue'
 
 const emit = defineEmits(['clicked-seat'])
 const props = defineProps<{
