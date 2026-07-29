@@ -8,10 +8,14 @@ export const useLoggedInStore = defineStore("loggedIn", () => {
   // make call to API /me
   async function checkLoggedIn() {
     try {
-      const res = apiClient.get("/me");
+      const res = await apiClient.get('/auth/me');
+      if (res.status === 200) {
+        console.log("User is logged in");
+        loggedIn.value = true;
+      }
 
-      loggedIn.value = true;
     } catch (e) {
+      console.log("User is NOT logged in");
       loggedIn.value = false;
     }
   }
