@@ -24,6 +24,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.UUID;
 
@@ -82,7 +83,12 @@ public class CartService {
             // TODO: make custom exception
             throw new RuntimeException("Seat is not available");
         }
-        // TODO: UPDATE EVENT_SEATING SEAT TO BE HELD UNTIL SOLD
+
+        eventSeating.setSeatStatus(SeatStatus.HELD);
+        eventSeating.setHoldExpiry(Instant.now().plus(1, ChronoUnit.HOURS));
+
+        eventSeatingRepo.save(eventSeating);
+
 
         CartItem cartItem = new CartItem();
         cartItem.setCart(cart);
