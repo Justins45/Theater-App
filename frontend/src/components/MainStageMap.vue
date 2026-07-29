@@ -506,6 +506,11 @@ watch(() => props.selectedSeats, (newIds) => {
 </template>
 
 <style scoped lang="scss">
+svg {
+  width: 100%;
+  height: auto;
+}
+
 .seat {
   rx: 4;
   ry: 4;
