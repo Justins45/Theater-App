@@ -120,6 +120,19 @@ public class CartService {
 
     // 204 - NO CONTENT (deleted success) | 404 NOT FOUND (deleted failed)
     public ResponseEntity<Void> removeItemFromCart(UUID itemId, UUID cartId) {
+
+        CartItem cartItem = cartItemRepo.findById(itemId).orElseThrow(
+                () -> new EntityNotFoundException("Cart item not found")
+        );
+
+        EventSeating es = eventSeatingRepo.findById(cartItem.getEventSeating().getId()).orElseThrow(
+                () -> new EntityNotFoundException("Event seating not found")
+        );
+
+        es.setSeatStatus(SeatStatus.AVAILABLE);
+        es.setHoldExpiry(null);
+        eventSeatingRepo.save(es);
+
         return cartItemRepo.deleteByIdAndCartId(itemId, cartId) > 0
                 ? ResponseEntity.status(HttpStatus.NO_CONTENT).build()
                 : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
