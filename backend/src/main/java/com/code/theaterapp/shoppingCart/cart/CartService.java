@@ -24,6 +24,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.UUID;
 
@@ -82,7 +83,12 @@ public class CartService {
             // TODO: make custom exception
             throw new RuntimeException("Seat is not available");
         }
-        // TODO: UPDATE EVENT_SEATING SEAT TO BE HELD UNTIL SOLD
+
+        eventSeating.setSeatStatus(SeatStatus.HELD);
+        eventSeating.setHoldExpiry(Instant.now().plus(1, ChronoUnit.HOURS));
+
+        eventSeatingRepo.save(eventSeating);
+
 
         CartItem cartItem = new CartItem();
         cartItem.setCart(cart);
@@ -114,6 +120,19 @@ public class CartService {
 
     // 204 - NO CONTENT (deleted success) | 404 NOT FOUND (deleted failed)
     public ResponseEntity<Void> removeItemFromCart(UUID itemId, UUID cartId) {
+
+        CartItem cartItem = cartItemRepo.findById(itemId).orElseThrow(
+                () -> new EntityNotFoundException("Cart item not found")
+        );
+
+        EventSeating es = eventSeatingRepo.findById(cartItem.getEventSeating().getId()).orElseThrow(
+                () -> new EntityNotFoundException("Event seating not found")
+        );
+
+        es.setSeatStatus(SeatStatus.AVAILABLE);
+        es.setHoldExpiry(null);
+        eventSeatingRepo.save(es);
+
         return cartItemRepo.deleteByIdAndCartId(itemId, cartId) > 0
                 ? ResponseEntity.status(HttpStatus.NO_CONTENT).build()
                 : ResponseEntity.status(HttpStatus.NOT_FOUND).build();

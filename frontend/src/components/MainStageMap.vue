@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { watch, ref } from 'vue'
+import { watch, ref, onMounted } from 'vue'
 
 const emit = defineEmits(['clicked-seat'])
 const props = defineProps<{
@@ -26,6 +26,15 @@ function selectSeat(event: PointerEvent) {
   sendUp(clickedSeat)
 }
 
+function applyUnavailableClasses() {
+  const statusMap = new Map(props.seats.map(s => [s.uiIdentifier, s.seatStatus]))
+
+  svgMap.value?.querySelectorAll('[data-seat-id]').forEach(el => {
+    const status = statusMap.get(el.getAttribute('data-seat-id') ?? '')
+    el.classList.toggle('unavailable', status === 'SOLD' || status === 'HELD')
+  })
+}
+
 watch(() => props.selectedSeats, (newIds) => {
 
   svgMap.value?.querySelectorAll(`[data-seat-id]`).forEach( el => {
@@ -37,6 +46,10 @@ watch(() => props.selectedSeats, (newIds) => {
   })
   }, { deep: true }
 )
+
+onMounted(() => {
+  applyUnavailableClasses()
+})
 
 </script>
 
@@ -506,6 +519,11 @@ watch(() => props.selectedSeats, (newIds) => {
 </template>
 
 <style scoped lang="scss">
+svg {
+  width: 100%;
+  height: auto;
+}
+
 .seat {
   rx: 4;
   ry: 4;
@@ -513,14 +531,20 @@ watch(() => props.selectedSeats, (newIds) => {
   stroke: #2c5f8a;
   stroke-width: 1;
   cursor: pointer;
-}
 
-.seat:hover {
-  fill: #f0a500;
-}
+  &.unavailable {
+    pointer-events: none;
+    cursor: not-allowed;
+    fill: #555555;
+  }
 
-.selected {
-  fill: #7c0d0e;
+  &.selected {
+    fill: #7c0d0e;
+  }
+
+  &:hover {
+    fill: #f0a500;
+  }
 }
 
 .row-label {
