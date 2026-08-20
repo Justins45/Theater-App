@@ -1,9 +1,11 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import apiClient from '@/api/axios'
+import { useLoggedInStore } from '@/stores/loggedIn'
 
 export const useCartStore = defineStore("cart", () => {
   const cart = ref([]);
+  const loggedIn = useLoggedInStore()
 
   // get total items in cart
   const totalItems = computed(() => cart.value.length);
@@ -36,8 +38,10 @@ export const useCartStore = defineStore("cart", () => {
 
   async function loadCart() {
     try {
-      const res = await apiClient.get("/cart")
-      cart.value = res.data.cartItems
+      if (loggedIn.loggedIn) {
+        const res = await apiClient.get("/cart")
+        cart.value = res.data.cartItems
+      }
     } catch (error: any) {
       console.error(error)
     }
