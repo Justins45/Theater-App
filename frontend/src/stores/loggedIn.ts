@@ -20,6 +20,10 @@ export const useLoggedInStore = defineStore("loggedIn", () => {
     }
   }
 
+  // TODO: lock down website endpoints when not logged in
+  // redirects on those pages
+  // dont remember much from here even though i just coded it lol
+
   async function logOut() {
     loggedIn.value = false;
     // TODO: make call to server to kill the current cookies (main and refresh)

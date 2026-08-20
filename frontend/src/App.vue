@@ -24,6 +24,7 @@ onMounted(() => {
       <template v-if="loggedInStore.loggedIn">
         <li><RouterLink to="/account/me">My Account</RouterLink></li>
         <li><RouterLink to="/cart">Cart<span v-if="cartStore.totalItems > 0"> - {{ cartStore.totalItems }}</span></RouterLink></li>
+        <li><button @click="loggedInStore.logOut">Logout</button></li>
       </template>
       <template v-else>
         <li><RouterLink to="/account/login">Login</RouterLink></li>
