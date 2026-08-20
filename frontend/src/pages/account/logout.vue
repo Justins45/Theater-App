@@ -7,7 +7,7 @@ const loggedInStore = useLoggedInStore()
 
 <template>
   <div>
-    <button @onClick="loggedInStore.logOut">Log out</button>
+    <button @click="loggedInStore.logOut">Log out</button>
   </div>
 </template>
 

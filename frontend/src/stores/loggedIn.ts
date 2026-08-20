@@ -25,6 +25,7 @@ export const useLoggedInStore = defineStore("loggedIn", () => {
   // dont remember much from here even though i just coded it lol
 
   async function logOut() {
+    console.log("Logging user out");
     loggedIn.value = false;
     // TODO: make call to server to kill the current cookies (main and refresh)
     // NOTE: function might exist on the logged out page not in here
