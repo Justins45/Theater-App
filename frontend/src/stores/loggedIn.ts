@@ -1,9 +1,11 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
 import apiClient from '@/api/axios'
+import router from "@/router";
 
 export const useLoggedInStore = defineStore("loggedIn", () => {
   const loggedIn = ref<boolean>(false);
+  const justLoggedOut = ref<boolean>(false);
 
   // make call to API /me
   async function checkLoggedIn() {
@@ -25,12 +27,13 @@ export const useLoggedInStore = defineStore("loggedIn", () => {
   // dont remember much from here even though i just coded it lol
 
   async function logOut() {
-    console.log("Logging user out");
     loggedIn.value = false;
+    justLoggedOut.value = true;
     // TODO: make call to server to kill the current cookies (main and refresh)
-    // NOTE: function might exist on the logged out page not in here
+    // redirect to home page
+    await router.push("/");
   }
 
 
-  return { loggedIn, checkLoggedIn, logOut };
+  return { loggedIn, checkLoggedIn, logOut, justLoggedOut };
 });

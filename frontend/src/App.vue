@@ -11,6 +11,10 @@ cartStore.loadCart()
 const loggedInStore = useLoggedInStore()
 
 onMounted(() => {
+  if (loggedInStore.justLoggedOut) {
+    loggedInStore.justLoggedOut = false
+    alert("User Logged Outs")
+  }
   loggedInStore.checkLoggedIn()
 })
 
