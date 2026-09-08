@@ -1,0 +1,131 @@
+[
+    {
+        "id": "",
+        "name": "ShowTime Deals",
+        "timeZone": "America/Edmonton",
+        "street": "400 street SW",
+        "city": "Calgary",
+        "province": "AB",
+        "postalCode": "1A2 B3C",
+        "country": "Canada",
+        "events" : [
+            {
+                "id": "01a06e19-31d8-702f-bdd7-7bc96145180d",
+                "title": "The Inheritance of Dust",
+                "stage": 1,
+                "description": "A slow-burn family drama set in a crumbling estate where three estranged siblings return to settle their late father's affairs — and old wounds. Intimate staging with minimal set design.",
+                "prce": "28.00",
+                "performances": [
+                    {
+                        "id": "01a06e19-fb2b-753e-af26-233dabba5027",
+                        "showTime": "19:00",
+                        "performanceStatus": "SCHEDULED",
+                        "event": "01a06e19-31d8-702f-bdd7-7bc96145180d"
+                    },
+                    {
+                        "id": "01a06e20-b2fb-74c5-902c-dd4773611498",
+                        "showTime": "21:30",
+                        "performanceStatus": "SCHEDULED",
+                        "event": "01a06e19-31d8-702f-bdd7-7bc96145180d"
+                    }
+                ]
+            },
+            {
+                "id": "01a06e28-6a97-701f-b33d-bd0519493fc6",
+                "title": "Letters Never Sent",
+                "stage": 1,
+                "description": "An epistolary play told entirely through letters read aloud by two performers on a bare stage. Spans 40 years of a friendship between two women across different continents.",
+                "price": "22.00",
+                "performances": [
+                    {
+                        "id": "01a06fa9-72c8-70e8-9832-573c03199fd0",
+                        "showTime": "14:00",
+                        "performanceStatus": "SCHEDULED",
+                        "event": "01a06e28-6a97-701f-b33d-bd0519493fc6"
+                    },
+                    {
+                        "id": "01a06fa9-9d9f-701d-a271-a42dde48db34",
+                        "showTime": "17:00",
+                        "performanceStatus": "SCHEDULED",
+                        "event": "01a06e28-6a97-701f-b33d-bd0519493fc6"
+                    },
+                    {
+                        "id": "01a06fa9-b4f2-746c-9215-54f39cd915bd",
+                        "showTime": "20:00",
+                        "performanceStatus": "SCHEDULED",
+                        "event": "01a06e28-6a97-701f-b33d-bd0519493fc6"   
+                    }
+                ]
+            },
+            {
+                "id": "01a06e28-9cf8-7731-b3cb-85ffda4480fc",
+                "title": "The Cartographer's Dillemma",
+                "stage": 1,
+                "description": "A tense two-handler set in a 1940s mapmaking office. A cartographer and a government official clash over what gets drawn — and what gets erased. Sharp dialogue, period costumes.",
+                "price": "35:00",
+                "performances": [
+                    {
+                        "id": "01a06faa-2e92-7748-ae5a-bb58b1ad30e5",
+                        "showTime": "17:00",
+                        "performanceStatus": "SCHEDULED",
+                        "event": "01a06e28-9cf8-7731-b3cb-85ffda4480fc"
+                    },
+                    {
+                        "id": "01a06fa9-d8f9-707c-b22c-5b1e447cfc82",
+                        "showTime": "21:00",
+                        "performanceStatus": "SCHEDULED",
+                        "event": "01a06e28-9cf8-7731-b3cb-85ffda4480fc"
+                    }
+                ]
+            },
+            {
+                "id": "01a06e28-bef3-71fb-a693-17bdaf59ced1",
+                "title": "All the Small Hours",
+                "stage": 1,
+                "description": "A comedic ensemble piece following the overnight staff of a hotel across a single chaotic New Year's Eve. Seven characters, one rotating set, no intermission.",
+                "price": "19.50",
+                "performances": [
+                    {
+                        "id": "01a06faa-5e02-736f-8170-cf5585eeeb45",
+                        "showTime": "13:00",
+                        "performanceStatus": "SCHEDULED",
+                        "event": "01a06e28-bef3-71fb-a693-17bdaf59ced1"
+                    },
+                    {
+                        "id": "01a06faa-8929-71bd-8b02-e2ab02b66171",
+                        "showTime": "16:00",
+                        "performanceStatus": "SCHEDULED",
+                        "event": "01a06e28-bef3-71fb-a693-17bdaf59ced1"
+                    },
+                    {
+                        "id": "01a06faa-9d62-749e-a516-6a7108e4de0f",
+                        "showTime": "20:30",
+                        "performanceStatus": "SCHEDULED",
+                        "event": "01a06e28-bef3-71fb-a693-17bdaf59ced1"
+                    }
+                ]
+            },
+            {
+                "id": "01a06e28-dbdc-76aa-998a-3b371e1fea26",
+                "title": "The Glass Verdict",
+                "stage": 1,
+                "description": "A courtroom drama where the audience serves as the jury. The case: a small-town trial that divided a community. The outcome changes nightly based on audience vote.",
+                "price": "42.00",
+                "performances": [
+                    {
+                        "id": "01a06faa-c206-77e6-a54d-59af8cc9b027",
+                        "showTime": "19:00",
+                        "performanceStatus": "SCHEDULED",
+                        "event": "01a06e28-dbdc-76aa-998a-3b371e1fea26"
+                    },
+                    {
+                        "id": "01a06faa-e503-702f-a889-16e8f6368858",
+                        "showTime": "22:00",
+                        "performanceStatus": "SCHEDULED",
+                        "event": "01a06e28-dbdc-76aa-998a-3b371e1fea26"
+                    }
+                ]
+            }
+        ]
+    }
+]
