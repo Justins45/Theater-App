@@ -27,6 +27,9 @@ public class Event {
     @Column(nullable = false)
     private String title;
 
+    @Column(nullable = true)
+    private String description;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stage_id")
     private Stage stage;
