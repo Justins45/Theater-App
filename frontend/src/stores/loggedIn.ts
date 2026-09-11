@@ -29,7 +29,6 @@ export const useLoggedInStore = defineStore("loggedIn", () => {
   async function logOut() {
     loggedIn.value = false;
     justLoggedOut.value = true;
-    // TODO: make call to server to kill the current cookies (main and refresh)
     try {
       const res = await apiClient.post('/auth/logout');
       if (res.status = 204) {
