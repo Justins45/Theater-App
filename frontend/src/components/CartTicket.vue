@@ -1,7 +1,18 @@
 <script setup lang="ts">
 
+interface CartTicket {
+  itemType: string,
+  eventName: string,
+  stageName: string,
+  performanceTime: string,
+  section: string,
+  row: string,
+  seatNumber: number,
+  price: string
+}
+
 defineProps<{
-  item: object;
+  item: CartTicket;
 }>()
 </script>
 
