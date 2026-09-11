@@ -4,7 +4,20 @@ import apiClient from '@/api/axios'
 import { useLoggedInStore } from '@/stores/loggedIn'
 
 export const useCartStore = defineStore("cart", () => {
-  const cart = ref([]);
+
+  interface CartTicket {
+    id: string,
+    itemType: string,
+    eventName: string,
+    stageName: string,
+    performanceTime: string,
+    section: string,
+    row: string,
+    seatNumber: number,
+    price: string
+  }
+
+  const cart = ref<CartTicket[]>([]);
   const loadedCart = ref(false)
   const loggedIn = useLoggedInStore()
 
