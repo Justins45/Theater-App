@@ -1,13 +1,5 @@
 package com.code.theaterapp.auth;
 
-import com.code.theaterapp.auth.dtos.LoginRequestDTO;
-import com.code.theaterapp.auth.dtos.LoginResponseDTO;
-import com.code.theaterapp.auth.secruity.JwtService;
-import com.code.theaterapp.exceptions.EntityNotFoundException;
-import com.code.theaterapp.shared.person.Person;
-import com.code.theaterapp.shared.person.PersonRepo;
-import com.code.theaterapp.staff.StaffRepo;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -16,6 +8,16 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
+
+import com.code.theaterapp.auth.dtos.LoginRequestDTO;
+import com.code.theaterapp.auth.dtos.LoginResponseDTO;
+import com.code.theaterapp.auth.secruity.JwtService;
+import com.code.theaterapp.exceptions.EntityNotFoundException;
+import com.code.theaterapp.shared.person.Person;
+import com.code.theaterapp.shared.person.PersonRepo;
+import com.code.theaterapp.staff.StaffRepo;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -63,4 +65,9 @@ public class AuthService {
                 .build();
     }
 
+        // AuthService
+    public ResponseCookie logout() {
+        ResponseCookie cookie = jwTservice.killCookie(authTokenName);  
+        return cookie;
+    }
 }
