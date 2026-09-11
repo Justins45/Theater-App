@@ -17,7 +17,7 @@ export const useLoggedInStore = defineStore("loggedIn", () => {
       }
 
     } catch (e) {
-      console.log("User is NOT logged in");
+      console.log(`User is NOT logged in :: ${e}`);
       loggedIn.value = false;
     }
   }
@@ -30,6 +30,15 @@ export const useLoggedInStore = defineStore("loggedIn", () => {
     loggedIn.value = false;
     justLoggedOut.value = true;
     // TODO: make call to server to kill the current cookies (main and refresh)
+    try {
+      const res = await apiClient.post('/auth/logout');
+      if (res.status = 204) {
+        console.log("Killed cookie?")
+      }
+    } catch (e) {
+      console.log(`Loggout did not work :: ${e}`)
+      justLoggedOut.value = false
+    }
     // redirect to home page
     await router.push("/");
   }
