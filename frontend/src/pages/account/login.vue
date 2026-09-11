@@ -17,9 +17,9 @@ async function handleLogin() {
     responseMessage.value = `Successfully logged in ${res.data.message}`
     await router.push('/');
     window.location.reload();
-  } catch (error: any) {
+  } catch (error) {
     console.log(error)
-    responseMessage.value = `Error: ${error.message}`;
+    responseMessage.value = `Error: ${error}`;
   }
 }
 </script>
