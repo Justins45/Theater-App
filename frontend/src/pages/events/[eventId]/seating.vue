@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import apiClient from '@/api/axios'
 import MainStageMap from '@/components/MainStageMap.vue'
 import { useCartStore } from '@/stores/cart'
+import { useLoggedInStore } from '@/stores/loggedIn'
 
 const router = useRouter()
 const route = useRoute()
@@ -13,6 +14,7 @@ const performanceInfo = ref()
 const clickedSeat = ref()
 const selectedSeats = ref([])
 const cartStore = useCartStore()
+const loggedInStore = useLoggedInStore()
 
 async function getInformation(pId: string, eId: string) {
   try {
@@ -51,6 +53,11 @@ const getSeatClick = (receivedData: any) => {
 }
 
 const addItemsToCart = () => {
+  if (!loggedInStore.loggedIn) {
+    router.push("/account/login")
+    return
+  }
+
   for (const index in selectedSeats.value) {
     cartStore.addToCart({
       eventName: performanceInfo.value.eventName,
@@ -80,8 +87,9 @@ watch(() => route.params.performanceId, async (performance_id) => {
   }
 })
 
-// FIXME: Will break website when user is not logged in.
-watch(() => cartStore.cart.map(item => item), (newCartIds, oldCartIds) => {
+watch(() => cartStore.cart?.map(item => item) ?? [], (newCartIds, oldCartIds) => {
+  if (!loggedInStore.loggedIn) return
+
   const removedIds = oldCartIds.filter(id => !newCartIds.includes(id))
 
   if (removedIds.length > 0) {

@@ -12,8 +12,9 @@ async function getInformation(newId: string) {
    const res = await apiClient.get("/events/" + newId)
    event.value = res.data
    // console.log(res.data)
- } catch (error: any) {
-   router.push({ path: '/404-not-found', state: { originalPath: `/events/${newId}` } })
+ } catch (error) {
+   await router.push({ path: '/404-not-found', state: { originalPath: `/events/${newId}` } })
+   console.log(`Error :: ${error}`)
  }
 }
 

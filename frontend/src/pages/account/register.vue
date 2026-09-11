@@ -14,9 +14,9 @@ async function handleRegister() {
     const res = await apiClient.post("/auth/register", registerInfo)
 
     responseMessage.value = `Successfully registered for ${res.data.message}`
-  } catch (error: any) {
+  } catch (error) {
     console.log(error)
-    responseMessage.value = `Error: ${error.message}`;
+    responseMessage.value = `Error: ${error}`;
   }
 }
 </script>

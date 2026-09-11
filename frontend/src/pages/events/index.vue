@@ -3,7 +3,13 @@ import EventSummaryItem from '@/components/EventSummaryItem.vue'
 import apiClient from '@/api/axios'
 import { ref } from 'vue'
 
-const information = ref([])
+interface EventItem {
+  id: string,
+  title: string,
+  stageName: string
+}
+
+const information = ref<EventItem[]>([])
 // get data from api events
 async function getInformation() {
   const res = await apiClient.get("/events")
