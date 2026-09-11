@@ -6,8 +6,6 @@ import { useCartStore } from '@/stores/cart'
 import { useLoggedInStore } from '@/stores/loggedIn'
 
 const cartStore = useCartStore()
-cartStore.loadCart()
-
 const loggedInStore = useLoggedInStore()
 
 onMounted(() => {
@@ -16,6 +14,7 @@ onMounted(() => {
     alert("User Logged Outs")
   }
   loggedInStore.checkLoggedIn()
+  cartStore.loadCart()
 })
 
 </script>

@@ -5,6 +5,7 @@ import { useLoggedInStore } from '@/stores/loggedIn'
 
 export const useCartStore = defineStore("cart", () => {
   const cart = ref([]);
+  const loadedCart = ref(false)
   const loggedIn = useLoggedInStore()
 
   // get total items in cart
@@ -38,13 +39,19 @@ export const useCartStore = defineStore("cart", () => {
 
   async function loadCart() {
     try {
-      if (loggedIn.loggedIn) {
-        const res = await apiClient.get("/cart")
-        cart.value = res.data.cartItems
-      }
+      if (loadedCart.value) { return }
+
+      const res = await apiClient.get("/cart")
+      cart.value = res.data.cartItems
+      loadedCart.value = true
+
     } catch (error: any) {
       console.error(error)
     }
+  }
+
+  function invalidateCart() {
+    loadedCart.value = false
   }
 
   // get total price (every addition and deletion + checks)
@@ -58,6 +65,6 @@ export const useCartStore = defineStore("cart", () => {
   const totalTax   = computed(() => formatToString(totalTaxNum.value))
   const totalPrice = computed(() => formatToString(totalPriceNum.value))
 
-  return {cart, totalItems, addToCart, removeFromCart, loadCart, subtotal, totalTax, totalPrice};
+  return {cart, totalItems, addToCart, removeFromCart, loadCart, subtotal, totalTax, totalPrice, invalidateCart};
 
 });
