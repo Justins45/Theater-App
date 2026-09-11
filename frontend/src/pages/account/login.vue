@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
 import apiClient from '@/api/axios'
+import router from '@/router'
 
 const loginInfo = reactive({
   email: '',
@@ -14,6 +15,8 @@ async function handleLogin() {
     const res = await apiClient.post("/auth/login", loginInfo)
 
     responseMessage.value = `Successfully logged in ${res.data.message}`
+    await router.push('/');
+    window.location.reload();
   } catch (error: any) {
     console.log(error)
     responseMessage.value = `Error: ${error.message}`;

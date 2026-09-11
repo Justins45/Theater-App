@@ -51,6 +51,13 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
+    '/account/logout': RouteRecordInfo<
+      '/account/logout',
+      '/account/logout',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
     '/account/me/': RouteRecordInfo<
       '/account/me/',
       '/account/me',
@@ -128,6 +135,12 @@ declare module 'vue-router/auto-routes' {
     'src/pages/account/login.vue': {
       routes:
         | '/account/login'
+      views:
+        | never
+    }
+    'src/pages/account/logout.vue': {
+      routes:
+        | '/account/logout'
       views:
         | never
     }

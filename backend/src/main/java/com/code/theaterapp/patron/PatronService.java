@@ -46,7 +46,7 @@ public class PatronService {
 
     public ResponseEntity<PatronMeResponse> getMe(PatronAccount account) {
         if (account == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         return ResponseEntity.ok(patronMapper.toMe(account));
     }

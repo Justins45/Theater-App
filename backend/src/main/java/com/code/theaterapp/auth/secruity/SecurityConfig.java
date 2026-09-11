@@ -142,7 +142,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
                 .requestMatchers("/api/admin/**").hasAuthority("ROLE_ADMIN")
                 .requestMatchers("/api/staff/**").hasAuthority("ROLE_STAFF")
-                .requestMatchers("/api/auth/me").hasAuthority("ROLE_PATRON")
+                .requestMatchers("/api/auth/me").permitAll()
 
                 // All other endpoints are public — lock these down as the app grows
                 .anyRequest().permitAll()
