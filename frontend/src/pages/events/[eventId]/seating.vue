@@ -53,6 +53,11 @@ const getSeatClick = (receivedData: any) => {
 }
 
 const addItemsToCart = () => {
+  if (!loggedInStore.loggedIn) {
+    router.push("/account/login")
+    return
+  }
+
   for (const index in selectedSeats.value) {
     cartStore.addToCart({
       eventName: performanceInfo.value.eventName,
