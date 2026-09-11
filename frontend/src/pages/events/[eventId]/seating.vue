@@ -82,7 +82,6 @@ watch(() => route.params.performanceId, async (performance_id) => {
   }
 })
 
-// FIXME: Will break website when user is not logged in.
 watch(() => cartStore.cart?.map(item => item) ?? [], (newCartIds, oldCartIds) => {
   if (!loggedInStore.loggedIn) return
 
