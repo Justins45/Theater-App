@@ -1,6 +1,7 @@
 package com.code.theaterapp.auth.secruity;
 
 import com.code.theaterapp.patron.PatronDetailsService;
+import com.code.theaterapp.shared.enums.UserType;
 import com.code.theaterapp.staff.StaffDetailsService;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
@@ -103,8 +104,8 @@ public class JwtFilter extends OncePerRequestFilter {
      * Extract an email from whichever token is usable.
      * Returns null if neither token yields a valid email.
      */
-    private UserDetails loadUserDetails(String email, String userType) {
-        if ("STAFF".equals(userType)) {
+    private UserDetails loadUserDetails(String email, UserType userType) {
+        if (UserType.STAFF.equals(userType)) {
             return staffDetailsService.loadUserByUsername(email);
         }
         return patronDetailsService.loadUserByUsername(email);
@@ -127,7 +128,7 @@ public class JwtFilter extends OncePerRequestFilter {
         try {
             Date authTokenExp = jwTservice.extractExpiration(authToken);
             long millisUntilExpiry = authTokenExp.getTime() - new Date().getTime();
-            String userType = jwTservice.extractUserType(authToken);
+            UserType userType = jwTservice.extractUserType(authToken);
 
             if (millisUntilExpiry < TimeUnit.MINUTES.toMillis(10)) {
                 ResponseCookie newAuthCookie = jwTservice.generateToken(email, userType, authTokenName);
@@ -153,7 +154,7 @@ public class JwtFilter extends OncePerRequestFilter {
         if (SecurityContextHolder.getContext().getAuthentication() != null) return;
 
         try {
-            String userType = jwTservice.extractUserType(authToken);
+            UserType userType = jwTservice.extractUserType(authToken);
             UserDetails userDetails = loadUserDetails(email, userType);
 
             if (jwTservice.validateToken(authToken)) {

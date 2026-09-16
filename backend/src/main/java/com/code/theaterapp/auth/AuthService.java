@@ -16,6 +16,7 @@ import com.code.theaterapp.exceptions.EntityNotFoundException;
 import com.code.theaterapp.shared.person.Person;
 import com.code.theaterapp.shared.person.PersonRepo;
 import com.code.theaterapp.staff.StaffRepo;
+import com.code.theaterapp.shared.enums.UserType;
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,9 +37,9 @@ public class AuthService {
     @Value("${remember.token.name}")
     private String rememberTokenName;
 
-    public ResponseEntity<LoginResponseDTO> login(LoginRequestDTO login, String userType) {
+    public ResponseEntity<LoginResponseDTO> login(LoginRequestDTO login, UserType userType) {
 
-        AuthenticationManager manager = "STAFF".equals(userType) ?  staffAuthManager :  patronAuthManager;
+        AuthenticationManager manager = UserType.STAFF.equals(userType) ?  staffAuthManager :  patronAuthManager;
 
         manager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -51,7 +52,7 @@ public class AuthService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
         // check for staff profile
-        if ("STAFF".equals(userType)) {
+        if (UserType.STAFF.equals(userType)) {
             staffRepo.findByPerson(person)
                     .orElseThrow(() -> new AccessDeniedException("No staff profile for this user"));
         }

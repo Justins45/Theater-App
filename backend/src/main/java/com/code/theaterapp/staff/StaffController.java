@@ -4,6 +4,7 @@ import com.code.theaterapp.auth.AuthService;
 import com.code.theaterapp.auth.dtos.LoginRequestDTO;
 import com.code.theaterapp.auth.dtos.LoginResponseDTO;
 import com.code.theaterapp.auth.secruity.accounts.StaffAccount;
+import com.code.theaterapp.shared.enums.UserType;
 import com.code.theaterapp.staff.dtos.StaffMeResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class StaffController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO request) {
-        return authService.login(request, "STAFF");
+        return authService.login(request, UserType.STAFF);
     }
 
     @GetMapping("/me")
