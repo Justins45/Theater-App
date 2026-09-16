@@ -3,4 +3,6 @@
 .idea
 .env
 
+typos.toml
+
 node_modules
