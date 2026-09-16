@@ -1,0 +1,3 @@
+# All routes fall back to index.html so Vue Router handles them
+# Page reloads - this sends to index, then vue router takes to the correct page
+/* /index.html 200
