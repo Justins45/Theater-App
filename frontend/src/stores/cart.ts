@@ -1,25 +1,11 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import apiClient from '@/api/axios'
-import { useLoggedInStore } from '@/stores/loggedIn'
-
+import type { CartTicket } from "@theater/shared";
 export const useCartStore = defineStore("cart", () => {
-
-  interface CartTicket {
-    id: string,
-    itemType: string,
-    eventName: string,
-    stageName: string,
-    performanceTime: string,
-    section: string,
-    row: string,
-    seatNumber: number,
-    price: string
-  }
 
   const cart = ref<CartTicket[]>([]);
   const loadedCart = ref(false)
-  const loggedIn = useLoggedInStore()
 
   // get total items in cart
   const totalItems = computed(() => cart.value.length);
@@ -29,7 +15,7 @@ export const useCartStore = defineStore("cart", () => {
   }
 
   // add item to cart
-  function addToCart(item: any) {
+  function addToCart(item: CartTicket) {
     const exists = cart.value.some(cartItem => cartItem.id === item.id);
     if (!exists) {
       cart.value.push(item);
@@ -45,7 +31,7 @@ export const useCartStore = defineStore("cart", () => {
         data: { itemId: id }
       });
       await loadCart()
-    } catch (error: any) {
+    } catch (error) {
       console.error(error)
     }
   }
@@ -58,7 +44,7 @@ export const useCartStore = defineStore("cart", () => {
       cart.value = res.data.cartItems
       loadedCart.value = true
 
-    } catch (error: any) {
+    } catch (error) {
       console.error(error)
     }
   }
@@ -69,7 +55,7 @@ export const useCartStore = defineStore("cart", () => {
 
   // get total price (every addition and deletion + checks)
   const subtotalNum  = computed(() => {
-    return cart.value.reduce((sum, item) => sum + item.price, 0)
+    return cart.value.reduce((sum, item) => sum + Number(item.price), 0)
   })
   const totalTaxNum  = computed(() => subtotalNum.value * 0.05)
   const totalPriceNum = computed(() => subtotalNum.value + totalTaxNum.value)

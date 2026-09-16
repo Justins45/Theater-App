@@ -1,15 +1,5 @@
 <script setup lang="ts">
-
-interface CartTicket {
-  itemType: string,
-  eventName: string,
-  stageName: string,
-  performanceTime: string,
-  section: string,
-  row: string,
-  seatNumber: number,
-  price: string
-}
+import type { CartTicket } from '@theater/shared'
 
 defineProps<{
   item: CartTicket;
