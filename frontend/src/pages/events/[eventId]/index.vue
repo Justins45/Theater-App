@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRoute, useRouter, RouterLink } from 'vue-router'
+import { useRouteData } from '@/composable/useRouteData'
 import apiClient from '@/api/axios'
 
 const router = useRouter()
@@ -18,12 +19,9 @@ async function getInformation(newId: string) {
  }
 }
 
-// // if URL updates re fetch
-watch(() => route.params.eventId, async (newId) => {
-  if (newId) {
-    // newId comes as type "string | string[]"
-    await getInformation(newId.toString())
-  }
+// if URL updates re fetch
+useRouteData(['eventId'], async ({ eventId}) => {
+   await getInformation(eventId)
 })
 
 // Handle initial load separately, after component is mounted

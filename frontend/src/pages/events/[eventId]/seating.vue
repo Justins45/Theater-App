@@ -5,6 +5,7 @@ import apiClient from '@/api/axios'
 import MainStageMap from '@/components/MainStageMap.vue'
 import { useCartStore } from '@/stores/cart'
 import { useLoggedInStore } from '@/stores/loggedIn'
+import { useRouteData } from '@/composable/useRouteData'
 
 const router = useRouter()
 const route = useRoute()
@@ -17,14 +18,16 @@ const cartStore = useCartStore()
 const loggedInStore = useLoggedInStore()
 
 async function getInformation(pId: string, eId: string) {
+  console.log(pId, eId)
   try {
     const res = await apiClient.get("/events/" + eId + "/performances/" + pId + "/seating")
     const res2 = await apiClient.get("/events/" + eId + "/performances/" + pId + "/info")
     // console.log(res.data)
     seating.value = res.data
     performanceInfo.value = res2.data
-  } catch (error: any) {
+  } catch (error) {
     router.push({ path: '/404-not-found', state: { originalPath: `/events/${eId}/seating` } })
+    console.log(`Error :: ${error}`)
   }
 }
 
@@ -78,13 +81,10 @@ const addItemsToCart = () => {
 }
 
 // // if URL updates re fetch
-watch(() => route.params.performanceId, async (performance_id) => {
-
-  if (performance_id) {
-    // performance_id comes as type "string | string[]"
-    // console.log(performance_id)
-    await getInformation(performance_id.toString(), eventId.value)
-  }
+useRouteData(['eventId'], async ({ eventId }) => {
+  // fetch your data
+  const performance_id = route.query.performanceId as string
+  await getInformation(performance_id, eventId)
 })
 
 watch(() => cartStore.cart?.map(item => item) ?? [], (newCartIds, oldCartIds) => {
