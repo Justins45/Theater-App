@@ -6,7 +6,5 @@
 </template>
 
 <style scoped lang="scss">
-div {
-  margin-bottom: 1.75rem;
-}
+
 </style>

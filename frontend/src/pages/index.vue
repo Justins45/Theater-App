@@ -23,8 +23,10 @@ getInformation()
   <div>
     <h2>Events</h2>
     <template v-if="information.length > 0">
-      <div v-for="item in information" :key="item.id" class="event-list">
-          <EventSummaryItem v-bind="item"></EventSummaryItem>
+      <div class="event-list">
+        <div v-for="item in information" :key="item.id" class="event-item">
+            <EventSummaryItem v-bind="item"></EventSummaryItem>
+        </div>
       </div>
     </template>
     <template v-else>
@@ -36,7 +38,11 @@ getInformation()
 </template>
 
 <style scoped lang="scss">
-div {
-  margin-bottom: 1.75rem;
+.event-list {
+  margin: 1rem;
+
+  .event-item {
+    margin-bottom: 1.75rem;
+  }
 }
 </style>
