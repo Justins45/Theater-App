@@ -5,8 +5,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public record LoginRequestDTO(
-        // TODO: make branch for adding custom annotations
-
         @NotBlank
         @Email
         String email,

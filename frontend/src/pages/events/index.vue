@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import EventSummaryItem from '@/components/EventSummaryItem.vue'
-import apiClient from '@/api/axios'
+import EventSummaryItem from '@components/EventSummaryItem.vue'
+import apiClient from '@api'
 import { ref } from 'vue'
 
 interface EventItem {

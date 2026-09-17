@@ -19,6 +19,7 @@ import com.code.theaterapp.auth.dtos.PatronRegisterDTO;
 import com.code.theaterapp.auth.secruity.accounts.PatronAccount;
 import com.code.theaterapp.patron.PatronService;
 import com.code.theaterapp.patron.dtos.PatronMeResponse;
+import com.code.theaterapp.shared.enums.UserType;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +39,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO request) {
-        return authService.login(request, "PATRON");
+        return authService.login(request, UserType.PATRON);
     }
 
     @PostMapping("/register")

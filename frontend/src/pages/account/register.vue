@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
-import apiClient from '@/api/axios'
+import apiClient from '@api'
+
 
 const registerInfo = reactive({
   email: '',

@@ -1,6 +1,5 @@
 package com.code.theaterapp.tickets;
 
-import com.code.theaterapp.event.EventRepo;
 import com.code.theaterapp.exceptions.EntityNotFoundException;
 import com.code.theaterapp.patron.Patron;
 import com.code.theaterapp.patron.PatronRepo;
@@ -8,11 +7,9 @@ import com.code.theaterapp.shared.enums.TicketStatus;
 import com.code.theaterapp.tickets.dtos.CreateTicketDTO;
 import com.code.theaterapp.tickets.dtos.TicketDetailsDTO;
 import com.code.theaterapp.tickets.dtos.TicketSummaryDTO;
-import com.code.theaterapp.venue.VenueRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,8 +20,6 @@ public class TicketService {
     private final TicketRepo ticketRepo;
     private final TicketMapper ticketMapper;
     private final PatronRepo patronRepo;
-    private final EventRepo eventRepo;
-    private final VenueRepo venueRepo;
 
     public List<TicketSummaryDTO> getAllTickets(UUID patronId) {
         return ticketRepo.findAllByPatronId(patronId)
@@ -50,7 +45,6 @@ public class TicketService {
         ticket.setPrice(createTicketDTO.price());
         ticket.setPatron(patron);
         ticket.setTicketStatus(TicketStatus.ISSUED);
-        ticket.setCreatedAt(Instant.now());
 
         Ticket savedTicket = ticketRepo.save(ticket);
         return ticketMapper.toDetails(savedTicket);

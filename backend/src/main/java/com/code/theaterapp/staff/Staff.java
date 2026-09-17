@@ -11,6 +11,8 @@ import lombok.Setter;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,6 +24,7 @@ public class Staff {
     @Id
     private UUID id;
 
+    @CreationTimestamp 
     @Column(nullable = false)
     private OffsetDateTime staffAccountCreation;
 
@@ -31,7 +34,7 @@ public class Staff {
 
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
-    @JoinColumn(name = "person_id")
+    @JoinColumn(name = "person_id", nullable = false)
     private Person person;
 
 }

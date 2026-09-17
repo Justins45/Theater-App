@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useLoggedInStore} from '@/stores/loggedIn'
+import { useLoggedInStore} from '@stores/loggedIn'
 
 const loggedInStore = useLoggedInStore()
 

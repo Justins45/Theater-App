@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.math.BigDecimal;
@@ -26,7 +28,7 @@ public class CartItem {
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cart_id")
+    @JoinColumn(name = "cart_id", nullable = false)
     private Cart cart;
 
     @Column(nullable = false)
@@ -43,6 +45,7 @@ public class CartItem {
     @Column(nullable = false)
     private BigDecimal unitPrice;
 
+    @CreationTimestamp 
     @Column(nullable = false)
     private Instant addedAt;
 

@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.math.BigDecimal;
@@ -33,17 +35,18 @@ public class Ticket {
 //    private Seat seatId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "patron_id")
+    @JoinColumn(name = "patron_id", nullable = false)
     private Patron patron;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "performance_id")
+    @JoinColumn(name = "performance_id", nullable = false)
     private Performance performance;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TicketStatus ticketStatus;
 
+    @CreationTimestamp 
     @Column(nullable = false)
     private Instant createdAt;
 }

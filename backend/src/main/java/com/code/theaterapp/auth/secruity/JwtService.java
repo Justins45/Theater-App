@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;
 
+import com.code.theaterapp.shared.enums.UserType;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.JwtException;
@@ -50,7 +52,7 @@ public class JwtService {
      * @param tokenName the cookie name; determines token duration
      * @return a {@link ResponseCookie} containing the signed JWT
      */
-    public ResponseCookie generateToken(String email, String userType, String tokenName) {
+    public ResponseCookie generateToken(String email, UserType userType, String tokenName) {
 
         // Durations are in HOURS — tokenDuration controls JWT expiry, cookieMaxAge controls browser lifetime
         // Defaults to 1 hour; rememberMe extends both to 24 hours
@@ -171,8 +173,13 @@ public class JwtService {
     }
 
 
-    public String extractUserType(String token) {
-        return extractClaim(token, claims -> claims.get("userType", String.class));
+    public UserType extractUserType(String token) {
+        String raw = extractClaim(token, claims -> claims.get("userType", String.class));
+        try {
+            return UserType.valueOf(raw);
+        } catch (IllegalArgumentException | NullPointerException e) {
+            throw new JwtException("Invalid or missing userType claim: " + raw);
+        }
     }
 
     /**

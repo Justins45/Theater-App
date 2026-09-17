@@ -3,7 +3,6 @@ package com.code.theaterapp.event;
 import com.code.theaterapp.event.dtos.CreateEventDTO;
 import com.code.theaterapp.event.dtos.EventDetailsDTO;
 import com.code.theaterapp.event.dtos.EventSummaryDTO;
-import com.code.theaterapp.exceptions.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -9,7 +9,6 @@ import com.code.theaterapp.venue.VenueRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -40,7 +39,6 @@ public class StageService {
         Stage stage = new Stage();
         stage.setName(createStageDTO.name());
         stage.setCapacity(createStageDTO.capacity());
-        stage.setDateCreated(Instant.now());
         stage.setVenue(venue);
 
         Stage savedStage = stageRepo.save(stage);

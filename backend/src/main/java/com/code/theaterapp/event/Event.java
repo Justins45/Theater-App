@@ -1,15 +1,25 @@
 package com.code.theaterapp.event;
 
+import java.time.Instant;
+import java.util.UUID;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UuidGenerator;
+
 import com.code.theaterapp.stage.Stage;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.UuidGenerator;
-
-import java.time.Instant;
-import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
@@ -31,9 +41,10 @@ public class Event {
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "stage_id")
+    @JoinColumn(name = "stage_id", nullable = false)
     private Stage stage;
 
+    @CreationTimestamp 
     @Column(nullable = false)
     private Instant eventCreated;
 

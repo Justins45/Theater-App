@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
-import apiClient from '@/api/axios'
+import apiClient from '@api'
 import router from '@/router'
 
 const loginInfo = reactive({

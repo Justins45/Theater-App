@@ -34,6 +34,6 @@ public class Seat {
     private String uiIdentifier; // orch-AA-6 | main-AG-19
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "stage_id")
+    @JoinColumn(name = "stage_id", nullable = false)
     private Stage stage;
 }

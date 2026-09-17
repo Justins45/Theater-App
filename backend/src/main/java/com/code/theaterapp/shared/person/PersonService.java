@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Service
@@ -26,7 +25,6 @@ public class PersonService {
         Person person = new Person();
         person.setPassword(bCryptPasswordEncoder.encode(createPerson.password()));
         person.setEmail(createPerson.email());
-        person.setAccountCreated(OffsetDateTime.now());
 
         return personRepo.save(person);
     }

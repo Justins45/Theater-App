@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { ref, watch, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import apiClient from '@/api/axios'
-import MainStageMap from '@/components/MainStageMap.vue'
-import { useCartStore } from '@/stores/cart'
-import { useLoggedInStore } from '@/stores/loggedIn'
-import { useRouteData } from '@/composable/useRouteData'
+import apiClient from '@api'
+import MainStageMap from '@components/MainStageMap.vue'
+import { useCartStore } from '@stores/cart'
+import { useLoggedInStore } from '@stores/loggedIn'
+import { useRouteData } from '@composable/useRouteData'
+import type { Seat } from '@theater/shared'
 
 const router = useRouter()
 const route = useRoute()
@@ -13,9 +14,14 @@ const seating = ref()
 const eventId = ref("")
 const performanceInfo = ref()
 const clickedSeat = ref()
-const selectedSeats = ref([])
+const selectedSeats = ref<Seat[]>([])
 const cartStore = useCartStore()
 const loggedInStore = useLoggedInStore()
+
+interface TransferTicket {
+  id: string | undefined,
+  itemType: string
+}
 
 async function getInformation(pId: string, eId: string) {
   console.log(pId, eId)
@@ -31,20 +37,21 @@ async function getInformation(pId: string, eId: string) {
   }
 }
 
-async function sendInformation(item: object) {
+async function sendInformation(item: TransferTicket) {
   try {
     const res = await apiClient.post("/cart", {
       itemId: item.id,
       itemType: item.itemType
     })
     console.log(res.data)
-  } catch (error: any) {
+  } catch (error) {
     console.error(error)
   }
 }
 
-const getSeatClick = (receivedData: any) => {
+const getSeatClick = (receivedData: Seat) => {
 
+  if (receivedData)
   clickedSeat.value = receivedData
 
   if (selectedSeats.value.includes(receivedData)) {
@@ -62,6 +69,7 @@ const addItemsToCart = () => {
   }
 
   for (const index in selectedSeats.value) {
+    if (!performanceInfo.value || !selectedSeats.value[index]) return
     cartStore.addToCart({
       eventName: performanceInfo.value.eventName,
       id: selectedSeats.value[index].id,
@@ -74,7 +82,7 @@ const addItemsToCart = () => {
       stageName: performanceInfo.value.stageName
     })
     sendInformation({
-      id: selectedSeats.value[index].id,
+      id: selectedSeats.value[index]?.id,
       itemType: "TICKET",
     })
   }
@@ -87,13 +95,13 @@ useRouteData(['eventId'], async ({ eventId }) => {
   await getInformation(performance_id, eventId)
 })
 
-watch(() => cartStore.cart?.map(item => item) ?? [], (newCartIds, oldCartIds) => {
+watch(() => cartStore.cart?.map(item => item.id) ?? [], (newCartIds, oldCartIds) => {
   if (!loggedInStore.loggedIn) return
 
   const removedIds = oldCartIds.filter(id => !newCartIds.includes(id))
 
   if (removedIds.length > 0) {
-    selectedSeats.value = selectedSeats.value.filter(id => !removedIds.includes(id))
+    selectedSeats.value = selectedSeats.value.filter(seat => !removedIds.includes(seat.id))
   }
 })
 

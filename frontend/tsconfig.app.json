@@ -9,6 +9,11 @@
     // Path mapping for cleaner imports.
     "paths": {
       "@/*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@composable/*": ["./src/composable/*"],
+      // NOTE: soon to make --"@views": ["./src/views/*"], --
+      "@stores/*": ["./src/stores/*"],
+      "@api": ["./src/api/axios"], 
       "@theater/shared": ["../shared/index.d.ts"]
     },
 

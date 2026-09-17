@@ -7,7 +7,6 @@ import com.code.theaterapp.venue.dtos.VenueSummaryDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -39,7 +38,6 @@ public class VenueService {
         venue.setProvince(createVenueDTO.province());
         venue.setPostalCode(createVenueDTO.postalCode());
         venue.setCountry(createVenueDTO.country());
-        venue.setDateCreated(Instant.now());
 
         Venue savedVenue = venueRepo.save(venue);
         return venueMapper.toDetails(savedVenue);
