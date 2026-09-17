@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.OffsetDateTime;
@@ -27,6 +29,7 @@ public class Person {
     @Column(nullable = false)
     private String password;
 
+    @CreationTimestamp 
     @Column(nullable = false)
     private OffsetDateTime accountCreated;
 

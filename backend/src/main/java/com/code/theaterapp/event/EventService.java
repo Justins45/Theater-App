@@ -11,7 +11,6 @@ import com.code.theaterapp.stage.StageRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,7 +47,6 @@ public class EventService {
         Event event = new Event();
         event.setTitle(createEventDTO.title());
         event.setStage(stage);
-        event.setEventCreated(Instant.now());
 
         Event savedEvent = eventRepo.save(event);
         return eventMapper.toDetails(savedEvent, null);

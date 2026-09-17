@@ -40,6 +40,8 @@ public class CartService {
     private final CartItemMapper cartItemMapper;
     private final PricingRuleService pricingRuleService;
 
+    // TODO: CART SHOULD NOT BE MADE FOR NO REASON -- ONLY MAKE WHEN ADDING TO CART FIRST TIME
+
     public CartDetailsDTO getOrCreateCart(UUID personId) {
         return cartRepo.findCartByPersonIdAndActive(personId)
                 .map(cart -> {
@@ -55,7 +57,6 @@ public class CartService {
     private CartDetailsDTO createCart(UUID personId) {
         Cart cart = new Cart();
         cart.setPerson(personRepo.getReferenceById(personId));
-        cart.setCartCreated(Instant.now());
         cart.setStatus(CartStatus.ACTIVE);
 
         Cart saved = cartRepo.save(cart);
@@ -104,7 +105,6 @@ public class CartService {
 
 
         cartItem.setUnitPrice(price.price());
-        cartItem.setAddedAt(Instant.now());
 
         CartItem savedCartItem = cartItemRepo.save(cartItem);
 

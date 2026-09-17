@@ -11,6 +11,8 @@ import lombok.Setter;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,6 +24,7 @@ public class Staff {
     @Id
     private UUID id;
 
+    @CreationTimestamp 
     @Column(nullable = false)
     private OffsetDateTime staffAccountCreation;
 

@@ -12,8 +12,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.OffsetDateTime;
-
 @Service
 @RequiredArgsConstructor
 public class StaffService {
@@ -46,7 +44,6 @@ public class StaffService {
         // make staff account
         Staff staff = new Staff();
         staff.setPerson(person);
-        staff.setStaffAccountCreation(OffsetDateTime.now());
         staff.setRole(requestDTO.role());
 
         Staff staffSaved = staffRepo.save(staff);
@@ -65,7 +62,6 @@ public class StaffService {
         // make staff account
         Staff staff = new Staff();
         staff.setPerson(person);
-        staff.setStaffAccountCreation(OffsetDateTime.now());
         staff.setRole(requestDTO.role());
 
         Staff staffSaved = staffRepo.save(staff);

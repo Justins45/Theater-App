@@ -8,6 +8,8 @@ import lombok.Setter;
 
 import java.time.Instant;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 @Entity
 @NoArgsConstructor
 @Getter
@@ -25,6 +27,7 @@ public class Stage {
     @JoinColumn(name = "venue_id")
     private Venue venue;
 
+    @CreationTimestamp 
     @Column(nullable = false)
     private Instant dateCreated;
 

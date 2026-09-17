@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.Instant;
@@ -31,6 +33,7 @@ public class Cart {
     @Enumerated(EnumType.STRING)
     private CartStatus status;
 
+    @CreationTimestamp 
     @Column(nullable = false)
     private Instant cartCreated;
 
