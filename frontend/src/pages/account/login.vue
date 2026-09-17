@@ -26,11 +26,11 @@ async function handleLogin() {
 
 <template>
 <div>
-  <h1>Please login</h1>
+  <h1>Login Page</h1>
   <div class="login-form">
     <form @submit.prevent="handleLogin">
       <div class="email">
-        <label for="email">Email</label>
+        <label for="email">Email Address</label>
         <input
           id="email"
           name="email"
@@ -61,6 +61,7 @@ async function handleLogin() {
 </template>
 
 <style scoped lang="scss">
+// TODO: Ensure proper focous highlighting when tabbing though
 
 .email, .password {
   display: flex;
