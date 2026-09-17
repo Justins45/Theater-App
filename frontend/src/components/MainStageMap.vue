@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { watch, ref, onMounted } from 'vue'
+import type { Seat } from "@theater/shared"
 
 const emit = defineEmits(['clicked-seat'])
 const props = defineProps<{
-  seats: Array<any>,
-  selectedSeats: Array<any>,
+  seats: Array<Seat>,
+  selectedSeats: Array<Seat>,
 }>()
 const svgMap = ref()
 
-function sendUp(data: any) {
+function sendUp(data: Seat) {
   emit('clicked-seat', data)
 }
 
@@ -21,7 +22,9 @@ function selectSeat(event: PointerEvent) {
   const uiIdentifier = e.dataset.seatId
 
   if (props.seats.length < 1) { return null }
-  const clickedSeat = props.seats.find(seat => seat.uiIdentifier === uiIdentifier)
+  const clickedSeat: Seat | undefined = props.seats.find(seat => seat.uiIdentifier === uiIdentifier)
+
+  if (!clickedSeat) return
 
   sendUp(clickedSeat)
 }
@@ -29,7 +32,7 @@ function selectSeat(event: PointerEvent) {
 function applyUnavailableClasses() {
   const statusMap = new Map(props.seats.map(s => [s.uiIdentifier, s.seatStatus]))
 
-  svgMap.value?.querySelectorAll('[data-seat-id]').forEach(el => {
+  svgMap.value?.querySelectorAll('[data-seat-id]').forEach((el: Element) => {
     const status = statusMap.get(el.getAttribute('data-seat-id') ?? '')
     el.classList.toggle('unavailable', status === 'SOLD' || status === 'HELD')
   })
@@ -37,7 +40,7 @@ function applyUnavailableClasses() {
 
 watch(() => props.selectedSeats, (newIds) => {
 
-  svgMap.value?.querySelectorAll(`[data-seat-id]`).forEach( el => {
+  svgMap.value?.querySelectorAll(`[data-seat-id]`).forEach((el: Element) => {
     el.classList.remove('selected')
   })
 
