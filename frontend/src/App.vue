@@ -22,8 +22,7 @@ onMounted(() => {
 <template>
   <nav>
     <ul>
-      <li><RouterLink to="/">Home</RouterLink></li>
-      <li><RouterLink to="/events">events</RouterLink></li>
+      <li><RouterLink to="/">Events</RouterLink></li>
       <template v-if="loggedInStore.loggedIn">
         <li><RouterLink to="/account/me">My Account</RouterLink></li>
         <li><RouterLink to="/cart">Cart<span v-if="cartStore.totalItems > 0"> - {{ cartStore.totalItems }}</span></RouterLink></li>
