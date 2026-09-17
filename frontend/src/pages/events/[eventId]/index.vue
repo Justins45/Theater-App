@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter, RouterLink } from 'vue-router'
-import { useRouteData } from '@/composable/useRouteData'
-import apiClient from '@/api/axios'
+import { useRouteData } from '@composable/useRouteData'
+import apiClient from '@api'
 
 const router = useRouter()
 const route = useRoute()

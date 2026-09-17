@@ -2,8 +2,8 @@
 import { onMounted } from 'vue'
 import { SharedButton } from "@theater/shared";
 import { RouterLink, RouterView } from "vue-router";
-import { useCartStore } from '@/stores/cart'
-import { useLoggedInStore } from '@/stores/loggedIn'
+import { useCartStore } from '@stores/cart'
+import { useLoggedInStore } from '@stores/loggedIn'
 
 const cartStore = useCartStore()
 const loggedInStore = useLoggedInStore()

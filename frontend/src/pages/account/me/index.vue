@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
-import apiClient from '@/api/axios'
+import apiClient from '@api'
 
 const formInfo = reactive({
   firstName: null,

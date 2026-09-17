@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, watch, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import apiClient from '@/api/axios'
-import MainStageMap from '@/components/MainStageMap.vue'
-import { useCartStore } from '@/stores/cart'
-import { useLoggedInStore } from '@/stores/loggedIn'
-import { useRouteData } from '@/composable/useRouteData'
+import apiClient from '@api'
+import MainStageMap from '@components/MainStageMap.vue'
+import { useCartStore } from '@stores/cart'
+import { useLoggedInStore } from '@stores/loggedIn'
+import { useRouteData } from '@composable/useRouteData'
 import type { Seat } from '@theater/shared'
 
 const router = useRouter()
