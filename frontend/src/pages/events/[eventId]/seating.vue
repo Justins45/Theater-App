@@ -132,7 +132,4 @@ onMounted(async () => {
 </template>
 
 <style scoped lang="scss">
-td {
-  padding: 0 15px;
-}
 </style>

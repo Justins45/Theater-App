@@ -523,7 +523,7 @@ onMounted(() => {
 
 <style scoped lang="scss">
 svg {
-  width: 100%;
+  width: 85%;
   height: auto;
 }
 
