@@ -121,13 +121,13 @@ onMounted(async () => {
 <template>
   <div>
     <h2>Event seating</h2>
-    <button v-if="clickedSeat" @click="addItemsToCart">Add items to cart</button>
   </div>
   <template v-if="seating">
     <MainStageMap :seats="seating" :selectedSeats="selectedSeats" @clicked-seat="getSeatClick"/>
 
     <template v-if="selectedSeats.length > 0">
       <h2>Selected Seats</h2>
+      <button v-if="clickedSeat" @click="addItemsToCart" class="add-seats-button">Reserve Seats</button>
       <div>
         <div v-for="(seat, index) in selectedSeats" :key="index" class="selected-ticket" >
           <SelectedSeat :section="seat.section" :row="seat.row" :seat-number="seat.seatNumber" />
@@ -142,5 +142,7 @@ onMounted(async () => {
 </template>
 
 <style scoped lang="scss">
-
+.add-seats-button {
+  margin-bottom: 1rem;
+}
 </style>
