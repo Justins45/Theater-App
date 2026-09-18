@@ -7,6 +7,7 @@ import { useCartStore } from '@stores/cart'
 import { useLoggedInStore } from '@stores/loggedIn'
 import { useRouteData } from '@composable/useRouteData'
 import type { Seat } from '@theater/shared'
+import SelectedSeat from '@/components/SelectedSeat.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -127,24 +128,12 @@ onMounted(async () => {
 
     <template v-if="selectedSeats.length > 0">
       <h2>Selected Seats</h2>
-      <div class="ticket-list">
+      <div>
         <div v-for="(seat, index) in selectedSeats" :key="index" class="selected-ticket" >
-          <div>
-            <p class="ticket-title">SEC</p>
-            <p>{{ seat.section }}</p>
-          </div>
-          <div>
-            <p class="ticket-title">ROW</p>
-            <p>{{ seat.row }}</p>
-          </div>
-          <div>
-            <p class="ticket-title">SEAT</p>
-            <p>{{ seat.seatNumber }}</p>
-          </div>
+          <SelectedSeat :section="seat.section" :row="seat.row" :seat-number="seat.seatNumber" />
         </div>
       </div>
     </template>
-
 
   </template>
   <template v-else>
@@ -154,17 +143,4 @@ onMounted(async () => {
 
 <style scoped lang="scss">
 
-.ticket-list .selected-ticket {
-  margin-bottom: 1rem;
-}
-
-.selected-ticket {
-  display: flex;
-  flex-direction: row;
-  max-width: 15rem;
-  justify-content: space-between;
-  background-color: lightgrey;
-  border-radius: 5px;
-  padding: 0 1rem
-}
 </style>
