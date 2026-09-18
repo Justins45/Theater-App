@@ -57,6 +57,7 @@ async function handleLogin() {
     </form>
   </div>
   <p v-if="responseMessage">{{ responseMessage }}</p>
+  <p>Dont have an account? <RouterLink to="/account/register">Register Today!</RouterLink></p>
 </div>
 </template>
 
