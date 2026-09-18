@@ -39,10 +39,9 @@ getInformation()
 
 <style scoped lang="scss">
 .event-list {
-  margin: 1rem;
 
   .event-item {
-    margin-bottom: 1.75rem;
+    margin-bottom: 1rem;
   }
 }
 </style>

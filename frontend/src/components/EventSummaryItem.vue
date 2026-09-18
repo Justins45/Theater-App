@@ -25,4 +25,13 @@ a {
   color: black;
   text-decoration: none;
 }
+
+.event {
+  padding: 1rem;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: lightgray;
+  }
+}
 </style>
