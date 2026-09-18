@@ -124,7 +124,28 @@ onMounted(async () => {
   </div>
   <template v-if="seating">
     <MainStageMap :seats="seating" :selectedSeats="selectedSeats" @clicked-seat="getSeatClick"/>
-    <pre>{{ selectedSeats }}</pre>
+
+    <template v-if="selectedSeats.length > 0">
+      <h2>Selected Seats</h2>
+      <div class="ticket-list">
+        <div v-for="(seat, index) in selectedSeats" :key="index" class="selected-ticket" >
+          <div>
+            <p class="ticket-title">SEC</p>
+            <p>{{ seat.section }}</p>
+          </div>
+          <div>
+            <p class="ticket-title">ROW</p>
+            <p>{{ seat.row }}</p>
+          </div>
+          <div>
+            <p class="ticket-title">SEAT</p>
+            <p>{{ seat.seatNumber }}</p>
+          </div>
+        </div>
+      </div>
+    </template>
+
+
   </template>
   <template v-else>
     Loading...
@@ -132,4 +153,18 @@ onMounted(async () => {
 </template>
 
 <style scoped lang="scss">
+
+.ticket-list .selected-ticket {
+  margin-bottom: 1rem;
+}
+
+.selected-ticket {
+  display: flex;
+  flex-direction: row;
+  max-width: 15rem;
+  justify-content: space-between;
+  background-color: lightgrey;
+  border-radius: 5px;
+  padding: 0 1rem
+}
 </style>
