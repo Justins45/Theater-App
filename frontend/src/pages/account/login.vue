@@ -26,33 +26,48 @@ async function handleLogin() {
 
 <template>
 <div>
-  <h1>Please login</h1>
-  <form @submit.prevent="handleLogin">
-    <label for="email">Email</label>
-    <input
-      id="email"
-      name="email"
-      type="email"
-      v-model="loginInfo.email"
-      placeholder="email@example.ca"
-      autocomplete="email"
-      required
-    />
-    <input
-      id="password"
-      name="password"
-      type="password"
-      v-model="loginInfo.password"
-      placeholder="password"
-      autocomplete="current-password"
-      required
-    />
-    <button type="submit">Login</button>
-  </form>
+  <h1>Login Page</h1>
+  <div class="login-form">
+    <form @submit.prevent="handleLogin">
+      <div class="email">
+        <label for="email">Email Address</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          v-model="loginInfo.email"
+          placeholder="email@example.ca"
+          autocomplete="email"
+          required
+        />
+      </div>
+      <div class="password">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          name="password"
+          type="password"
+          v-model="loginInfo.password"
+          placeholder="password"
+          autocomplete="current-password"
+          required
+        />
+      </div>
+      <button type="submit">Login</button>
+    </form>
+  </div>
   <p v-if="responseMessage">{{ responseMessage }}</p>
+  <p>Dont have an account? <RouterLink to="/account/register">Register Today!</RouterLink></p>
 </div>
 </template>
 
 <style scoped lang="scss">
+// TODO: Ensure proper focous highlighting when tabbing though
 
+.email, .password {
+  display: flex;
+  flex-direction: column;
+  width: 15rem;
+  margin-bottom: 1rem;
+}
 </style>

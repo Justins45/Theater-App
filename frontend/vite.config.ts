@@ -21,6 +21,10 @@ export default defineConfig({
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
       "@theater/shared": fileURLToPath(new URL("../shared/index.ts", import.meta.url)),
+      "@stores": fileURLToPath(new URL("./src/stores", import.meta.url)),
+      "@components": fileURLToPath(new URL("./src/components", import.meta.url)),
+      "@composable": fileURLToPath(new URL("./src/composable", import.meta.url)),
+      "@api": fileURLToPath(new URL("./src/api/axios.ts", import.meta.url)),
     },
     // ensures symlinked packages resolve correctly
     preserveSymlinks: true,

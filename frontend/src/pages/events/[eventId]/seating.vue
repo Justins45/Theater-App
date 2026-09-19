@@ -7,6 +7,7 @@ import { useCartStore } from '@stores/cart'
 import { useLoggedInStore } from '@stores/loggedIn'
 import { useRouteData } from '@composable/useRouteData'
 import type { Seat } from '@theater/shared'
+import SelectedSeat from '@/components/SelectedSeat.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -120,11 +121,20 @@ onMounted(async () => {
 <template>
   <div>
     <h2>Event seating</h2>
-    <button v-if="clickedSeat" @click="addItemsToCart">Add items to cart</button>
   </div>
   <template v-if="seating">
     <MainStageMap :seats="seating" :selectedSeats="selectedSeats" @clicked-seat="getSeatClick"/>
-    <pre>{{ selectedSeats }}</pre>
+
+    <template v-if="selectedSeats.length > 0">
+      <h2>Selected Seats</h2>
+      <button v-if="clickedSeat" @click="addItemsToCart" class="add-seats-button">Reserve Seats</button>
+      <div>
+        <div v-for="(seat, index) in selectedSeats" :key="index" class="selected-ticket" >
+          <SelectedSeat :seat="seat" @remove-seat="getSeatClick" />
+        </div>
+      </div>
+    </template>
+
   </template>
   <template v-else>
     Loading...
@@ -132,7 +142,7 @@ onMounted(async () => {
 </template>
 
 <style scoped lang="scss">
-td {
-  padding: 0 15px;
+.add-seats-button {
+  margin-bottom: 1rem;
 }
 </style>
