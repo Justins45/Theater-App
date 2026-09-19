@@ -14,21 +14,26 @@ function sendUp(data: Seat) {
 </script>
 
 <template>
-  <div class="selected-seat">
-    <div>
-      <p class="seat-title">SEC</p>
-      <p>{{ seat.section }}</p>
+  <div class="selected-seat-container">
+    <div class="selected-seat">
+      <div>
+        <p class="seat-title">SEC</p>
+        <p>{{ seat.section }}</p>
+      </div>
+      <div>
+        <p class="seat-title">ROW</p>
+        <p>{{ seat.row }}</p>
+      </div>
+      <div>
+        <p class="seat-title">SEAT</p>
+        <p>{{ seat.seatNumber }}</p>
+      </div>
+      <div>
+        <button @click="sendUp(seat)">X</button>
+      </div>
     </div>
     <div>
-      <p class="seat-title">ROW</p>
-      <p>{{ seat.row }}</p>
-    </div>
-    <div>
-      <p class="seat-title">SEAT</p>
-      <p>{{ seat.seatNumber }}</p>
-    </div>
-    <div>
-      <button @click="sendUp(seat)">X</button>
+      <p class="price">Price: {{ seat.price }}</p>
     </div>
   </div>
 </template>
@@ -39,15 +44,23 @@ function sendUp(data: Seat) {
   font-weight: 800;
 }
 
+.selected-seat-container {
+  max-width: 15rem;
+  background-color: lightgrey;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+
+  .price {
+    margin: 0.5rem 0 0 0;
+  }
+
+}
+
 .selected-seat {
   display: flex;
   flex-direction: row;
-  max-width: 15rem;
   justify-content: space-between;
-  background-color: lightgrey;
-  border-radius: 5px;
-  padding: 0 1rem;
-  margin-bottom: 1rem;
 
   button {
     margin-top: 1rem;
