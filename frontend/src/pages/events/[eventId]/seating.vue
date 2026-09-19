@@ -130,7 +130,7 @@ onMounted(async () => {
       <button v-if="clickedSeat" @click="addItemsToCart" class="add-seats-button">Reserve Seats</button>
       <div>
         <div v-for="(seat, index) in selectedSeats" :key="index" class="selected-ticket" >
-          <SelectedSeat :section="seat.section" :row="seat.row" :seat-number="seat.seatNumber" />
+          <SelectedSeat :seat="seat" @remove-seat="getSeatClick" />
         </div>
       </div>
     </template>

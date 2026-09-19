@@ -1,24 +1,34 @@
 <script lang="ts" setup>
+import type { Seat } from '@theater/shared';
+
 defineProps<{
-  section: string,
-  row: string,
-  seatNumber: number
+  seat: Seat,
 }>()
+
+const emit = defineEmits(['remove-seat'])
+
+function sendUp(data: Seat) {
+  emit('remove-seat', data)
+}
+
 </script>
 
 <template>
   <div class="selected-seat">
     <div>
       <p class="seat-title">SEC</p>
-      <p>{{ section }}</p>
+      <p>{{ seat.section }}</p>
     </div>
     <div>
       <p class="seat-title">ROW</p>
-      <p>{{ row }}</p>
+      <p>{{ seat.row }}</p>
     </div>
     <div>
       <p class="seat-title">SEAT</p>
-      <p>{{ seatNumber }}</p>
+      <p>{{ seat.seatNumber }}</p>
+    </div>
+    <div>
+      <button @click="sendUp(seat)">X</button>
     </div>
   </div>
 </template>
@@ -38,5 +48,9 @@ defineProps<{
   border-radius: 5px;
   padding: 0 1rem;
   margin-bottom: 1rem;
+
+  button {
+    margin-top: 1rem;
+  }
 }
 </style>
