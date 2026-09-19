@@ -27,7 +27,7 @@ const cartStore = useCartStore()
 
     </template>
     <template v-else>
-      <p>No items in the cart</p>
+      <p class="no-items">No items in the cart</p>
     </template>
   </div>
 </template>
@@ -50,6 +50,10 @@ const cartStore = useCartStore()
   button {
     display: block;
   }
+}
+
+.no-items {
+  margin-left: 1rem;
 }
 
 </style>
