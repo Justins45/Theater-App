@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { SharedButton } from "@theater/shared";
 import { RouterLink, RouterView } from "vue-router";
 import { useCartStore } from '@stores/cart'
 import { useLoggedInStore } from '@stores/loggedIn'
@@ -22,8 +21,7 @@ onMounted(() => {
 <template>
   <nav>
     <ul>
-      <li><RouterLink to="/">Home</RouterLink></li>
-      <li><RouterLink to="/events">events</RouterLink></li>
+      <li><RouterLink to="/">Events</RouterLink></li>
       <template v-if="loggedInStore.loggedIn">
         <li><RouterLink to="/account/me">My Account</RouterLink></li>
         <li><RouterLink to="/cart">Cart<span v-if="cartStore.totalItems > 0"> - {{ cartStore.totalItems }}</span></RouterLink></li>
@@ -37,7 +35,6 @@ onMounted(() => {
     </ul>
 
   </nav>
-  <SharedButton />
   <router-view></router-view>
 </template>
 
@@ -50,12 +47,12 @@ ul {
   li {
     margin-right: 1rem;
     a {
-      color: red;
+      color: black;
       text-decoration: none;
     }
     a:hover {
       text-decoration: underline;
-      color: green;
+      color: blue;
     }
   }
 }

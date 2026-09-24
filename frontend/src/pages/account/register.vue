@@ -24,33 +24,49 @@ async function handleRegister() {
 
 <template>
   <div>
-    <h1>Please Register</h1>
-    <form @submit.prevent="handleRegister">
-      <label for="email">Email</label>
-      <input
-        id="email"
-        name="email"
-        type="email"
-        v-model="registerInfo.email"
-        placeholder="email@example.ca"
-        autocomplete="off"
-        required
-      />
-      <input
-        id="password"
-        name="password"
-        type="password"
-        v-model="registerInfo.password"
-        placeholder="password"
-        autocomplete="off"
-        required
-      />
-      <button type="submit">Register</button>
-    </form>
+    <h1>Create an Account</h1>
+    <div class="register-form">
+      <form @submit.prevent="handleRegister">
+        <div class="email">
+          <label for="email">Email Address</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            v-model="registerInfo.email"
+            placeholder="email@example.ca"
+            autocomplete="off"
+            required
+          />
+        </div>
+
+        <div class="password">
+          <label for="password">Password</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            v-model="registerInfo.password"
+            placeholder="password"
+            autocomplete="off"
+            required
+          />
+        </div>
+        <button type="submit">Register</button>
+      </form>
+    </div>
     <p v-if="responseMessage">{{ responseMessage }}</p>
+    <p>Have an account? <RouterLink to="/account/login">Login Now!</RouterLink></p>
   </div>
 </template>
 
 <style scoped lang="scss">
+// TODO: Ensure proper focous highlighting when tabbing though
 
+.email, .password {
+  display: flex;
+  flex-direction: column;
+  width: 15rem;
+  margin-bottom: 1rem;
+}
 </style>

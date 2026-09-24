@@ -1,42 +1,10 @@
 <script setup lang="ts">
-import EventSummaryItem from '@components/EventSummaryItem.vue'
-import apiClient from '@api'
-import { ref } from 'vue'
-
-interface EventItem {
-  id: string,
-  title: string,
-  stageName: string
-}
-
-const information = ref<EventItem[]>([])
-// get data from api events
-async function getInformation() {
-  const res = await apiClient.get("/events")
-  information.value = res.data
-}
-
-getInformation()
 </script>
 
 <template>
-  <div>
-    <h2>Events</h2>
-    <template v-if="information.length > 0">
-      <div v-for="item in information" :key="item.id" class="event-list">
-          <EventSummaryItem v-bind="item"></EventSummaryItem>
-      </div>
-    </template>
-    <template v-else>
-      <div>
-        <p>No Events to be seen</p>
-      </div>
-    </template>
-  </div>
+  <p>Event index to be removed</p>
 </template>
 
 <style scoped lang="scss">
-div {
-  margin-bottom: 1.75rem;
-}
+
 </style>

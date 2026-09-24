@@ -38,10 +38,11 @@ onMounted(async () => {
 <template>
   <template v-if="event">
     <div class="container">
-      <div>
+      <div class="event-details">
         <h1>{{ event.title}}</h1>
         <p>Playing at {{ event.stageName }}</p>
       </div>
+      <div class="divider"></div>
       <div>
         <h2>Show times</h2>
         <template v-if="event.performances.length > 0">
@@ -58,10 +59,18 @@ onMounted(async () => {
 </template>
 
 <style scoped lang="scss">
+.event-details {
+  margin-bottom: 2rem;
+}
+
+.divider {
+  width: 100%;
+  height: 2px;
+  border-radius: 5px;
+  background-color: lightgrey;
+}
+
 .container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   max-width: 800px;
 }
 </style>
