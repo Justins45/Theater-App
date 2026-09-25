@@ -11,8 +11,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.Instant;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -29,7 +28,7 @@ public class Performance {
     private UUID id;
 
     @Column(nullable = false)
-    private LocalTime showTime;
+    private LocalDateTime showTime;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -42,10 +41,5 @@ public class Performance {
     @CreationTimestamp
     @Column(nullable = false)
     private Instant createdAt;
-
-    public String getWallClock() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
-        return this.showTime.format(formatter);
-    }
 
 }
