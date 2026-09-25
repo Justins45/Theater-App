@@ -40,11 +40,13 @@ onMounted(async () => {
     <div class="container">
       <div class="event-details">
         <h1>{{ event.title}}</h1>
+        <p>{{ event.description }}</p>
         <p>Playing at {{ event.stageName }}</p>
       </div>
       <div class="divider"></div>
       <div>
         <h2>Show times</h2>
+        <!-- TODO: make this a slot to handle the map with the event details + changing showtime?  -->
         <template v-if="event.performances.length > 0">
           <div v-for="item in event.performances" :key="item.eventId">
             <RouterLink :to="'/events/' + event.id + '/seating?performanceId=' + item.id" v-if="item.status != 'CANCELED'">{{ item.showTime }}</RouterLink>
