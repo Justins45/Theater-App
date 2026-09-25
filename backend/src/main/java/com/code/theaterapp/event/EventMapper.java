@@ -14,8 +14,8 @@ public class EventMapper {
         return new EventDetailsDTO(
                 event.getId(),
                 event.getTitle(),
+                event.getDescription(),
                 event.getStage().getName(),
-                event.getStage().getCapacity(),
                 performances
         );
     }
@@ -26,8 +26,6 @@ public class EventMapper {
                 event.getTitle(),
                 event.getStage().getId(),
                 event.getStage().getName()
-
-
         );
     }
 }
