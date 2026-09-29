@@ -8,6 +8,24 @@ const router = useRouter()
 const route = useRoute()
 const event = ref()
 
+const ordinalRules = new Intl.PluralRules('en-US', { type: 'ordinal' })
+const SUFFIXES: Record<string, string> = {
+  one: 'st', two: 'nd', few: 'rd', other: 'th',
+}
+
+function formatDateTime(input?: string | null): string {
+  if (!input) return ''
+
+  const date = new Date(input)
+  if (Number.isNaN(date.getTime())) return ''
+
+  const weekday = date.toLocaleDateString('en-US', { weekday: 'long' })
+  const month = date.toLocaleDateString('en-US', { month: 'long' })
+  const day = date.getDate()
+
+  return `${weekday} ${month} ${day}${SUFFIXES[ordinalRules.select(day)]}`
+} // "Tuesday September 29th"
+
 async function getInformation(newId: string) {
  try {
    const res = await apiClient.get("/events/" + newId)
@@ -49,7 +67,9 @@ onMounted(async () => {
         <!-- TODO: make this a slot to handle the map with the event details + changing showtime?  -->
         <template v-if="event.performances.length > 0">
           <div v-for="item in event.performances" :key="item.eventId">
-            <RouterLink :to="'/events/' + event.id + '/seating?performanceId=' + item.id" v-if="item.status != 'CANCELED'">{{ item.showTime }}</RouterLink>
+
+            <RouterLink :to="'/events/' + event.id + '/seating?performanceId=' + item.id" v-if="item.status != 'CANCELED'">{{ formatDateTime(item.showTime) }}</RouterLink>
+
           </div>
         </template>
         <template v-else>
