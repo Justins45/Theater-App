@@ -15,7 +15,6 @@ const SUFFIXES: Record<string, string> = {
   one: 'st', two: 'nd', few: 'rd', other: 'th',
 }
 
-// Created once at module load, not on every call
 const weekdayFmt = new Intl.DateTimeFormat('en-US', { weekday: 'long' })
 const monthFmt = new Intl.DateTimeFormat('en-US', { month: 'long' })
 const timeFmt = new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit' })
