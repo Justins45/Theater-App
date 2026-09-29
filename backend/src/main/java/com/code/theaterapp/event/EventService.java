@@ -46,6 +46,9 @@ public class EventService {
 
         Event event = new Event();
         event.setTitle(createEventDTO.title());
+        if (!createEventDTO.description().isBlank()) {
+            event.setDescription(createEventDTO.description());
+        }
         event.setStage(stage);
 
         Event savedEvent = eventRepo.save(event);

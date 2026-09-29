@@ -11,7 +11,7 @@ public class PerformanceMapper {
     public PerformanceDetailsDTO toDetails(Performance performance) {
         return new PerformanceDetailsDTO(
                 performance.getId(),
-                performance.getWallClock(),
+                performance.getShowTime(),
                 performance.getPerformanceStatus(),
                 performance.getEvent().getId()
         );
@@ -20,7 +20,7 @@ public class PerformanceMapper {
     public PerformanceSummaryDTO toSummary(Performance performance) {
         return new PerformanceSummaryDTO(
                 performance.getId(),
-                performance.getWallClock(),
+                performance.getShowTime(),
                 performance.getPerformanceStatus(),
                 performance.getEvent().getId()
         );
@@ -31,7 +31,7 @@ public class PerformanceMapper {
                 performance.getId(),
                 performance.getEvent().getTitle(),
                 performance.getEvent().getStage().getName(),
-                performance.getWallClock(),
+                performance.getShowTime(),
                 performance.getPerformanceStatus()
         );
     }

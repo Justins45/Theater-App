@@ -23,7 +23,7 @@ public class CartItemMapper {
                         cartItem.getId(),
                         cartItem.getEventSeating().getPerformance().getEvent().getTitle(),
                         cartItem.getEventSeating().getPerformance().getEvent().getStage().getName(),
-                        cartItem.getEventSeating().getPerformance().getWallClock(),
+                        cartItem.getEventSeating().getPerformance().getShowTime(),
                         cartItem.getUnitPrice(),
                         cartItem.getEventSeating().getSeat().getRow(),
                         cartItem.getEventSeating().getSeat().getSection(),

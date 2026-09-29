@@ -8,8 +8,8 @@ import java.util.UUID;
 public record EventDetailsDTO(
         UUID id,
         String title,
+        String description,
         String stageName,
-        Integer capacity,
         List<PerformanceSummaryDTO> performances
 ) {
 }

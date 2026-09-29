@@ -1,13 +1,14 @@
 package com.code.theaterapp.shoppingCart.cartItem.dtos;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record CartTicketItem(
     UUID id,
     String eventName,
     String stageName,
-    String performanceTime,
+    LocalDateTime performanceTime,
     BigDecimal price,
     String row,
     String section,
