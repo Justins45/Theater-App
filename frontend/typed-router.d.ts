@@ -65,6 +65,27 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
+    '/account/orders/': RouteRecordInfo<
+      '/account/orders/',
+      '/account/orders',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
+    '/account/orders/[id]/confirmation': RouteRecordInfo<
+      '/account/orders/[id]/confirmation',
+      '/account/orders/:id/confirmation',
+      { id: ParamValue<true> },
+      { id: ParamValue<false> },
+      | never
+    >,
+    '/account/orders/[id]/details': RouteRecordInfo<
+      '/account/orders/[id]/details',
+      '/account/orders/:id/details',
+      { id: ParamValue<true> },
+      { id: ParamValue<false> },
+      | never
+    >,
     '/account/register': RouteRecordInfo<
       '/account/register',
       '/account/register',
@@ -75,6 +96,13 @@ declare module 'vue-router/auto-routes' {
     '/cart/': RouteRecordInfo<
       '/cart/',
       '/cart',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
+    '/checkout/': RouteRecordInfo<
+      '/checkout/',
+      '/checkout',
       Record<never, never>,
       Record<never, never>,
       | never
@@ -150,6 +178,24 @@ declare module 'vue-router/auto-routes' {
       views:
         | never
     }
+    'src/pages/account/orders/index.vue': {
+      routes:
+        | '/account/orders/'
+      views:
+        | never
+    }
+    'src/pages/account/orders/[id]/confirmation.vue': {
+      routes:
+        | '/account/orders/[id]/confirmation'
+      views:
+        | never
+    }
+    'src/pages/account/orders/[id]/details.vue': {
+      routes:
+        | '/account/orders/[id]/details'
+      views:
+        | never
+    }
     'src/pages/account/register.vue': {
       routes:
         | '/account/register'
@@ -159,6 +205,12 @@ declare module 'vue-router/auto-routes' {
     'src/pages/cart/index.vue': {
       routes:
         | '/cart/'
+      views:
+        | never
+    }
+    'src/pages/checkout/index.vue': {
+      routes:
+        | '/checkout/'
       views:
         | never
     }

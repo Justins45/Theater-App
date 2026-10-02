@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
+import { RouterLink } from 'vue-router'
 import apiClient from '@api'
 
 const formInfo = reactive({
@@ -62,6 +63,11 @@ async function handleNameChange() {
 <template>
   <div>
     <h1>ACCOUNT</h1>
+
+    <div>
+      <h2>View my Orders</h2>
+      <RouterLink to="/account/orders">View Orders</RouterLink>
+    </div>
 
     <div>
       <h2>Names</h2>
