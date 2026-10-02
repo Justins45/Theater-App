@@ -65,6 +65,13 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
+    '/account/orders/': RouteRecordInfo<
+      '/account/orders/',
+      '/account/orders',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
     '/account/register': RouteRecordInfo<
       '/account/register',
       '/account/register',
@@ -75,6 +82,13 @@ declare module 'vue-router/auto-routes' {
     '/cart/': RouteRecordInfo<
       '/cart/',
       '/cart',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
+    '/checkout/': RouteRecordInfo<
+      '/checkout/',
+      '/checkout',
       Record<never, never>,
       Record<never, never>,
       | never
@@ -150,6 +164,12 @@ declare module 'vue-router/auto-routes' {
       views:
         | never
     }
+    'src/pages/account/orders/index.vue': {
+      routes:
+        | '/account/orders/'
+      views:
+        | never
+    }
     'src/pages/account/register.vue': {
       routes:
         | '/account/register'
@@ -159,6 +179,12 @@ declare module 'vue-router/auto-routes' {
     'src/pages/cart/index.vue': {
       routes:
         | '/cart/'
+      views:
+        | never
+    }
+    'src/pages/checkout/index.vue': {
+      routes:
+        | '/checkout/'
       views:
         | never
     }
