@@ -79,6 +79,13 @@ declare module 'vue-router/auto-routes' {
       { id: ParamValue<false> },
       | never
     >,
+    '/account/orders/[id]/details': RouteRecordInfo<
+      '/account/orders/[id]/details',
+      '/account/orders/:id/details',
+      { id: ParamValue<true> },
+      { id: ParamValue<false> },
+      | never
+    >,
     '/account/register': RouteRecordInfo<
       '/account/register',
       '/account/register',
@@ -180,6 +187,12 @@ declare module 'vue-router/auto-routes' {
     'src/pages/account/orders/[id]/confirmation.vue': {
       routes:
         | '/account/orders/[id]/confirmation'
+      views:
+        | never
+    }
+    'src/pages/account/orders/[id]/details.vue': {
+      routes:
+        | '/account/orders/[id]/details'
       views:
         | never
     }

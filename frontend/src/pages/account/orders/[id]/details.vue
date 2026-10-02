@@ -6,12 +6,12 @@ const route = useRoute()
 
 const routeId = ref(route.params.id)
 
-// NOTE: Used for order confirmation - NOT for viewing orders from account
+// NOTE: Used for viewing order details - NOT confirmation
 
 </script>
 <template>
   <div>
-    <p>Order Confirmation - {{ routeId }}</p>
+    <p>Order details - {{ routeId }}</p>
   </div>
 </template>
 <style lang="scss" scoped>
