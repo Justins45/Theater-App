@@ -1,11 +1,12 @@
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { ref } from 'vue'
+import { useRoute } from 'vue-router'
 
-const router = useRouter()
 const route = useRoute()
 
 const routeId = ref(route.params.id)
+
+// NOTE: Used for order confirmation - NOT for viewing orders from account (maybe)
 
 </script>
 <template>
