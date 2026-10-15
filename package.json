@@ -8,37 +8,51 @@
   ],
   "scripts": {
     "build:shared": "cd shared && npm run build:types",
-    "start:admin": "cd admin && npm run tauri dev",
+    "start:admin": "cd admin && npm run dev",
     "start:frontend": "cd frontend && npm run dev",
     "start:backend": "cd backend && mvn spring-boot:run",
-    "lint": "npm run lint:frontend && npm run lint:admin-vue && npm run lint:admin-rust-clippy && npm run lint:shared",
+    "lint": "npm run lint:frontend && npm run lint:admin-vue && npm run lint:shared",
     "lint:frontend": "eslint frontend/src",
     "lint:admin-vue": "eslint admin/src",
-    "lint:admin-rust-clippy": "cd admin/src-tauri && cargo clippy",
     "lint:shared": "eslint shared",
-    "format": "npm run format:vue && npm run format:admin-rust",
+    "format": "npm run format:vue",
     "format:vue": "prettier --write .",
-    "format:admin-rust": "cd admin/src-tauri && cargo fmt",
-    "test": " npm run test:vue && npm run test:admin-rust && npm run test:backend",
+    "test": "npm run test:vue && npm run test:backend",
     "test:vue": "vitest run",
-    "test:admin-rust": "cd admin/src-tauri && cargo test",
     "test:backend": "cd backend && mvn test"
+  },
+  "dependencies": {
+    "@theater/shared": "*",
+    "axios": "^1.18.0",
+    "pinia": "^3.0.4",
+    "sass": "^1.99.0",
+    "vue": "^3.5.42",
+    "vue-router": "^5.3.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",
+    "@tsconfig/node24": "^24.0.5",
+    "@types/jsdom": "^30.0.0",
+    "@types/node": "^24.13.4",
     "@vitejs/plugin-vue": "^5.0.0",
+    "@vitest/eslint-plugin": "^1.6.16",
     "@vue/eslint-config-prettier": "^10.0.0",
     "@vue/eslint-config-typescript": "^14.0.0",
     "@vue/test-utils": "^2.0.0",
     "@vue/tsconfig": "^0.7.0",
     "eslint": "^9.0.0",
     "eslint-plugin-vue": "^9.0.0",
+    "jiti": "^2.6.1",
+    "jsdom": "^30.0.1",
+    "npm-run-all2": "^9.0.3",
     "prettier": "^3.0.0",
     "typescript": "^5.0.0",
     "vite": "^6.0.0",
-    "vitest": "^3.0.0"
+    "vite-plugin-vue-devtools": "^8.2.1",
+    "vitest": "^3.0.0",
+    "vue-tsc": "^3.3.11"
   },
-  "dependencies": {
-    "axios": "^1.18.0"
+  "engines": {
+    "node": "^22.18.0 || >=24.12.0"
   }
 }
