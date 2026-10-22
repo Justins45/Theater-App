@@ -45,6 +45,13 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
+    '/logout': RouteRecordInfo<
+      '/logout',
+      '/logout',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
   }
 
   /**
@@ -69,6 +76,14 @@ declare module 'vue-router/auto-routes' {
     'src/pages/login.vue': {
       routes:
         | '/login'
+      views:
+        | never
+      pathParamNames:
+        | never
+    }
+    'src/pages/logout.vue': {
+      routes:
+        | '/logout'
       views:
         | never
       pathParamNames:
