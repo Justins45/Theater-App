@@ -13,7 +13,7 @@ theater-app/
 ├── shared/                    ← shared Vue component library
 │   ├── src/
 │   │   ├── components/        ← Button, Modal, Badge, SeatMap etc.
-│   │   ├── composables/       ← useAuth, useTicket, useSeatStatus etc.
+│   │   ├── styles/            ← SCSS styling sheets
 │   │   └── index.js           ← exports everything
 │   └── package.json           ← name: "@theater-app/shared"
 │
@@ -35,10 +35,8 @@ theater-app/
 │   ├── src/
 │   │   ├── components/        ← Admin specific components
 │   │   ├── pages/             ← Vue admin pages
-│   │   └── stores/
-│   ├── src-tauri/             ← Rust / Tauri config
-│   │   ├── src/
-│   │   └── tauri.conf.json
+│   │   ├── stores/            ← Pinia stores
+│   │   └── router/            ← Vue Router config
 │   └── package.json
 │
 ├── docs/                      ← any markdown docs, schema diagrams etc.
