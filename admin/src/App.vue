@@ -11,7 +11,7 @@ import { RouterView, RouterLink } from 'vue-router';
         <RouterLink to="/">Home</RouterLink>
       </li>
       <li>
-        <Routerlink to="/logout">Logout</Routerlink>
+        <RouterLink to="/logout">Logout</RouterLink> 
       </li>
     </ul>
     
