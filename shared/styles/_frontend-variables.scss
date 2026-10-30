@@ -1,0 +1,12 @@
+// =============================================================
+// _frontend-variables.scss
+// Public-facing site palette (5 colours).
+// Same variable names as the admin file on purpose, so shared
+// components work in either app.
+// =============================================================
+
+$color-primary:   #7a1f3d !default; // deep velvet red
+$color-secondary: #c8a24a !default; // gold
+$color-accent:    #2f8f9d !default; // teal
+$color-surface:   #faf7f2 !default; // page background
+$color-text:      #1f1a1d !default; // body text

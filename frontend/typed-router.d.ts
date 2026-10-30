@@ -20,8 +20,9 @@ import type {
 
 declare module 'vue-router' {
   interface TypesConfig {
-    ParamParsers:
-      | never
+    _ParamParsers: {}
+    RouteNamedMap: import('vue-router/auto-routes').RouteNamedMap
+    _RouteFileInfoMap: import('vue-router/auto-routes')._RouteFileInfoMap
   }
 }
 
@@ -153,17 +154,23 @@ declare module 'vue-router/auto-routes' {
         | '/'
       views:
         | never
+      pathParamNames:
+        | never
     }
     'src/pages/[...path].vue': {
       routes:
         | '/[...path]'
       views:
         | never
+      pathParamNames:
+        | 'path'
     }
     'src/pages/account/login.vue': {
       routes:
         | '/account/login'
       views:
+        | never
+      pathParamNames:
         | never
     }
     'src/pages/account/logout.vue': {
@@ -171,11 +178,15 @@ declare module 'vue-router/auto-routes' {
         | '/account/logout'
       views:
         | never
+      pathParamNames:
+        | never
     }
     'src/pages/account/me/index.vue': {
       routes:
         | '/account/me/'
       views:
+        | never
+      pathParamNames:
         | never
     }
     'src/pages/account/orders/index.vue': {
@@ -183,11 +194,15 @@ declare module 'vue-router/auto-routes' {
         | '/account/orders/'
       views:
         | never
+      pathParamNames:
+        | never
     }
     'src/pages/account/orders/[id]/confirmation.vue': {
       routes:
         | '/account/orders/[id]/confirmation'
       views:
+        | never
+      pathParamNames:
         | never
     }
     'src/pages/account/orders/[id]/details.vue': {
@@ -195,11 +210,15 @@ declare module 'vue-router/auto-routes' {
         | '/account/orders/[id]/details'
       views:
         | never
+      pathParamNames:
+        | never
     }
     'src/pages/account/register.vue': {
       routes:
         | '/account/register'
       views:
+        | never
+      pathParamNames:
         | never
     }
     'src/pages/cart/index.vue': {
@@ -207,11 +226,15 @@ declare module 'vue-router/auto-routes' {
         | '/cart/'
       views:
         | never
+      pathParamNames:
+        | never
     }
     'src/pages/checkout/index.vue': {
       routes:
         | '/checkout/'
       views:
+        | never
+      pathParamNames:
         | never
     }
     'src/pages/events/index.vue': {
@@ -219,11 +242,15 @@ declare module 'vue-router/auto-routes' {
         | '/events/'
       views:
         | never
+      pathParamNames:
+        | never
     }
     'src/pages/events/[eventId]/index.vue': {
       routes:
         | '/events/[eventId]/'
       views:
+        | never
+      pathParamNames:
         | never
     }
     'src/pages/events/[eventId]/seating.vue': {
@@ -231,11 +258,15 @@ declare module 'vue-router/auto-routes' {
         | '/events/[eventId]/seating'
       views:
         | never
+      pathParamNames:
+        | never
     }
     'src/pages/patrons/index.vue': {
       routes:
         | '/patrons/'
       views:
+        | never
+      pathParamNames:
         | never
     }
   }

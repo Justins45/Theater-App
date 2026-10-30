@@ -1,8 +1,11 @@
 # System URL pathing
 
+## Main Application
+
+- admin.url.com
+
 ## Documentation (support?)
 
-- docs.url.com
 - support.url.com
 
 ## System health

@@ -193,28 +193,30 @@ Roadmap to display the intent with each step along with some notes on how to pro
 
 ---
 
-## 5.0 - Phase 5 - Theater Admin Desktop App (Tauri + Vue)
+## 5.0 - Phase 5 - Theater Admin Web App (Vue)
 
-- **5.1** Init Tauri app
+- **5.1** Init Vue 3 admin web app (Vite, Pinia, Router) as its own app, separate from the customer-facing site
+  - 5.1.1 Reuse shared components and styling from the customer frontend where it makes sense
 
-- **5.2** Implement auth + API client (same backend auth as web)
+- **5.2** Implement auth + API client (same backend auth as customer site)
   - 5.2.1 Auth must use `ROLE_STAFF` or `ROLE_ADMIN` — reject `ROLE_CUSTOMER` tokens
+  - 5.2.2 Add router guards so admin pages are only reachable with a valid staff/admin session
 
-- **5.3** Build admin views
+- **5.3** Build admin pages
   - 5.3.1 Login
   - 5.3.2 Events list
   - 5.3.3 Search orders
   - 5.3.4 View orders
   - 5.3.5 Resend ticket
   - 5.3.6 Refund (full + partial)
-  - 5.3.7 Ticket scan / invalidation view
-    - 5.3.7.1 Scan QR code / barcode at the door
+  - 5.3.7 Ticket scan / invalidation page
+    - 5.3.7.1 Scan QR code / barcode at the door using the device camera (browser camera API)
     - 5.3.7.2 Validate ticket signature
     - 5.3.7.3 Display ticket status (ISSUED / SCANNED / REFUNDED)
     - 5.3.7.4 Mark ticket as SCANNED (one-time use enforcement)
   - 5.3.8 ...
 
-- **5.4** Add basic Rust commands in Tauri (config / storage)
+- **5.4** Make admin pages usable on phones and tablets (door staff will likely scan from a mobile device)
 
 ---
 
@@ -238,7 +240,7 @@ Roadmap to display the intent with each step along with some notes on how to pro
 - **6.3.1** Setup GitHub Actions (or equivalent)
 - **6.3.2** Backend pipeline: build → test → Docker image → deploy
 - **6.3.3** Frontend pipeline: lint → test → build → deploy
-- **6.3.4** Tauri pipeline: build installers for Windows / Mac on tag / release
+- **6.3.4** Admin web app pipeline: lint → test → build → deploy
 
 ### 6.4 - Staging Environment
 
@@ -274,10 +276,10 @@ Roadmap to display the intent with each step along with some notes on how to pro
 
 - **7.3** Deploy to production cloud (Render, Fly.io, DO) using NeonDB
 
-- **7.4** Distribute Tauri app
-  - 7.4.1 Installers for Windows / Mac
-  - 7.4.2 Configure environment (API base URL) via config file or env
-  - 7.4.3 Provide separate staging and production config options
+- **7.4** Deploy admin web app
+  - 7.4.1 Host the built static admin site alongside or separate from the customer frontend
+  - 7.4.2 Configure API base URL via environment variables at build time
+  - 7.4.3 Provide separate staging and production configurations
 
 ### 7.5 - Database Backups / Disaster Recovery
 

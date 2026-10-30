@@ -1,0 +1,95 @@
+// =============================================================
+// _global-variables.scss
+// Shared by BOTH frontend and admin. Nothing brand-specific here.
+// `!default` means an app can set its own value *before* loading
+// this file (via @use ... with (...)) without editing it.
+// =============================================================
+
+
+// ---------- Status colours ----------
+$color-info:    #2b7de9 !default;
+$color-success: #2e9e5b !default;
+$color-warning: #e8a317 !default;
+$color-error:   #d64545 !default;
+
+
+// ---------- Spacing scale (single source of truth) ----------
+$space-xs:   0.25rem !default; //  4px at 16px root
+$space-sm:   0.5rem  !default; //  8px
+$space-md:   1rem    !default; // 16px
+$space-lg:   1.5rem  !default; // 24px
+$space-xlg:  2.5rem  !default; // 40px
+$space-2xlg: 4rem    !default; // 64px
+
+
+// ---------- Padding (defaults to the scale, can diverge later) ----------
+$padding-xs:   $space-xs   !default;
+$padding-sm:   $space-sm   !default;
+$padding-md:   $space-md   !default;
+$padding-lg:   $space-lg   !default;
+$padding-xlg:  $space-xlg  !default;
+$padding-2xlg: $space-2xlg !default;
+
+
+// ---------- Margins (defaults to the scale, can diverge later) ----------
+$margin-xs:   $space-xs   !default;
+$margin-sm:   $space-sm   !default;
+$margin-md:   $space-md   !default;
+$margin-lg:   $space-lg   !default;
+$margin-xlg:  $space-xlg  !default;
+$margin-2xlg: $space-2xlg !default;
+
+
+// ---------- Viewport-relative sizing ----------
+// vh: height of the viewport
+$vh-full:   100vh !default;
+$vh-hero:   60vh  !default;
+$vh-header: 8vh   !default;
+$vh-footer: 10vh  !default;
+
+// vw: width of the viewport (note: 100vw includes the scrollbar)
+$vw-full:      100vw !default;
+$vw-container: 90vw  !default;
+$vw-sidebar:   20vw  !default;
+
+// vmin: the *smaller* of vw/vh, good for things that must stay square-ish
+$vmin-modal: 80vmin !default;
+$vmin-icon:  12vmin !default;
+
+// vmax: the *larger* of vw/vh, good for oversized backgrounds/decoration
+$vmax-backdrop: 120vmax !default;
+$vmax-glow:     50vmax  !default;
+
+
+// ---------- Screen sizes (minimum width where each size starts) ----------
+$screen-xs:   0rem  !default; //   0px
+$screen-sm:   36rem !default; // 576px
+$screen-md:   48rem !default; // 768px
+$screen-lg:   64rem !default; // 1024px
+$screen-xlg:  80rem !default; // 1280px
+$screen-2xlg: 96rem !default; // 1536px
+
+// Offset used so ranges never overlap (1px at 16px root)
+$screen-gap: 0.0625rem !default;
+
+
+// ---------- Screen boundaries (min/max range of each size) ----------
+$screen-xs-min: $screen-xs;
+$screen-xs-max: $screen-sm - $screen-gap;
+
+$screen-sm-min: $screen-sm;
+$screen-sm-max: $screen-md - $screen-gap;
+
+$screen-md-min: $screen-md;
+$screen-md-max: $screen-lg - $screen-gap;
+
+$screen-lg-min: $screen-lg;
+$screen-lg-max: $screen-xlg - $screen-gap;
+
+$screen-xlg-min: $screen-xlg;
+$screen-xlg-max: $screen-2xlg - $screen-gap;
+
+$screen-2xlg-min: $screen-2xlg; // no max: it's the top range
+
+// Max width of centred page content
+$container-max-width: 80rem !default;

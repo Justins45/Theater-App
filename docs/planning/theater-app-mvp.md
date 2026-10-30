@@ -13,7 +13,7 @@ This is the minimum path to a working product covering three core flows:
 ## 1.0 - Foundation
 
 - **1.1** Define the three roles: `ROLE_CUSTOMER`, `ROLE_STAFF`, `ROLE_ADMIN` ✅
-- **1.2** Define seat states: `AVAILABLE`, `HELD`, `SOLD`
+- **1.2** Define seat states: `AVAILABLE`, `HELD`, `SOLD` ✅
 - **1.3** Define ticket statuses: `ISSUED`, `SCANNED` ✅
 
 ---
@@ -27,21 +27,19 @@ This is the minimum path to a working product covering three core flows:
   - 2.1.1 Consider making it public — eliminates the Actions minute quota entirely and serves as a portfolio piece ✅
 
 - **2.2** Backend CI pipeline (GitHub Actions)
-  - 2.2.1 Trigger on every push to main ✅
-  - 2.2.2 Build Spring Boot jar ✅
-  - 2.2.3 Run tests (scaffold this now even if no tests exist yet — adding them later becomes trivial) ✅
+  - 2.2.1 Trigger on every push to main
+  - 2.2.2 Build Spring Boot jar
+  - 2.2.3 Run tests (scaffold this now even if no tests exist yet — adding them later becomes trivial)
 
 - **2.3** Frontend CI pipeline (GitHub Actions)
-  - 2.3.1 Trigger on every push to main ✅
-  - 2.3.2 Lint + build Vue app ✅
+  - 2.3.1 Trigger on every push to main
+  - 2.3.2 Lint + build Vue app
 
-- **2.4** Tauri CD pipeline (GitHub Actions)
-  - 2.4.1 Trigger on tagged releases only (e.g. `v1.0.0`) — Tauri builds are slow, don't run on every push
-  - 2.4.2 Build Windows + Mac installers
-  - 2.4.3 Attach installers to GitHub Release automatically
-
+- **2.4** Admin CI Pipeline (GitHub Actions)
+  - 2.4.1 Trigger on every push to main
+  - 2.4.2 Lint + build Vue app
+  
 - **2.5** Setup databases
-
   - 2.5.1 Local PostgreSQL via application.yml
   - 2.5.2 NeonDB (cloud) via application.yml
 
@@ -62,8 +60,8 @@ This is the minimum path to a working product covering three core flows:
   - 3.2.1 Users (id, email, password, role) ✅
   - 3.2.2 Venues (id, name, timezone) ✅
   - 3.2.3 Events (id, venue_id, name, datetime UTC) ✅
-  - 3.2.4 Seats (id, event_id, label, state)
-  - 3.2.5 Seat Holds (id, user_id, seat_id, expires_at)
+  - 3.2.4 Seats (id, event_id, label, state) ✅
+  - 3.2.5 Seat Holds (id, user_id, seat_id, expires_at) ✅
   - 3.2.6 Orders (id, user_id, created_at)
   - 3.2.7 Tickets (id, order_id, seat_id, qr_payload, status, venu timezone) ✅
 
@@ -75,7 +73,7 @@ This is the minimum path to a working product covering three core flows:
 - **3.4** Core API — only what the three flows need
 
   - 3.4.1 GET /events — list events ✅
-  - 3.4.2 GET /events/{id}/seats — seat map with availability
+  - 3.4.2 GET /events/{id}/seats — seat map with availability ✅
   - 3.4.3 POST /seats/hold — hold seats during checkout (10 min TTL)
   - 3.4.4 POST /checkout/create-session — create Stripe session
   - 3.4.5 POST /stripe/webhook — on payment complete: create order + tickets + mark seats SOLD
@@ -91,7 +89,7 @@ This is the minimum path to a working product covering three core flows:
 
 - **3.6** API Docs
   - 3.6.1 Setup Swagger/Springdoc OpenAP to view API end-points
-  - 3.6.2 Setup and Use Postman to test all API end-points to make sure they do the correct things
+  - 3.6.2 Setup and Use Postman to test all API end-points to make sure they do the correct things ✅
 
 ---
 
@@ -110,21 +108,19 @@ This is the minimum path to a working product covering three core flows:
 ## 5.0 - Web Frontend — Patron Flows (Vue 3)
 
 - **5.1** Setup Vue + SCSS + Pinia + Router ✅
-- **5.2** Event list page
-- **5.3** Event detail + seat selection page
+- **5.2** Event list page ✅
+- **5.3** Event detail + seat selection page ✅
   - 5.3.1 Show real-time seat availability (AVAILABLE / HELD / SOLD)
   - 5.3.2 Show countdown timer while seats are held
-- **5.4** Login / Register page
+- **5.4** Login / Register page ✅
 - **5.5** Checkout page (Stripe redirect)
 - **5.6** My Tickets page — list tickets + display QR code per ticket
 
 ---
 
-## 6.0 - Admin Views (Vue first, Tauri second)
+## 6.0 - Admin Views (Vue first)
 
 > Build these as standard Vue pages first and get them fully working in the browser
-> against the real API. Then wrap in Tauri. This separates two learning curves —
-> don't try to learn Tauri and build features at the same time.
 
 - **6.1** Admin: Orders list page
 - **6.2** Admin: Order detail page (view tickets on an order)
@@ -136,25 +132,6 @@ This is the minimum path to a working product covering three core flows:
 
 ---
 
-## 7.0 - Tauri Wrapper
-
-> By this point all admin Vue views are done and tested in the browser.
-> Tauri is now just a shell around work you've already completed.
-
-- **7.1** Init Tauri project, point it at existing Vue admin views
-- **7.2** Configure API base URL via Tauri config (staging vs production)
-- **7.3** Auth integration — same JWT flow as web, no backend changes needed
-- **7.4** Basic Rust commands for local config storage
-  - 7.4.1 Remember API base URL
-  - 7.4.2 Persist auth token between sessions
-- **7.5** Test all three admin flows inside the Tauri shell
-  - 7.5.1 View and search orders
-  - 7.5.2 Manually issue a ticket
-  - 7.5.3 Scan a ticket and mark as scanned
-- **7.6** Tag a release → CI/CD pipeline builds and attaches installers automatically
-
----
-
 ## 8.0 - Ship It
 
 - **8.1** Switch Stripe from test mode to production keys
@@ -163,22 +140,6 @@ This is the minimum path to a working product covering three core flows:
   - 8.2.2 Admin views the order and manually issues a ticket
   - 8.2.3 Staff scans the ticket and marks it as scanned
 - **8.3** Confirm Stripe webhooks are firing correctly in production
-
----
-
-## Realistic Timeline (Evenings + Weekends)
-
-| Phase                     | Estimate        |
-| ------------------------- | --------------- |
-| 1.0 Foundation            | 1–2 days        |
-| 2.0 CI/CD + project setup | 1–2 weekends    |
-| 3.0 Backend               | 4–6 weeks       |
-| 4.0 Stripe                | 1–2 weekends    |
-| 5.0 Vue patron flows      | 3–4 weeks       |
-| 6.0 Admin Vue views       | 2–3 weeks       |
-| 7.0 Tauri wrapper         | 1–2 weekends    |
-| 8.0 Deploy + smoke test   | 1 weekend       |
-| **Total**                 | **~4–5 months** |
 
 ---
 

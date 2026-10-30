@@ -1,0 +1,12 @@
+// =============================================================
+// _admin-variables.scss
+// Admin dashboard palette (5 colours).
+// Same variable names as the frontend file on purpose, so shared
+// components work in either app.
+// =============================================================
+
+$color-primary:   #1f3a5f !default; // navy
+$color-secondary: #4f6d8f !default; // slate blue
+$color-accent:    #f2a541 !default; // amber
+$color-surface:   #f1f4f8 !default; // page background
+$color-text:      #1a202c !default; // body text

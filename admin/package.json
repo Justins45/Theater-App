@@ -1,25 +1,13 @@
 {
   "name": "admin",
+  "version": "0.0.0",
   "private": true,
-  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
-    "tauri": "tauri"
-  },
-  "dependencies": {
-    "@tauri-apps/api": "^2",
-    "@tauri-apps/plugin-http": "^2.5.9",
-    "@tauri-apps/plugin-opener": "^2",
-    "@tauri-apps/plugin-window-state": "^2.4.1",
-    "@theater/shared": "*",
-    "vue": "^3.5.13"
-  },
-  "devDependencies": {
-    "@tauri-apps/cli": "^2",
-    "sass": "^1.99.0",
-    "vue-tsc": "^2.1.10"
+    "build-only": "vite build",
+    "type-check": "vue-tsc --build"
   }
 }
