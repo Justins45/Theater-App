@@ -8,7 +8,7 @@ theater-app/
 |       ├── shared.yml         ← lints + builds + tests (if present) on every push
 │       ├── backend.yml        ← builds + tests on every push
 │       ├── frontend.yml       ← lints + builds on every push
-│       └── tauri.yml          ← builds installers on tagged release
+│       └── admin.yml          ← lints + builds on every push 
 |
 ├── shared/                    ← shared Vue component library
 │   ├── src/
@@ -31,7 +31,7 @@ theater-app/
 │   ├── package.json
 │   └── vite.config.js
 │
-├── admin/                     ← Tauri + Vue admin app
+├── admin/                     ← Vue admin app
 │   ├── src/
 │   │   ├── components/        ← Admin specific components
 │   │   ├── pages/             ← Vue admin pages
